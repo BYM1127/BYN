@@ -95,7 +95,7 @@ function OrderCard({ order }: { order: typeof MOCK_CROCHET[0] }) {
             letterSpacing: '0.05em',
             textTransform: 'uppercase',
             color: STATUS_COLOR[order.status] ?? 'var(--color-text-muted)',
-            background: `${STATUS_COLOR[order.status]}18` ?? 'rgba(255,255,255,0.04)',
+            background: STATUS_COLOR[order.status] ? `${STATUS_COLOR[order.status]}18` : 'rgba(255,255,255,0.04)',
             padding: '0.2rem 0.6rem',
             borderRadius: 'var(--radius-full)',
           }}
