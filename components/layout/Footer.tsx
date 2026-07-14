@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Scissors, Camera, Monitor, Heart, Mail, Instagram } from 'lucide-react'
+import { Scissors, Camera, Monitor, Heart, Mail, Share2 } from 'lucide-react'
 
 const PILLARS = [
   {
@@ -119,7 +119,7 @@ export default function Footer() {
                 }}
                 aria-label="Instagram"
               >
-                <Instagram size={16} />
+                <Share2 size={16} />
               </a>
               <a
                 href="mailto:hello@bymstudio.co"
