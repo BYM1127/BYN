@@ -59,7 +59,9 @@ const PILLAR_ICON: Record<Pillar, React.ReactNode> = {
   webdesign: <Monitor size={14} />,
 }
 
-function OrderCard({ order }: { order: typeof MOCK_CROCHET[0] }) {
+type OrderType = typeof MOCK_CROCHET[0] | typeof MOCK_PHOTO[0] | typeof MOCK_WEB[0]
+
+function OrderCard({ order }: { order: OrderType }) {
   const color = PILLAR_COLOR[order.pillar]
   return (
     <div
