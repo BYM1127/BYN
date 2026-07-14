@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { Scissors, Camera, Monitor, Heart, Mail, Share2 } from 'lucide-react'
 
