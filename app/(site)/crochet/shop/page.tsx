@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { ShoppingBag, SlidersHorizontal, Star, ArrowRight, Scissors } from 'lucide-react'
+import { ShoppingBag, SlidersHorizontal, Star, ArrowRight, Scissors, Loader2 } from 'lucide-react'
+import { getPortfolioItems, PortfolioItem } from '@/lib/firestore'
 
 type Category = 'all' | 'bags' | 'blankets' | 'tops' | 'home_decor' | 'baby' | 'accessories'
 
@@ -16,22 +17,7 @@ const CATEGORIES: { value: Category; label: string; emoji: string }[] = [
   { value: 'accessories', label: 'Accessories',  emoji: '🎀' },
 ]
 
-// Static showcase products (would come from Firestore in production)
-const PRODUCTS = [
-  { id: '1', name: 'Boho Tote Bag', category: 'bags',        price: 450,  rating: 5, reviews: 24, tags: ['bohemian', 'everyday'], emoji: '👜' },
-  { id: '2', name: 'Rainbow Throw Blanket', category: 'blankets',    price: 780,  rating: 5, reviews: 18, tags: ['colourful', 'cosy'],     emoji: '🌈' },
-  { id: '3', name: 'Crochet Crop Top', category: 'tops',        price: 380,  rating: 4, reviews: 11, tags: ['summer', 'festival'],   emoji: '👗' },
-  { id: '4', name: 'Plant Pot Hanger', category: 'home_decor',  price: 220,  rating: 5, reviews: 31, tags: ['boho', 'decor'],         emoji: '🌿' },
-  { id: '5', name: 'Baby Bunny Set', category: 'baby',        price: 320,  rating: 5, reviews: 42, tags: ['gift', 'newborn'],       emoji: '🐰' },
-  { id: '6', name: 'Mini Coin Purse', category: 'accessories', price: 150,  rating: 4, reviews: 19, tags: ['compact', 'cute'],       emoji: '👛' },
-  { id: '7', name: 'Chunky Bucket Bag', category: 'bags',        price: 590,  rating: 5, reviews: 8,  tags: ['statement', 'chunky'],  emoji: '🎒' },
-  { id: '8', name: 'Neutral Baby Blanket', category: 'baby',        price: 420,  rating: 5, reviews: 55, tags: ['neutral', 'gift'],       emoji: '🍼' },
-  { id: '9', name: 'Macramé Wall Art', category: 'home_decor',  price: 340,  rating: 4, reviews: 14, tags: ['wall art', 'boho'],      emoji: '🏡' },
-  { id: '10', name: 'Open-Knit Cardigan', category: 'tops',        price: 520,  rating: 5, reviews: 7,  tags: ['layering', 'casual'],   emoji: '🧥' },
-  { id: '11', name: 'Beaded Headband', category: 'accessories', price: 180,  rating: 4, reviews: 22, tags: ['summer', 'beach'],       emoji: '🎀' },
-  { id: '12', name: 'XL Comfort Blanket', category: 'blankets',    price: 950,  rating: 5, reviews: 9,  tags: ['luxury', 'large'],       emoji: '🛏️' },
-]
-
+// Dynamic products loaded from Firestore
 const SORT_OPTIONS = [
   { value: 'popular',   label: 'Most Popular' },
   { value: 'price_asc', label: 'Price: Low to High' },
@@ -40,15 +26,35 @@ const SORT_OPTIONS = [
 ]
 
 export default function CrochetShopPage() {
-  const [activeCategory, setActiveCategory] = useState<Category>('all')
+  const [activeCategory, setActiveCategory] = useState<Category | string>('all')
   const [sortBy, setSortBy] = useState('popular')
+  const [products, setProducts] = useState<PortfolioItem[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const filtered = PRODUCTS.filter(
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getPortfolioItems('crochet')
+        setProducts(data)
+      } catch (error) {
+        console.error('Error fetching crochet products:', error)
+      }
+      setLoading(false)
+    }
+    fetchProducts()
+  }, [])
+
+  const filtered = products.filter(
     (p) => activeCategory === 'all' || p.category === activeCategory
   ).sort((a, b) => {
-    if (sortBy === 'price_asc') return a.price - b.price
-    if (sortBy === 'price_desc') return b.price - a.price
-    if (sortBy === 'popular') return b.reviews - a.reviews
+    const priceA = a.price || 0
+    const priceB = b.price || 0
+    const ratingA = a.rating || 0
+    const ratingB = b.rating || 0
+    
+    if (sortBy === 'price_asc') return priceA - priceB
+    if (sortBy === 'price_desc') return priceB - priceA
+    if (sortBy === 'popular') return ratingB - ratingA
     return 0
   })
 
@@ -75,7 +81,7 @@ export default function CrochetShopPage() {
                 The Collection
               </h1>
               <p style={{ color: 'var(--color-text-secondary)', fontSize: '1rem' }}>
-                {PRODUCTS.length} handcrafted pieces, each made with love.
+                {loading ? 'Loading collection...' : `${products.length} handcrafted pieces, each made with love.`}
               </p>
             </div>
             <Link href="/crochet/design" className="btn btn-primary">
@@ -136,25 +142,32 @@ export default function CrochetShopPage() {
       <section style={{ padding: '2.5rem 1.5rem' }}>
         <div className="container">
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.5rem' }}>
-            {filtered.map((product) => (
+            {loading && (
+              <div style={{ gridColumn: '1 / -1', display: 'flex', justifyContent: 'center', padding: '4rem' }}>
+                <Loader2 size={32} className="animate-spin-slow" style={{ color: 'var(--color-crochet)' }} />
+              </div>
+            )}
+            {!loading && filtered.map((product) => (
               <div
                 key={product.id}
                 className="card"
                 style={{ overflow: 'hidden', cursor: 'pointer' }}
               >
-                {/* Product image placeholder */}
                 <div
                   style={{
                     background: 'linear-gradient(135deg, var(--color-crochet-dim) 0%, rgba(212,168,83,0.08) 100%)',
                     aspectRatio: '1',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '4rem',
+                    position: 'relative',
                     borderBottom: '1px solid var(--color-border)',
+                    overflow: 'hidden',
                   }}
                 >
-                  {product.emoji}
+                  {product.imageUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={product.imageUrl} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', fontSize: '4rem' }}>🧶</div>
+                  )}
                 </div>
 
                 <div style={{ padding: '1.25rem' }}>
@@ -177,16 +190,16 @@ export default function CrochetShopPage() {
                   </div>
 
                   <h3 style={{ fontWeight: 600, fontSize: '1rem', color: 'var(--color-text-primary)', marginBottom: '0.35rem' }}>
-                    {product.name}
+                    {product.title}
                   </h3>
 
                   {/* Rating */}
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginBottom: '0.85rem' }}>
                     <div className="stars" style={{ fontSize: '0.75rem' }}>
-                      {'★'.repeat(product.rating)}
+                      {'★'.repeat(product.rating || 5)}
                     </div>
                     <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-                      ({product.reviews})
+                      ({product.reviews || 0})
                     </span>
                   </div>
 
@@ -194,15 +207,14 @@ export default function CrochetShopPage() {
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div>
                       <span style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>
-                        R{product.price.toLocaleString()}
+                        {product.price ? `R${product.price.toLocaleString()}` : 'Custom'}
                       </span>
                     </div>
                     <button
                       className="btn btn-primary btn-sm"
                       style={{ cursor: 'pointer' }}
                       onClick={() => {
-                        // Navigate to contact/enquire for this product
-                        window.location.href = `/contact?product=${encodeURIComponent(product.name)}`
+                        window.location.href = `/contact?product=${encodeURIComponent(product.title)}`
                       }}
                     >
                       <ShoppingBag size={13} /> Order
