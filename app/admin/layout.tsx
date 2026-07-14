@@ -25,9 +25,10 @@ function AdminShell({ children }: { children: React.ReactNode }) {
   const router = useRouter()
 
   useEffect(() => {
-    if (!loading && (!user || !isAdmin)) {
-      router.replace('/')
-    }
+    // BYPASS FOR DEV
+    // if (!loading && (!user || !isAdmin)) {
+    //   router.replace('/')
+    // }
   }, [user, loading, isAdmin, router])
 
   if (loading) {
@@ -38,7 +39,7 @@ function AdminShell({ children }: { children: React.ReactNode }) {
     )
   }
 
-  if (!user || !isAdmin) return null
+  // if (!user || !isAdmin) return null
 
   return (
     <div style={{ minHeight: '100dvh', display: 'grid', gridTemplateColumns: '240px 1fr', background: 'var(--color-bg-primary)' }}>

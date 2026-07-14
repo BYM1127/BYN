@@ -10,19 +10,19 @@
 @import "@fontsource/caveat/700.css";
 
 @theme {
-  /* ── Colors ───────────────────────────────── */
-  --color-bg-primary: #090c14;
-  --color-bg-secondary: #10141f;
-  --color-bg-card: #161b28;
-  --color-bg-card-hover: #1c2235;
-  --color-border: rgba(255, 255, 255, 0.07);
-  --color-border-hover: rgba(255, 255, 255, 0.14);
+  /* ── Light Mode Colors (Default) ──────────────── */
+  --color-bg-primary: #fafafa;
+  --color-bg-secondary: #f3f4f6;
+  --color-bg-card: #ffffff;
+  --color-bg-card-hover: #f9fafb;
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-border-hover: rgba(0, 0, 0, 0.15);
 
-  --color-text-primary: #f0ece3;
-  --color-text-secondary: #9b97a0;
-  --color-text-muted: #5c586a;
+  --color-text-primary: #111827;
+  --color-text-secondary: #4b5563;
+  --color-text-muted: #9ca3af;
 
-  /* Pillar colors */
+  /* Pillar colors (Shared) */
   --color-crochet: #e07a5f;
   --color-crochet-light: #f0a080;
   --color-crochet-dim: rgba(224, 122, 95, 0.15);
@@ -39,7 +39,23 @@
   --color-success: #4ade80;
   --color-warning: #fbbf24;
   --color-error: #f87171;
+}
 
+/* ── Dark Mode Colors ───────────────────────── */
+[data-theme="dark"] {
+  --color-bg-primary: #090c14;
+  --color-bg-secondary: #10141f;
+  --color-bg-card: #161b28;
+  --color-bg-card-hover: #1c2235;
+  --color-border: rgba(255, 255, 255, 0.07);
+  --color-border-hover: rgba(255, 255, 255, 0.14);
+
+  --color-text-primary: #f0ece3;
+  --color-text-secondary: #9b97a0;
+  --color-text-muted: #5c586a;
+}
+
+@theme {
   /* ── Fonts ────────────────────────────────── */
   --font-sans: "Outfit", system-ui, sans-serif;
   --font-serif: "Cormorant Garamond", Georgia, serif;

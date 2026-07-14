@@ -16,6 +16,7 @@ import {
   ChevronDown,
 } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
+import { ThemeToggle } from '@/components/ThemeToggle'
 
 interface NavItem {
   label: string
@@ -170,7 +171,7 @@ export default function Navbar() {
                       : 'var(--color-text-secondary)',
                     transition: 'all 0.2s',
                     background: isActive(item.href)
-                      ? 'rgba(255,255,255,0.06)'
+                      ? 'var(--color-border)'
                       : 'transparent',
                     textDecoration: 'none',
                   }}
@@ -200,9 +201,9 @@ export default function Navbar() {
                       left: '50%',
                       transform: 'translateX(-50%)',
                       marginTop: '0.5rem',
-                      background: 'rgba(22,27,40,0.97)',
+                      background: 'var(--color-bg-card)',
                       backdropFilter: 'blur(20px)',
-                      border: '1px solid rgba(255,255,255,0.08)',
+                      border: '1px solid var(--color-border)',
                       borderRadius: 'var(--radius-lg)',
                       padding: '0.5rem',
                       minWidth: 180,
@@ -225,7 +226,7 @@ export default function Navbar() {
                           whiteSpace: 'nowrap',
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.background = 'rgba(255,255,255,0.06)'
+                          e.currentTarget.style.background = 'var(--color-border)'
                           e.currentTarget.style.color = 'var(--color-text-primary)'
                         }}
                         onMouseLeave={(e) => {
@@ -244,6 +245,8 @@ export default function Navbar() {
 
           {/* Right side */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <ThemeToggle />
+            
             {user ? (
               <>
                 {isAdmin && (
@@ -337,7 +340,7 @@ export default function Navbar() {
                       ? (item.color ?? 'var(--color-text-primary)')
                       : 'var(--color-text-secondary)',
                     background: isActive(item.href)
-                      ? 'rgba(255,255,255,0.06)'
+                      ? 'var(--color-border)'
                       : 'transparent',
                     textDecoration: 'none',
                   }}
