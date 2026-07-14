@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+
 import Link from 'next/link'
 import { Scissors, ShoppingBag, Wand2, Check, ArrowRight, Clock, Star, Heart } from 'lucide-react'
 
@@ -170,16 +171,7 @@ export default function CrochetPage() {
                   border: '1px solid var(--color-border)',
                   borderRadius: 'var(--radius-xl)',
                   textDecoration: 'none',
-                  transition: 'all 0.25s',
                   textAlign: 'center',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = 'rgba(224,122,95,0.4)'
-                  e.currentTarget.style.transform = 'translateY(-3px)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = 'var(--color-border)'
-                  e.currentTarget.style.transform = 'none'
                 }}
               >
                 <span style={{ fontSize: '2.25rem' }}>{cat.emoji}</span>
