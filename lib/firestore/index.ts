@@ -46,7 +46,7 @@ export async function submitWebDesignEnquiry(userId: string, data: any) {
 }
 
 export async function getUserOrders(userId: string) {
-  if (!db) throw new Error('Firebase is not initialized')
+  if (!db) return []
   const ordersRef = collection(db, 'orders')
   const q = query(ordersRef, where('userId', '==', userId), orderBy('createdAt', 'desc'))
   const snapshot = await getDocs(q)
@@ -54,12 +54,21 @@ export async function getUserOrders(userId: string) {
 }
 
 export async function getAllOrders() {
-  if (!db) throw new Error('Firebase is not initialized')
+  if (!db) return []
   const ordersRef = collection(db, 'orders')
   const q = query(ordersRef, orderBy('createdAt', 'desc'))
   const snapshot = await getDocs(q)
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
 }
+
+export async function getOrdersByPillar(pillar: string) {
+  if (!db) return []
+  const ordersRef = collection(db, 'orders')
+  const q = query(ordersRef, where('pillar', '==', pillar), orderBy('createdAt', 'desc'))
+  const snapshot = await getDocs(q)
+  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+}
+
 
 export async function updateOrderStatus(orderId: string, status: OrderStatus) {
   if (!db) throw new Error('Firebase is not initialized')
