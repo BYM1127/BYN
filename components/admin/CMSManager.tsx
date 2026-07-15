@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getPortfolioItems, addPortfolioItem, updatePortfolioItem, deletePortfolioItem, PortfolioItem } from '@/lib/firestore'
-import { uploadImage } from '@/lib/firestore/storage'
+import { getPortfolioItems, addPortfolioItem, updatePortfolioItem, deletePortfolioItem, PortfolioItemData as PortfolioItem } from '@/lib/actions/portfolio'
+import { uploadImage } from '@/lib/actions/storage'
 import { Plus, Edit2, Trash2, Image as ImageIcon, Loader2 } from 'lucide-react'
 
 interface CMSManagerProps {
@@ -77,7 +77,10 @@ export function CMSManager({ pillar }: CMSManagerProps) {
       let finalImageUrl = imageUrl
 
       if (imageFile) {
-        finalImageUrl = await uploadImage(imageFile, pillar)
+        const formData = new FormData()
+        formData.append('file', imageFile)
+        formData.append('folder', pillar)
+        finalImageUrl = await uploadImage(formData)
       }
 
       const itemData = {

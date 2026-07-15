@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getSiteSettings, updateSiteSettings, SiteSettings } from '@/lib/firestore/settings'
+import { getSiteSettings, updateSiteSettings, SiteSettingsData as SiteSettings } from '@/lib/actions/settings'
 import { Save, Loader2, Globe } from 'lucide-react'
 
 export default function AdminSettingsPage() {

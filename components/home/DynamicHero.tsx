@@ -3,10 +3,10 @@
 import { useState, useEffect } from 'react'
 import { Sparkles, Scissors, Camera, Monitor, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import { getSiteSettings, SiteSettings } from '@/lib/firestore/settings'
+import { getSiteSettings, SiteSettingsData } from '@/lib/actions/settings'
 
 export function DynamicHero() {
-  const [settings, setSettings] = useState<SiteSettings | null>(null)
+  const [settings, setSettings] = useState<SiteSettingsData | null>(null)
   
   useEffect(() => {
     async function fetchSettings() {

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ShoppingBag, SlidersHorizontal, Star, ArrowRight, Scissors, Loader2 } from 'lucide-react'
-import { getPortfolioItems, PortfolioItem } from '@/lib/firestore'
+import { getPortfolioItems, PortfolioItemData as PortfolioItem } from '@/lib/actions/portfolio'
 
 type Category = 'all' | 'bags' | 'blankets' | 'tops' | 'home_decor' | 'baby' | 'accessories'
 

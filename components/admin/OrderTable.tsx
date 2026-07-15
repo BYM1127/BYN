@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getOrdersByPillar, updateOrderStatus, OrderStatus } from '@/lib/firestore'
+import { getOrdersByPillar, updateOrderStatus, OrderStatus } from '@/lib/actions/orders'
 import { Clock, CheckCircle, Package, Truck, FileText, Star, Trash2 } from 'lucide-react'
 
 interface OrderTableProps {
@@ -108,7 +108,7 @@ export function OrderTable({ pillar }: OrderTableProps) {
                   </div>
                 </td>
                 <td style={{ padding: '1rem', fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
-                  {order.createdAt ? new Date(order.createdAt.seconds * 1000).toLocaleDateString() : 'Just now'}
+                  {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : 'Just now'}
                 </td>
                 <td style={{ padding: '1rem' }}>
                   <select 
@@ -120,8 +120,8 @@ export function OrderTable({ pillar }: OrderTableProps) {
                       fontSize: '0.8rem',
                       fontWeight: 600,
                       background: 'transparent',
-                      border: `1px solid ${STATUS_COLORS[order.status] || 'var(--color-border)'}`,
-                      color: STATUS_COLORS[order.status] || 'var(--color-text-primary)',
+                      border: `1px solid ${STATUS_COLORS[order.status as OrderStatus] || 'var(--color-border)'}`,
+                      color: STATUS_COLORS[order.status as OrderStatus] || 'var(--color-text-primary)',
                       cursor: 'pointer',
                       outline: 'none',
                     }}
