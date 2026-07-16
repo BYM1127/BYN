@@ -237,13 +237,13 @@ export default function HomePage() {
                 key={pillar.id}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
                   gap: '2rem',
                   alignItems: 'center',
                   background: 'var(--color-bg-card)',
                   border: '1px solid var(--color-border)',
                   borderRadius: 'var(--radius-2xl)',
-                  padding: '2.5rem',
+                  padding: 'clamp(1.5rem, 5vw, 2.5rem)',
                   position: 'relative',
                   overflow: 'hidden',
                   transition: 'all 0.3s ease',
@@ -376,7 +376,7 @@ export default function HomePage() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
               gap: '1.5rem',
             }}
           >
@@ -463,7 +463,7 @@ export default function HomePage() {
               <div
                 key={t.author}
                 className="card"
-                style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}
+                style={{ padding: 'clamp(1.25rem, 4vw, 1.75rem)', display: 'flex', flexDirection: 'column', gap: '1rem' }}
               >
                 {/* Stars */}
                 <div className="stars">{'★'.repeat(t.rating)}</div>

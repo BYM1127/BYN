@@ -141,7 +141,7 @@ export default function CrochetShopPage() {
       {/* Products Grid */}
       <section style={{ padding: '2.5rem 1.5rem' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 240px), 1fr))', gap: '1.5rem' }}>
             {loading && (
               <div style={{ gridColumn: '1 / -1', display: 'flex', justifyContent: 'center', padding: '4rem' }}>
                 <Loader2 size={32} className="animate-spin-slow" style={{ color: 'var(--color-crochet)' }} />

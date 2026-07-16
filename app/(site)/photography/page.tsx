@@ -12,6 +12,7 @@ const PACKAGES = [
   {
     id: 'portrait',
     name: 'Portrait Session',
+    imageUrl: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=600&auto=format&fit=crop',
     emoji: '🌟',
     duration: 60,
     photos: 20,
@@ -30,6 +31,7 @@ const PACKAGES = [
   {
     id: 'couples',
     name: 'Couples Session',
+    imageUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=600&auto=format&fit=crop',
     emoji: '💑',
     duration: 90,
     photos: 30,
@@ -49,6 +51,7 @@ const PACKAGES = [
   {
     id: 'family',
     name: 'Family Session',
+    imageUrl: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=600&auto=format&fit=crop',
     emoji: '👨‍👩‍👧‍👦',
     duration: 90,
     photos: 35,
@@ -68,6 +71,7 @@ const PACKAGES = [
   {
     id: 'maternity',
     name: 'Maternity Session',
+    imageUrl: 'https://images.unsplash.com/photo-1519064438302-7634f1b40d6c?q=80&w=600&auto=format&fit=crop',
     emoji: '🤰',
     duration: 75,
     photos: 25,
@@ -87,6 +91,7 @@ const PACKAGES = [
   {
     id: 'event',
     name: 'Event Coverage',
+    imageUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=600&auto=format&fit=crop',
     emoji: '🎉',
     duration: 240,
     photos: 80,
@@ -106,6 +111,7 @@ const PACKAGES = [
   {
     id: 'commercial',
     name: 'Commercial / Product',
+    imageUrl: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=600&auto=format&fit=crop',
     emoji: '📦',
     duration: 180,
     photos: 40,
@@ -236,14 +242,24 @@ export default function PhotographyPage() {
                       fontWeight: 700,
                       letterSpacing: '0.08em',
                       textTransform: 'uppercase',
+                      zIndex: 10,
+                      position: 'relative'
                     }}
                   >
                     <Sparkles size={11} style={{ marginRight: 4 }} />
                     Most Popular
                   </div>
                 )}
+                
+                {pkg.imageUrl && (
+                  <div style={{ width: '100%', height: '180px', position: 'relative', overflow: 'hidden' }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={pkg.imageUrl} alt={pkg.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <div style={{ position: 'absolute', bottom: -1, left: 0, width: '100%', height: '60px', background: 'linear-gradient(to top, var(--color-bg-card), transparent)' }}></div>
+                  </div>
+                )}
 
-                <div style={{ padding: '1.75rem' }}>
+                <div style={{ padding: pkg.imageUrl ? '0.5rem 1.75rem 1.75rem' : '1.75rem' }}>
                   {/* Header */}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
                     <div>
@@ -338,7 +354,7 @@ export default function PhotographyPage() {
               From booking to beautiful photos in four simple steps.
             </p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1.5rem' }}>
             {PROCESS.map((p) => (
               <div key={p.step} className="card" style={{ padding: '1.75rem', position: 'relative' }}>
                 <div style={{ fontSize: '3.5rem', fontWeight: 700, color: 'rgba(61,165,138,0.1)', fontFamily: 'var(--font-serif)', lineHeight: 1, marginBottom: '-0.5rem' }}>

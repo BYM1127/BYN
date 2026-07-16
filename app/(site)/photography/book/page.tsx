@@ -99,7 +99,7 @@ function BookingForm() {
         <h2 className="font-serif" style={{ fontSize: '1.35rem', marginBottom: '1.25rem' }}>
           Your Details
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1rem' }}>
           <div>
             <label className="label" htmlFor="name">Full Name *</label>
             <input id="name" className="input" type="text" placeholder="Jane Doe" value={form.name} onChange={(e) => update('name', e.target.value)} required />
@@ -140,7 +140,7 @@ function BookingForm() {
               <ChevronDown size={16} style={{ position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-muted)', pointerEvents: 'none' }} />
             </div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '1rem' }}>
             <div>
               <label className="label" htmlFor="preferred-date">Preferred Date *</label>
               <input id="preferred-date" className="input" type="date" value={form.preferredDate} onChange={(e) => update('preferredDate', e.target.value)} required />

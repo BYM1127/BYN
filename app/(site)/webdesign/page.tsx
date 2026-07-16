@@ -108,57 +108,36 @@ const TECH_STACK = [
 const PORTFOLIO = [
   {
     id: '1',
-    title: 'Boka\'s Yarn Market',
-    type: 'E-Commerce + Studio',
-    tech: ['Next.js', 'TypeScript', 'Firebase'],
-    description: 'Full-stack crochet studio site with custom order wizard, photography booking, and admin panel.',
-    emoji: '🧶',
-    color: 'var(--color-crochet)',
+    title: 'BMZtrial1',
+    type: 'Business Website',
+    tech: ['HTML', 'CSS', 'JavaScript'],
+    description: "Building a website for a friend's business. Focused on creating a clean, professional online presence.",
+    imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop',
+    projectUrl: 'https://github.com/BYM1127/BMZtrial1',
+    color: 'var(--color-webdesign)',
+    emoji: '🌸'
   },
   {
     id: '2',
-    title: 'Bloom & Co.',
-    type: 'Business Website',
-    tech: ['Next.js', 'Tailwind', 'Vercel'],
-    description: 'Elegant florist website with online ordering, gallery, and event bookings.',
-    emoji: '🌸',
-    color: 'var(--color-photography)',
+    title: 'DkLC - Catering',
+    type: 'Food & Catering',
+    tech: ['React', 'CSS', 'Vite'],
+    description: 'Dimpho ke Lesego Catering website. Showcasing delicious menus, services, and an easy booking contact system.',
+    imageUrl: 'https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=800&auto=format&fit=crop',
+    projectUrl: 'https://github.com/BYM1127/DkLC',
+    color: 'var(--color-crochet)',
+    emoji: '🍲'
   },
   {
     id: '3',
-    title: 'TechStart Africa',
-    type: 'Landing Page',
-    tech: ['React', 'TypeScript', 'Framer'],
-    description: 'High-converting SaaS landing page for an African tech startup with animated hero sections.',
-    emoji: '💡',
-    color: 'var(--color-webdesign)',
-  },
-  {
-    id: '4',
-    title: 'Lebo Photography',
-    type: 'Portfolio + Booking',
-    tech: ['Next.js', 'Supabase', 'Stripe'],
-    description: 'Photography portfolio with online booking system and secure payment processing.',
-    emoji: '📸',
-    color: 'var(--color-gold)',
-  },
-  {
-    id: '5',
-    title: 'Mama\'s Kitchen',
-    type: 'E-Commerce',
-    tech: ['Next.js', 'Firebase', 'PayFast'],
-    description: 'Online food store with daily menu updates, delivery zones, and order tracking.',
-    emoji: '🍲',
-    color: 'var(--color-crochet)',
-  },
-  {
-    id: '6',
-    title: 'TradeSkills SA',
-    type: 'Custom Web App',
-    tech: ['Next.js', 'PostgreSQL', 'Auth.js'],
-    description: 'Job marketplace connecting tradespeople with clients — roles, profiles, and review system.',
-    emoji: '🔧',
+    title: 'IMELA-PROJECTS',
+    type: 'Corporate Website',
+    tech: ['Next.js', 'Tailwind', 'TypeScript'],
+    description: 'Electrical & Solar Expertise You Can Trust. Fast, reliable installations and maintenance for residential and commercial projects.',
+    imageUrl: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=800&auto=format&fit=crop',
+    projectUrl: 'https://github.com/BYM1127/IMELA-PROJECTS',
     color: 'var(--color-photography)',
+    emoji: '💡'
   },
 ]
 
@@ -228,7 +207,7 @@ export default function WebDesignPage() {
               Quality, speed, and results — every single time.
             </p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1.25rem' }}>
             {WHY_ME.map((w) => (
               <div key={w.title} className="card" style={{ padding: '1.5rem' }}>
                 <div style={{ width: 44, height: 44, borderRadius: 'var(--radius-lg)', background: 'var(--color-webdesign-dim)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-webdesign)', marginBottom: '0.85rem' }}>
@@ -252,7 +231,7 @@ export default function WebDesignPage() {
               All prices in ZAR. International clients quoted in USD/EUR on request.
             </p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))', gap: '1.5rem' }}>
             {TIERS.map((tier) => (
               <div
                 key={tier.id}
@@ -321,11 +300,25 @@ export default function WebDesignPage() {
           </div>
           <div className="grid-auto-fill">
             {PORTFOLIO.map((p) => (
-              <div key={p.id} className="card" style={{ overflow: 'hidden' }}>
-                <div style={{ background: `linear-gradient(135deg, ${p.color}18, rgba(255,255,255,0.02))`, padding: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3.5rem', borderBottom: '1px solid var(--color-border)' }}>
-                  {p.emoji}
+              <div key={p.id} className="card" style={{ overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ position: 'relative', background: `linear-gradient(135deg, ${p.color}18, rgba(255,255,255,0.02))`, height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center', borderBottom: '1px solid var(--color-border)', overflow: 'hidden' }}>
+                  {p.imageUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={p.imageUrl} alt={p.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <div style={{ fontSize: '3.5rem' }}>{p.emoji}</div>
+                  )}
+                  {p.projectUrl && (
+                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.5)', opacity: 0, transition: 'opacity 0.2s', cursor: 'pointer' }}
+                         onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+                         onMouseLeave={(e) => e.currentTarget.style.opacity = '0'}
+                         onClick={(e) => { e.stopPropagation(); window.open(p.projectUrl, '_blank') }}
+                    >
+                      <span className="btn btn-web btn-sm">View on GitHub</span>
+                    </div>
+                  )}
                 </div>
-                <div style={{ padding: '1.5rem' }}>
+                <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
                   <div style={{ fontSize: '0.72rem', color: p.color, fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '0.35rem' }}>
                     {p.type}
                   </div>
@@ -389,7 +382,7 @@ export default function WebDesignPage() {
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
             <h2 className="section-title font-serif">My Process</h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1.5rem' }}>
             {PROCESS.map((p) => (
               <div key={p.step} className="card" style={{ padding: '1.75rem', position: 'relative' }}>
                 <div style={{ fontSize: '3.5rem', fontWeight: 700, color: 'rgba(139,92,246,0.1)', fontFamily: 'var(--font-serif)', lineHeight: 1, marginBottom: '-0.5rem' }}>{p.step}</div>

@@ -31,7 +31,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Stats grid */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1.25rem', marginBottom: '2.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 200px), 1fr))', gap: '1.25rem', marginBottom: '2.5rem' }}>
         {STATS.map((s) => (
           <Link
             key={s.label}
@@ -102,7 +102,7 @@ export default function AdminDashboardPage() {
       </div>
 
       {/* Quick links */}
-      <div style={{ marginTop: '2.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
+      <div style={{ marginTop: '2.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1rem' }}>
         {[
           { label: 'Manage Crochet Orders', href: '/admin/crochet', color: 'var(--color-crochet)' },
           { label: 'Photography Bookings', href: '/admin/photography', color: 'var(--color-photography)' },

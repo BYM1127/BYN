@@ -38,7 +38,7 @@ export default function AboutPage() {
       >
         <div style={{ position: 'absolute', top: -80, right: -80, width: 500, height: 500, borderRadius: '50%', background: 'radial-gradient(circle, rgba(212,168,83,0.08) 0%, transparent 65%)', pointerEvents: 'none' }} />
 
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '4rem', alignItems: 'center' }}>
+        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '4rem', alignItems: 'center' }}>
           <div>
             <span
               className="font-hand"
@@ -129,7 +129,7 @@ export default function AboutPage() {
             </span>
             <h2 className="section-title font-serif">The Values Behind the Work</h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.25rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: '1.25rem' }}>
             {VALUES.map((v) => (
               <div key={v.title} className="card" style={{ padding: '1.75rem' }}>
                 <div style={{ fontSize: '2.25rem', marginBottom: '0.85rem' }}>{v.icon}</div>

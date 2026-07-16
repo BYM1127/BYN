@@ -279,7 +279,7 @@ export default function CrochetDesignPage() {
             <div>
               <h2 className="font-serif" style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>What type of piece would you like?</h2>
               <p style={{ marginBottom: '2rem' }}>Choose the main category. You can give more detail later.</p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 150px), 1fr))', gap: '1rem' }}>
                 {PIECE_TYPES.map((pt) => (
                   <button
                     key={pt.value}
@@ -348,7 +348,7 @@ export default function CrochetDesignPage() {
             <div>
               <h2 className="font-serif" style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>Choose your colours</h2>
               <p style={{ marginBottom: '2rem' }}>Pick up to 4 colours. You can mix and match!</p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '0.75rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 140px), 1fr))', gap: '0.75rem' }}>
                 {COLOUR_OPTIONS.map((c) => (
                   <button
                     key={c.value}

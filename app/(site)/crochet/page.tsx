@@ -50,7 +50,7 @@ export default function CrochetPage() {
       >
         <div style={{ position: 'absolute', top: -100, right: -100, width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(224,122,95,0.12) 0%, transparent 65%)', pointerEvents: 'none' }} />
 
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem', alignItems: 'center' }}>
+        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '3rem', alignItems: 'center' }}>
           <div>
             <div
               style={{
@@ -152,7 +152,7 @@ export default function CrochetPage() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 160px), 1fr))',
               gap: '1rem',
               marginBottom: '2rem',
             }}
@@ -198,7 +198,7 @@ export default function CrochetPage() {
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <h2 className="section-title font-serif">Why Choose BYM Crochet?</h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1.5rem' }}>
             {HIGHLIGHTS.map((h) => (
               <div key={h.label} className="card" style={{ padding: '1.75rem' }}>
                 <div
@@ -237,7 +237,7 @@ export default function CrochetPage() {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem', marginBottom: '3rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: '1.25rem', marginBottom: '3rem' }}>
             {CUSTOM_STEPS.map((s) => (
               <div
                 key={s.step}

@@ -114,7 +114,7 @@ function EnquiryForm() {
       {/* Contact */}
       <div style={{ marginBottom: '2rem' }}>
         <h2 className="font-serif" style={{ fontSize: '1.35rem', marginBottom: '1.25rem' }}>Your Details</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '1rem' }}>
           <div>
             <label className="label" htmlFor="name">Full Name *</label>
             <input id="name" className="input" type="text" placeholder="Jane Doe" value={form.name} onChange={(e) => update('name', e.target.value)} required />
@@ -148,7 +148,7 @@ function EnquiryForm() {
               <ChevronDown size={16} style={{ position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)', color: 'var(--color-text-muted)', pointerEvents: 'none' }} />
             </div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '1rem' }}>
             <div>
               <label className="label" htmlFor="budget">Budget Range</label>
               <div style={{ position: 'relative' }}>
@@ -188,7 +188,7 @@ function EnquiryForm() {
       {/* Features wanted */}
       <div style={{ marginBottom: '2rem' }}>
         <h2 className="font-serif" style={{ fontSize: '1.35rem', marginBottom: '1rem' }}>Features Needed (tick all that apply)</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '0.6rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 200px), 1fr))', gap: '0.6rem' }}>
           {FEATURES.map((feat) => (
             <button
               key={feat}

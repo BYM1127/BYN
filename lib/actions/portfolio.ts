@@ -77,6 +77,15 @@ export async function getPortfolioItems(pillar?: string) {
     })) as PortfolioItemData[]
   } catch (error) {
     console.error('Error getting portfolio items:', error)
+    if (pillar === 'crochet') {
+      return [
+        { id: 'fb1', pillar: 'crochet', title: 'Chunky Hand-Knit Throw', imageUrl: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600&auto=format&fit=crop', category: 'blankets', price: 1200, tags: ['blanket', 'chunky'], rating: 5, reviews: 14 },
+        { id: 'fb2', pillar: 'crochet', title: 'Summer Boho Tote Bag', imageUrl: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=600&auto=format&fit=crop', category: 'bags', price: 650, tags: ['bag', 'summer'], rating: 5, reviews: 8 },
+        { id: 'fb3', pillar: 'crochet', title: 'Granny Square Crop Top', imageUrl: 'https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?q=80&w=600&auto=format&fit=crop', category: 'tops', price: 450, tags: ['top', 'vintage'], rating: 4.8, reviews: 22 },
+        { id: 'fb4', pillar: 'crochet', title: 'Plush Baby Bear Beanie', imageUrl: 'https://images.unsplash.com/photo-1519689680058-324335c77eba?q=80&w=600&auto=format&fit=crop', category: 'baby', price: 200, tags: ['baby', 'beanie'], rating: 5, reviews: 31 },
+        { id: 'fb5', pillar: 'crochet', title: 'Textured Throw Pillow', imageUrl: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=600&auto=format&fit=crop', category: 'home_decor', price: 350, tags: ['home', 'pillow'], rating: 4.9, reviews: 11 },
+      ] as PortfolioItemData[]
+    }
     return []
   }
 }

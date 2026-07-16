@@ -150,7 +150,7 @@ function OrdersContent() {
         ) : (
           <>
             {/* Summary cards */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 180px), 1fr))', gap: '1rem', marginBottom: '2.5rem' }}>
               {[
                 { label: 'Total Orders', value: allOrders.length, color: 'var(--color-gold)' },
                 { label: 'Crochet', value: MOCK_CROCHET.length, color: 'var(--color-crochet)' },
