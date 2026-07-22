@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Camera, ArrowRight, Rss } from 'lucide-react'
 
 export const revalidate = 60 // Revalidate every minute
+export const dynamic = 'force-dynamic' // Skip prerendering at build time to prevent DB connection errors
 
 export default async function NewsPage() {
   await dbConnect()
