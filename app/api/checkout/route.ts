@@ -14,13 +14,11 @@ export async function POST(req: Request) {
 
     await dbConnect()
 
-    // Calculate totals
     const subtotal = items.reduce((sum: number, item: any) => sum + (item.price * item.quantity), 0)
     const totalAmount = subtotal + shippingCost
 
-    // Create a pending order in the database
     const order = await Order.create({
-      userId: null, // If user is logged in, attach their ID here via auth context server-side
+      userId: null,
       pillar: 'crochet', 
       status: 'pending',
       paymentStatus: 'pending',
@@ -37,7 +35,6 @@ export async function POST(req: Request) {
       shippingAddress,
     })
 
-    // --- PAYFAST INTEGRATION ---
     const payfastParams: Record<string, string> = {
       merchant_id: process.env.PAYFAST_MERCHANT_ID!,
       merchant_key: process.env.PAYFAST_MERCHANT_KEY!,
@@ -45,38 +42,39 @@ export async function POST(req: Request) {
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout`,
       notify_url: `${process.env.NEXT_PUBLIC_APP_URL}/api/webhooks/payment`,
       name_first: shippingAddress.firstName || 'Customer',
-      name_last: shippingAddress.lastName || '',
-      email_address: shippingAddress.email || 'customer@example.com',
       m_payment_id: order._id.toString(),
       amount: totalAmount.toFixed(2),
       item_name: `Order ${order._id.toString().slice(-6)} from BYM Studio`,
     }
 
-    // Generate MD5 Signature for PayFast
+    // Include optional fields only if they have a value
+    if (shippingAddress.lastName) payfastParams.name_last = shippingAddress.lastName;
+    if (shippingAddress.email) payfastParams.email_address = shippingAddress.email;
+
+    // Generate MD5 Signature for PayFast (MUST be alphabetically sorted)
+    const sortedKeys = Object.keys(payfastParams).sort()
     let getString = ''
-    for (const key in payfastParams) {
-      getString += `${key}=${encodeURIComponent(payfastParams[key].trim()).replace(/%20/g, '+')}&`
+    for (const key of sortedKeys) {
+      if (payfastParams[key] !== '') {
+        getString += `${key}=${encodeURIComponent(payfastParams[key].trim()).replace(/%20/g, '+')}&`
+      }
     }
     
     // Append passphrase if it exists
     if (process.env.PAYFAST_PASSPHRASE) {
       getString += `passphrase=${encodeURIComponent(process.env.PAYFAST_PASSPHRASE.trim()).replace(/%20/g, '+')}`
     } else {
-      getString = getString.slice(0, -1)
+      getString = getString.slice(0, -1) // remove trailing &
     }
 
     const signature = crypto.createHash('md5').update(getString).digest('hex')
     payfastParams.signature = signature
 
-    // Construct query string for GET redirect
-    const queryParams = new URLSearchParams()
-    for (const key in payfastParams) {
-      queryParams.append(key, payfastParams[key])
-    }
-
+    // We return the fields to the frontend so it can construct and submit the POST form
     return NextResponse.json({ 
       provider: 'payfast',
-      url: `${process.env.PAYFAST_URL}?${queryParams.toString()}`
+      url: process.env.PAYFAST_URL!,
+      fields: payfastParams 
     })
     
   } catch (error: any) {
