@@ -1,35 +1,25 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { withAuth } from "next-auth/middleware"
+import { NextResponse } from "next/server"
 
-// Protected route prefixes
-const PROTECTED_ROUTES = ['/my-orders', '/admin']
-
-export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
-
-  const isProtected = PROTECTED_ROUTES.some((r) => pathname.startsWith(r))
-  if (!isProtected) return NextResponse.next()
-
-  // Check for Firebase session cookie (set by client after auth)
-  const sessionCookie = request.cookies.get('__session')?.value
-
-  // Bypass auth checks for dev
-  // if (!sessionCookie) {
-  //   const loginUrl = new URL('/auth/login', request.url)
-  //   loginUrl.searchParams.set('redirect', pathname)
-  //   return NextResponse.redirect(loginUrl)
-  // }
-  //
-  // if (pathname.startsWith('/admin')) {
-  //   const isAdminCookie = request.cookies.get('__admin')?.value
-  //   if (!isAdminCookie) {
-  //     return NextResponse.redirect(new URL('/', request.url))
-  //   }
-  // }
-
-  return NextResponse.next()
-}
+export default withAuth(
+  function middleware(req) {
+    // If the user is trying to access the admin panel but is not an admin, redirect them to the home page
+    if (req.nextUrl.pathname.startsWith("/admin") && req.nextauth.token?.role !== "admin") {
+      return NextResponse.redirect(new URL("/", req.url))
+    }
+  },
+  {
+    callbacks: {
+      // Require the user to be logged in (have a token) for any route matched by this middleware
+      authorized: ({ token }) => !!token,
+    },
+    pages: {
+      signIn: "/auth/login",
+    },
+  }
+)
 
 export const config = {
-  matcher: ['/my-orders/:path*', '/admin/:path*'],
+  // Apply middleware to these sensitive routes
+  matcher: ["/checkout/:path*", "/my-orders/:path*", "/admin/:path*"],
 }
