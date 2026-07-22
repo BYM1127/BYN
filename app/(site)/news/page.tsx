@@ -1,7 +1,7 @@
 import dbConnect from '@/lib/db'
 import NewsPost from '@/models/NewsPost'
 import Link from 'next/link'
-import { Instagram, Facebook, ArrowRight, Rss } from 'lucide-react'
+import { Camera, ArrowRight, Rss } from 'lucide-react'
 
 export const revalidate = 60 // Revalidate every minute
 
@@ -58,7 +58,7 @@ export default async function NewsPage() {
           {/* Sidebar - Social Media Feed */}
           <div style={{ position: 'sticky', top: '6rem' }}>
             <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Instagram size={18} /> Social Feed
+              <Camera size={18} /> Social Feed
             </h2>
             
             <div className="card" style={{ padding: '1.5rem', overflow: 'hidden' }}>
@@ -69,7 +69,7 @@ export default async function NewsPage() {
               */}
               
               <div style={{ background: 'rgba(255,255,255,0.02)', padding: '2rem', textAlign: 'center', borderRadius: 'var(--radius-lg)', border: '1px dashed var(--color-border)' }}>
-                <Instagram size={32} style={{ margin: '0 auto 1rem', opacity: 0.5 }} />
+                <Camera size={32} style={{ margin: '0 auto 1rem', opacity: 0.5 }} />
                 <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', marginBottom: '1rem' }}>
                   Your live Instagram and TikTok feed will appear here.
                 </p>
@@ -81,7 +81,7 @@ export default async function NewsPage() {
             
             <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
               <a href="https://instagram.com" target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm" style={{ flex: 1, justifyContent: 'center' }}>
-                <Instagram size={16} /> Instagram
+                <Camera size={16} /> Instagram
               </a>
               <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm" style={{ flex: 1, justifyContent: 'center' }}>
                 TikTok
