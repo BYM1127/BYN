@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ShoppingBag, SlidersHorizontal, Star, ArrowRight, Scissors, Loader2 } from 'lucide-react'
-import { getPortfolioItems, PortfolioItemData as PortfolioItem } from '@/lib/actions/portfolio'
+import { getProducts, ProductData as Product } from '@/lib/actions/products'
+import { useCart } from '@/lib/context/CartContext'
 
 type Category = 'all' | 'bags' | 'blankets' | 'tops' | 'home_decor' | 'baby' | 'accessories'
 
@@ -26,18 +27,19 @@ const SORT_OPTIONS = [
 ]
 
 export default function CrochetShopPage() {
+  const { addToCart } = useCart()
   const [activeCategory, setActiveCategory] = useState<Category | string>('all')
   const [sortBy, setSortBy] = useState('popular')
-  const [products, setProducts] = useState<PortfolioItem[]>([])
+  const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const data = await getPortfolioItems('crochet')
+        const data = await getProducts()
         setProducts(data)
       } catch (error) {
-        console.error('Error fetching crochet products:', error)
+        console.error('Error fetching products:', error)
       }
       setLoading(false)
     }
@@ -214,10 +216,17 @@ export default function CrochetShopPage() {
                       className="btn btn-primary btn-sm"
                       style={{ cursor: 'pointer' }}
                       onClick={() => {
-                        window.location.href = `/contact?product=${encodeURIComponent(product.title)}`
+                        addToCart({
+                          id: product.id || String(Math.random()), // Assuming PortfolioItem has an id
+                          productId: product.id || String(Math.random()),
+                          title: product.title,
+                          price: product.price || 0,
+                          quantity: 1,
+                          imageUrl: product.imageUrl,
+                        })
                       }}
                     >
-                      <ShoppingBag size={13} /> Order
+                      <ShoppingBag size={13} /> Add to Cart
                     </button>
                   </div>
                 </div>

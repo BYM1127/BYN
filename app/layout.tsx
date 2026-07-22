@@ -4,6 +4,8 @@ import { AuthProvider } from '@/lib/auth-context'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import WhatsAppButton from '@/components/WhatsAppButton'
 
+import { CartProvider } from '@/lib/context/CartContext'
+
 export const metadata: Metadata = {
   title: {
     default: 'BYM Studio — Crochet · Photography · Web Design',
@@ -30,8 +32,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="antialiased">
         <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
           <AuthProvider>
-            {children}
-            <WhatsAppButton />
+            <CartProvider>
+              {children}
+              <WhatsAppButton />
+            </CartProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

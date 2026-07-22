@@ -17,6 +17,8 @@ import {
 } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import { useCart } from '@/lib/context/CartContext'
+import CartDrawer from '@/components/CartDrawer'
 
 interface NavItem {
   label: string
@@ -57,6 +59,7 @@ const NAV_ITEMS: NavItem[] = [
       { label: 'Start a Project', href: '/webdesign/enquire' },
     ],
   },
+  { label: 'News / Blog', href: '/news' },
   { label: 'Gallery', href: '/gallery' },
   { label: 'About', href: '/about' },
 ]
@@ -64,6 +67,7 @@ const NAV_ITEMS: NavItem[] = [
 export default function Navbar() {
   const pathname = usePathname()
   const { user, profile, signOut, isAdmin } = useAuth()
+  const { cartCount, setIsCartOpen } = useCart()
   const [scrolled, setScrolled]   = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openDrop, setOpenDrop]   = useState<string | null>(null)
@@ -247,6 +251,25 @@ export default function Navbar() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <ThemeToggle />
             
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className="btn btn-ghost btn-sm"
+              style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', cursor: 'pointer', position: 'relative' }}
+            >
+              <ShoppingBag size={16} />
+              {cartCount > 0 && (
+                <span style={{ 
+                  position: 'absolute', top: -4, right: -4, 
+                  background: 'var(--color-crochet)', color: '#fff', 
+                  fontSize: '0.65rem', fontWeight: 'bold', 
+                  width: 16, height: 16, borderRadius: '50%', 
+                  display: 'flex', alignItems: 'center', justifyContent: 'center' 
+                }}>
+                  {cartCount}
+                </span>
+              )}
+            </button>
+            
             {user ? (
               <>
                 {isAdmin && (
@@ -407,6 +430,7 @@ export default function Navbar() {
         </div>
       )}
 
+      <CartDrawer />
       <style>{`
         @media (max-width: 900px) {
           .desktop-nav { display: none !important; }

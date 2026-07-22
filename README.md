@@ -10,7 +10,7 @@ BYM (BokasYarnMarket) Studio is a modern, premium online platform bringing toget
 - **Framework:** [Next.js 16](https://nextjs.org/) (App Router)
 - **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
 - **Icons:** [Lucide React](https://lucide.dev/)
-- **Database & Auth:** [Firebase](https://firebase.google.com/) (Firestore, Auth, Storage)
+- **Database & Auth:** [MongoDB](https://www.mongodb.com/) via Mongoose, and [NextAuth.js](https://next-auth.js.org/) for authentication
 - **Emails:** [Resend](https://resend.com/)
 - **Package Manager:** [pnpm](https://pnpm.io/)
 
