@@ -309,13 +309,11 @@ export default function WebDesignPage() {
                     <div style={{ fontSize: '3.5rem' }}>{p.emoji}</div>
                   )}
                   {p.projectUrl && (
-                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.5)', opacity: 0, transition: 'opacity 0.2s', cursor: 'pointer' }}
-                         onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
-                         onMouseLeave={(e) => e.currentTarget.style.opacity = '0'}
-                         onClick={(e) => { e.stopPropagation(); window.open(p.projectUrl, '_blank') }}
+                    <a href={p.projectUrl} target="_blank" rel="noreferrer" className="project-overlay"
+                       style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.5)', opacity: 0, transition: 'opacity 0.2s', cursor: 'pointer', textDecoration: 'none' }}
                     >
                       <span className="btn btn-web btn-sm">View on GitHub</span>
-                    </div>
+                    </a>
                   )}
                 </div>
                 <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
@@ -409,6 +407,12 @@ export default function WebDesignPage() {
           </Link>
         </div>
       </section>
+
+      <style>{`
+        .project-overlay:hover {
+          opacity: 1 !important;
+        }
+      `}</style>
     </>
   )
 }
