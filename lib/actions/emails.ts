@@ -1,3 +1,5 @@
+'use server'
+
 import { sendEmail } from '@/lib/resend'
 
 export async function sendOrderConfirmation(order: any) {
