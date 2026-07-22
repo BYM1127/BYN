@@ -4,6 +4,7 @@ import { useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Monitor, Send, ChevronDown } from 'lucide-react'
+import { sendWebEnquiryNotification } from '@/lib/actions/emails'
 
 const TIERS = [
   { id: 'starter',   label: 'Starter Site — from R2,500' },
@@ -81,7 +82,7 @@ function EnquiryForm() {
     setSubmitting(true)
     setError('')
     try {
-      await new Promise((r) => setTimeout(r, 1200))
+      await sendWebEnquiryNotification(form)
       setSubmitted(true)
     } catch {
       setError('Something went wrong. Please try again.')

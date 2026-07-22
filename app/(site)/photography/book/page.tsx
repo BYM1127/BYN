@@ -4,6 +4,7 @@ import { useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Camera, Send, Check, ChevronDown } from 'lucide-react'
+import { sendPhotographyBookingNotification } from '@/lib/actions/emails'
 
 const PACKAGES = [
   { id: 'portrait',   label: 'Portrait Session (R800)' },
@@ -60,7 +61,7 @@ function BookingForm() {
     setSubmitting(true)
     setError('')
     try {
-      await new Promise((r) => setTimeout(r, 1200))
+      await sendPhotographyBookingNotification(form)
       setSubmitted(true)
     } catch {
       setError('Something went wrong. Please try again.')
