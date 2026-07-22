@@ -54,23 +54,9 @@ export default function CheckoutPage() {
       })
       
       const data = await res.json()
-      if (data.provider === 'payfast' && data.url && data.fields) {
-        // Construct a hidden form and submit it to PayFast
-        const form = document.createElement('form')
-        form.method = 'POST'
-        form.action = data.url
-        form.style.display = 'none'
-        
-        for (const key in data.fields) {
-          const input = document.createElement('input')
-          input.type = 'hidden'
-          input.name = key
-          input.value = data.fields[key]
-          form.appendChild(input)
-        }
-        
-        document.body.appendChild(form)
-        form.submit()
+      if (data.provider === 'payfast' && data.url) {
+        // Redirect to PayFast via GET
+        window.location.href = data.url
       } else {
         alert('Payment provider error. Please try again later.')
         setIsProcessing(false)

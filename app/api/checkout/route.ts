@@ -68,11 +68,15 @@ export async function POST(req: Request) {
     const signature = crypto.createHash('md5').update(getString).digest('hex')
     payfastParams.signature = signature
 
-    // We return the fields to the frontend so it can construct and submit the form
+    // Construct query string for GET redirect
+    const queryParams = new URLSearchParams()
+    for (const key in payfastParams) {
+      queryParams.append(key, payfastParams[key])
+    }
+
     return NextResponse.json({ 
       provider: 'payfast',
-      url: process.env.PAYFAST_URL!,
-      fields: payfastParams 
+      url: `${process.env.PAYFAST_URL}?${queryParams.toString()}`
     })
     
   } catch (error: any) {
