@@ -4,7 +4,6 @@ import { useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Monitor, Send, ChevronDown } from 'lucide-react'
-import { sendWebEnquiryNotification } from '@/lib/actions/emails'
 
 const TIERS = [
   { id: 'starter',   label: 'Starter Site — from R2,500' },
@@ -82,7 +81,12 @@ function EnquiryForm() {
     setSubmitting(true)
     setError('')
     try {
-      await sendWebEnquiryNotification(form)
+      const res = await fetch('/api/notify-admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'webdesign', ...form }),
+      })
+      if (!res.ok) throw new Error('Failed to send')
       setSubmitted(true)
     } catch {
       setError('Something went wrong. Please try again.')

@@ -4,7 +4,6 @@ import { useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Camera, Send, Check, ChevronDown } from 'lucide-react'
-import { sendPhotographyBookingNotification } from '@/lib/actions/emails'
 
 const PACKAGES = [
   { id: 'portrait',   label: 'Portrait Session (R800)' },
@@ -61,7 +60,12 @@ function BookingForm() {
     setSubmitting(true)
     setError('')
     try {
-      await sendPhotographyBookingNotification(form)
+      const res = await fetch('/api/notify-admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'photography', ...form }),
+      })
+      if (!res.ok) throw new Error('Failed to send')
       setSubmitted(true)
     } catch {
       setError('Something went wrong. Please try again.')
