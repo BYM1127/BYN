@@ -1,12 +1,12 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, Suspense } from 'react'
 import { useCart } from '@/lib/context/CartContext'
 import Link from 'next/link'
 import { CheckCircle, ShoppingBag } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 
-export default function CheckoutSuccessPage() {
+function CheckoutSuccessContent() {
   const { clearCart } = useCart()
   const searchParams = useSearchParams()
   const sessionId = searchParams.get('session_id') || searchParams.get('mock_order_id')
@@ -39,5 +39,13 @@ export default function CheckoutSuccessPage() {
         </Link>
       </div>
     </div>
+  )
+}
+
+export default function CheckoutSuccessPage() {
+  return (
+    <Suspense fallback={<div style={{ paddingTop: '8rem', minHeight: '80vh', textAlign: 'center' }}>Loading...</div>}>
+      <CheckoutSuccessContent />
+    </Suspense>
   )
 }
