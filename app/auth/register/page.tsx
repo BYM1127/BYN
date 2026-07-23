@@ -1,14 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { UserPlus, Eye, EyeOff } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
 
 export default function RegisterPage() {
-  const { signUp } = useAuth()
+  const { signUp, user, loading: authLoading } = useAuth()
   const router = useRouter()
+
+  useEffect(() => {
+    if (user && !authLoading) {
+      router.push('/')
+    }
+  }, [user, authLoading, router])
 
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' })
   const [showPass, setShowPass] = useState(false)

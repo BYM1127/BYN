@@ -1,16 +1,22 @@
 'use client'
 
-import { useState, Suspense } from 'react'
+import { useState, Suspense, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { LogIn, Eye, EyeOff, Scissors, Camera, Monitor } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
 
 function LoginForm() {
-  const { signIn } = useAuth()
+  const { signIn, user, loading: authLoading } = useAuth()
   const router = useRouter()
   const params = useSearchParams()
   const redirect = params.get('redirect') ?? '/'
+
+  useEffect(() => {
+    if (user && !authLoading) {
+      router.push(redirect)
+    }
+  }, [user, authLoading, router, redirect])
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
