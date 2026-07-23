@@ -76,6 +76,7 @@ interface WizardState {
   customSizeNote: string
   inspirationNote: string
   customerNotes: string
+  referenceLink: string
   name: string
   email: string
   phone: string
@@ -89,6 +90,7 @@ const EMPTY: WizardState = {
   customSizeNote: '',
   inspirationNote: '',
   customerNotes: '',
+  referenceLink: '',
   name: '',
   email: '',
   phone: '',
@@ -455,20 +457,18 @@ export default function CrochetDesignPage() {
                 />
               </div>
 
-              <div
-                style={{
-                  border: '2px dashed var(--color-border)',
-                  borderRadius: 'var(--radius-xl)',
-                  padding: '2rem',
-                  textAlign: 'center',
-                  color: 'var(--color-text-muted)',
-                  cursor: 'pointer',
-                }}
-              >
-                <Upload size={24} style={{ margin: '0 auto 0.75rem', display: 'block', opacity: 0.5 }} />
-                <p style={{ fontSize: '0.875rem' }}>
-                  Inspiration image upload coming soon! For now, paste an image URL or describe it above.
-                </p>
+              <div style={{ marginBottom: '1.25rem' }}>
+                <label className="label" htmlFor="reference-link">
+                  Reference Image or Video Link (optional)
+                </label>
+                <input
+                  id="reference-link"
+                  className="input"
+                  type="url"
+                  placeholder="Paste a link to Pinterest, Instagram, TikTok, or an image URL..."
+                  value={state.referenceLink}
+                  onChange={(e) => update({ referenceLink: e.target.value })}
+                />
               </div>
             </div>
           )}
@@ -489,6 +489,7 @@ export default function CrochetDesignPage() {
                   { label: 'Stitch Style', value: STITCH_STYLES.find((s) => s.value === state.stitchStyle)?.label },
                   { label: 'Colours',      value: state.colours.map((c) => COLOUR_OPTIONS.find((o) => o.value === c)?.label).join(', ') },
                   { label: 'Size',         value: SIZES.find((s) => s.value === state.size)?.label },
+                  { label: 'Reference',    value: state.referenceLink ? <a href={state.referenceLink} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-crochet)', textDecoration: 'underline' }}>View Link</a> : '—' },
                   { label: 'Vision',       value: state.inspirationNote || '—' },
                 ].map((row) => (
                   <div key={row.label} style={{ display: 'flex', gap: '1rem', padding: '0.6rem 0', borderBottom: '1px solid var(--color-border)' }}>
