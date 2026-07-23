@@ -141,8 +141,12 @@ export default function CrochetDesignPage() {
     setError('')
     try {
       // In production: write to Firestore crochet_orders collection
-      // For now, simulate a small delay
-      await new Promise((r) => setTimeout(r, 1200))
+      const res = await fetch('/api/notify-admin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'crochet', ...state }),
+      })
+      if (!res.ok) throw new Error('Failed to send order request')
       setSubmitted(true)
     } catch {
       setError('Something went wrong. Please try again.')

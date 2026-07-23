@@ -43,6 +43,22 @@ export async function POST(req: Request) {
         ${form.referenceUrl1 ? `<p><strong>Reference 1:</strong> <a href="${form.referenceUrl1}">${form.referenceUrl1}</a></p>` : ''}
         ${form.referenceUrl2 ? `<p><strong>Reference 2:</strong> <a href="${form.referenceUrl2}">${form.referenceUrl2}</a></p>` : ''}
       `
+    } else if (type === 'crochet') {
+      subject = `🧶 New Crochet Custom Order — ${form.name}`
+      html = `
+        <h2>New Custom Crochet Order Request</h2>
+        <p><strong>Name:</strong> ${form.name}</p>
+        <p><strong>Email:</strong> ${form.email}</p>
+        <p><strong>Phone:</strong> ${form.phone || 'Not provided'}</p>
+        <p><strong>Piece Type:</strong> ${form.pieceType}</p>
+        <p><strong>Stitch Style:</strong> ${form.stitchStyle}</p>
+        <p><strong>Colours:</strong> ${form.colours?.join(', ') || 'None'}</p>
+        <p><strong>Size:</strong> ${form.size}</p>
+        <p><strong>Custom Size Note:</strong> ${form.customSizeNote || 'None'}</p>
+        <p><strong>Vision/Inspiration:</strong><br/>${form.inspirationNote || 'None'}</p>
+        <p><strong>Reference Link:</strong> ${form.referenceLink ? `<a href="${form.referenceLink}">${form.referenceLink}</a>` : 'None'}</p>
+        <p><strong>Customer Notes:</strong><br/>${form.customerNotes || 'None'}</p>
+      `
     } else {
       return NextResponse.json({ error: 'Unknown notification type' }, { status: 400 })
     }
