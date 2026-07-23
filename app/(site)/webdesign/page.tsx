@@ -139,6 +139,39 @@ const PORTFOLIO = [
     color: 'var(--color-photography)',
     emoji: '💡'
   },
+  {
+    id: '4',
+    title: 'Binary Breakout',
+    type: 'Educational Game',
+    tech: ['JavaScript', 'Canvas', 'Logic'],
+    description: 'An interactive, educational browser game designed to help students practice binary logic and conversions.',
+    imageUrl: '',
+    projectUrl: 'https://github.com/ST10440322-Bokamoso-Sebake/BinaryGame',
+    color: 'var(--color-crochet)',
+    emoji: '🎮'
+  },
+  {
+    id: '5',
+    title: 'BYM Studio',
+    type: 'Full-Stack Platform',
+    tech: ['Next.js', 'React', 'TypeScript'],
+    description: 'A custom-built, full-stack platform managing custom crochet orders, photography bookings, and web design enquiries.',
+    imageUrl: '',
+    projectUrl: 'https://github.com/BYM1127/BYN',
+    color: 'var(--color-webdesign)',
+    emoji: '✨'
+  },
+  {
+    id: '6',
+    title: 'Interactive Resume',
+    type: 'Portfolio',
+    tech: ['React', 'Tailwind', 'Framer Motion'],
+    description: 'A modern, interactive portfolio and resume showcasing my skills, experience, and complete technical journey.',
+    imageUrl: '',
+    projectUrl: 'https://github.com/BYM1127/About-me',
+    color: 'var(--color-photography)',
+    emoji: '👋'
+  },
 ]
 
 const PROCESS = [
