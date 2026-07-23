@@ -146,7 +146,7 @@ const PORTFOLIO = [
     tech: ['JavaScript', 'Canvas', 'Logic'],
     description: 'An interactive, educational browser game designed to help students practice binary logic and conversions.',
     imageUrl: '',
-    projectUrl: 'https://github.com/ST10440322-Bokamoso-Sebake/BinaryGame',
+    projectUrl: 'https://binarybreakout.netlify.app/',
     color: 'var(--color-crochet)',
     emoji: '🎮'
   },
@@ -157,7 +157,7 @@ const PORTFOLIO = [
     tech: ['Next.js', 'React', 'TypeScript'],
     description: 'A custom-built, full-stack platform managing custom crochet orders, photography bookings, and web design enquiries.',
     imageUrl: '',
-    projectUrl: 'https://github.com/BYM1127/BYN',
+    projectUrl: 'https://bym-studio.vercel.app',
     color: 'var(--color-webdesign)',
     emoji: '✨'
   },
@@ -168,7 +168,7 @@ const PORTFOLIO = [
     tech: ['React', 'Tailwind', 'Framer Motion'],
     description: 'A modern, interactive portfolio and resume showcasing my skills, experience, and complete technical journey.',
     imageUrl: '',
-    projectUrl: 'https://github.com/BYM1127/About-me',
+    projectUrl: '',
     color: 'var(--color-photography)',
     emoji: '👋'
   },
@@ -345,7 +345,7 @@ export default function WebDesignPage() {
                     <a href={p.projectUrl} target="_blank" rel="noreferrer" className="project-overlay"
                        style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.5)', opacity: 0, transition: 'opacity 0.2s', cursor: 'pointer', textDecoration: 'none' }}
                     >
-                      <span className="btn btn-web btn-sm">View on GitHub</span>
+                      <span className="btn btn-web btn-sm">View Live Site</span>
                     </a>
                   )}
                 </div>
