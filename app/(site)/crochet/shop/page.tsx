@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ShoppingBag, SlidersHorizontal, Star, ArrowRight, Scissors, Loader2 } from 'lucide-react'
 import { getProducts, ProductData as Product } from '@/lib/actions/products'
 import { useCart } from '@/lib/context/CartContext'
+import { ImageLightbox, ZoomOverlay } from '@/components/ImageLightbox'
 
 type Category = 'all' | 'bags' | 'blankets' | 'tops' | 'home_decor' | 'baby' | 'accessories'
 
@@ -32,6 +33,7 @@ export default function CrochetShopPage() {
   const [sortBy, setSortBy] = useState('popular')
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -162,11 +164,18 @@ export default function CrochetShopPage() {
                     position: 'relative',
                     borderBottom: '1px solid var(--color-border)',
                     overflow: 'hidden',
+                    cursor: product.imageUrl ? 'zoom-in' : 'default',
                   }}
+                  onClick={() => product.imageUrl && setLightboxIndex(filtered.indexOf(product))}
+                  onMouseEnter={(e) => { const z = e.currentTarget.querySelector('.zoom-overlay') as HTMLElement; if(z) z.style.opacity = '1' }}
+                  onMouseLeave={(e) => { const z = e.currentTarget.querySelector('.zoom-overlay') as HTMLElement; if(z) z.style.opacity = '0' }}
                 >
                   {product.imageUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={product.imageUrl} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={product.imageUrl} alt={product.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <ZoomOverlay />
+                    </>
                   ) : (
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', fontSize: '4rem' }}>🧶</div>
                   )}
@@ -238,6 +247,14 @@ export default function CrochetShopPage() {
             <div style={{ textAlign: 'center', padding: '5rem 1rem', color: 'var(--color-text-muted)' }}>
               No pieces found in this category yet.
             </div>
+          )}
+
+          {lightboxIndex !== null && (
+            <ImageLightbox
+              images={filtered.filter(p => p.imageUrl).map(p => ({ src: p.imageUrl, alt: p.title }))}
+              initialIndex={lightboxIndex}
+              onClose={() => setLightboxIndex(null)}
+            />
           )}
 
           {/* Custom order CTA */}

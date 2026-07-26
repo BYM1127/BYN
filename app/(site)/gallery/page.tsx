@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { ImageIcon, Scissors, Camera, Monitor, Loader2 } from 'lucide-react'
 import { getPortfolioItems, PortfolioItemData as PortfolioItem } from '@/lib/actions/portfolio'
+import { ImageLightbox, ZoomOverlay } from '@/components/ImageLightbox'
 
 type Filter = 'all' | 'crochet' | 'photography' | 'webdesign'
 
@@ -38,6 +39,7 @@ export default function GalleryPage() {
   const [filter, setFilter] = useState<Filter>('all')
   const [items, setItems] = useState<PortfolioItem[]>([])
   const [loading, setLoading] = useState(true)
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -149,16 +151,23 @@ export default function GalleryPage() {
                 >
                   {/* Image placeholder */}
                   <div
+                    onClick={() => item.imageUrl && setLightboxIndex(filtered.indexOf(item))}
                     style={{
                       flex: 1,
                       background: `linear-gradient(135deg, ${PILLAR_DIM[item.pillar]}, rgba(255,255,255,0.01))`,
                       position: 'relative',
                       overflow: 'hidden',
+                      cursor: item.imageUrl ? 'zoom-in' : 'default',
                     }}
+                    onMouseEnter={(e) => { const z = e.currentTarget.querySelector('.zoom-overlay') as HTMLElement; if(z) z.style.opacity = '1' }}
+                    onMouseLeave={(e) => { const z = e.currentTarget.querySelector('.zoom-overlay') as HTMLElement; if(z) z.style.opacity = '0' }}
                   >
                     {item.imageUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={item.imageUrl} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={item.imageUrl} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <ZoomOverlay />
+                      </>
                     ) : (
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', fontSize: '3.5rem' }}>
                         {PILLAR_EMOJI[item.pillar] || '✨'}
@@ -197,6 +206,14 @@ export default function GalleryPage() {
             </div>
           )}
           
+          {lightboxIndex !== null && (
+            <ImageLightbox
+              images={filtered.filter(i => i.imageUrl).map(i => ({ src: i.imageUrl, alt: i.title }))}
+              initialIndex={lightboxIndex}
+              onClose={() => setLightboxIndex(null)}
+            />
+          )}
+
           {!loading && filtered.length === 0 && (
             <div style={{ textAlign: 'center', padding: '5rem 1rem', color: 'var(--color-text-muted)' }}>
               No portfolio pieces found.
