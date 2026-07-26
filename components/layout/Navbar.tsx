@@ -132,18 +132,10 @@ export default function Navbar() {
                 fontWeight: 700,
                 color: '#fff',
                 fontFamily: 'var(--font-hand)',
-                letterSpacing: '0.02em',
-              }}
-            >
-              BYM
-            </div>
-            <span
-              className="font-serif"
-              style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--color-text-primary)' }}
-            >
-              BYM Studio
-            </span>
-          </Link>
+          <Link href="/" className="font-serif text-xl sm:text-2xl font-bold flex items-center gap-2 group">
+              <span className="text-[var(--color-crochet)] group-hover:scale-110 transition-transform">✧</span>
+              Bokas Yarn Market & Studio
+            </Link>
 
           {/* Desktop nav */}
           <div
