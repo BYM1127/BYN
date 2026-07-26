@@ -1,102 +1,112 @@
-import dbConnect from '@/lib/db'
-import NewsPost from '@/models/NewsPost'
 import Link from 'next/link'
-import { Camera, ArrowRight, Rss } from 'lucide-react'
+import { Camera, ExternalLink, Video } from 'lucide-react'
 
-export const revalidate = 60 // Revalidate every minute
-export const dynamic = 'force-dynamic' // Skip prerendering at build time to prevent DB connection errors
+export const metadata = {
+  title: 'Studio News & Live Feeds | BYM Studio',
+  description: 'Catch up on our latest crochet and photography projects directly from our Instagram and TikTok feeds.',
+}
 
-export default async function NewsPage() {
-  await dbConnect()
-  const posts = await NewsPost.find({ isPublished: true }).sort({ createdAt: -1 }).lean()
-
+export default function NewsPage() {
   return (
     <div style={{ paddingTop: '8rem', paddingBottom: '6rem', minHeight: '100vh', background: 'var(--color-bg-secondary)' }}>
-      <div className="container">
+      <div className="container" style={{ maxWidth: '1200px' }}>
         
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <h1 className="font-serif" style={{ fontSize: '3rem', marginBottom: '1rem' }}>Studio News</h1>
+          <h1 className="font-serif text-[var(--color-text-primary)]" style={{ fontSize: '3rem', marginBottom: '1rem' }}>Studio News & Updates</h1>
           <p style={{ color: 'var(--color-text-secondary)', maxWidth: 600, margin: '0 auto', fontSize: '1.1rem' }}>
-            Updates, behind-the-scenes, and the latest from BYM Studio.
+            Catch up on our latest crochet creations and photography sessions directly from our social feeds!
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 380px', gap: '3rem', alignItems: 'start' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start">
           
-          {/* Main Blog Content */}
-          <div>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Rss size={20} style={{ color: 'var(--color-crochet)' }} /> Latest Articles
-            </h2>
-            
-            {posts.length === 0 ? (
-              <div className="card" style={{ padding: '3rem', textAlign: 'center', color: 'var(--color-text-muted)' }}>
-                No news posts yet. Check back soon!
-              </div>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-                {posts.map((post: any) => (
-                  <article key={post._id.toString()} className="card" style={{ padding: '2rem' }}>
-                    {post.imageUrl && (
-                      <div style={{ width: '100%', height: 240, background: 'var(--color-bg-secondary)', marginBottom: '1.5rem', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
-                        <img src={post.imageUrl} alt={post.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                      </div>
-                    )}
-                    <h3 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '0.5rem' }}>{post.title}</h3>
-                    <div style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', marginBottom: '1.5rem' }}>
-                      {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-                    </div>
-                    {post.excerpt && <p style={{ color: 'var(--color-text-secondary)', marginBottom: '1.5rem', lineHeight: 1.6 }}>{post.excerpt}</p>}
-                    <Link href={`/news/${post.slug}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-crochet)', fontWeight: 600, textDecoration: 'none' }}>
-                      Read More <ArrowRight size={16} />
-                    </Link>
-                  </article>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Sidebar - Social Media Feed */}
-          <div style={{ position: 'sticky', top: '6rem' }}>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Camera size={18} /> Social Feed
-            </h2>
-            
-            <div className="card" style={{ padding: '1.5rem', overflow: 'hidden' }}>
-              {/* 
-                === ELFSIGHT WIDGET INTEGRATION ===
-                Paste your Elfsight or Curator.io embed code below. 
-                Example: <div className="elfsight-app-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" data-elfsight-app-lazy></div>
-              */}
-              
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem' }}>
-                <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=300&auto=format&fit=crop" alt="Feed 1" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
-                <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=300&auto=format&fit=crop" alt="Feed 2" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
-                <img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=300&auto=format&fit=crop" alt="Feed 3" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
-                <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=300&auto=format&fit=crop" alt="Feed 4" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
-              </div>
+          {/* Instagram Feed Section */}
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between mb-2">
+              <h2 style={{ fontSize: '1.75rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--color-text-primary)' }}>
+                <Camera size={28} className="text-[#E1306C]" /> Instagram
+              </h2>
+              <a 
+                href="https://www.instagram.com/bokasyarnmarket27?igsh=M2JiODh0NWRuZ2Q5" 
+                target="_blank" 
+                rel="noreferrer"
+                className="btn btn-ghost btn-sm flex items-center gap-2 text-sm"
+              >
+                @bokasyarnmarket27 <ExternalLink size={14} />
+              </a>
             </div>
             
-            <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm" style={{ flex: 1, justifyContent: 'center' }}>
-                <Camera size={16} /> Instagram
+            <div className="card w-full min-h-[600px] p-0 overflow-hidden flex flex-col relative border border-[var(--color-border)] shadow-md bg-[var(--color-bg-primary)]">
+              {/* 
+                === ELFSIGHT / CURATOR INSTAGRAM WIDGET GOES HERE ===
+                Paste your Instagram embed code below, replacing the placeholder div. 
+              */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 bg-[var(--color-bg-secondary)] m-4 rounded-xl border-2 border-dashed border-[var(--color-border)]">
+                <Camera size={48} className="text-gray-400 mb-4 opacity-50" />
+                <h3 className="text-xl font-bold mb-2 text-[var(--color-text-primary)]">Awaiting Instagram Widget</h3>
+                <p className="text-[var(--color-text-secondary)] mb-6 max-w-sm">
+                  Please paste your Elfsight or Curator.io Instagram widget code into <code>app/(site)/news/page.tsx</code> to display your live feed here.
+                </p>
+                <div className="flex gap-2">
+                  <div className="w-12 h-12 bg-gray-200/20 rounded animate-pulse"></div>
+                  <div className="w-12 h-12 bg-gray-200/20 rounded animate-pulse" style={{ animationDelay: '150ms' }}></div>
+                  <div className="w-12 h-12 bg-gray-200/20 rounded animate-pulse" style={{ animationDelay: '300ms' }}></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* TikTok Feed Section */}
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between mb-2">
+              <h2 style={{ fontSize: '1.75rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.75rem', color: 'var(--color-text-primary)' }}>
+                <Video size={28} className="text-[#000000] dark:text-white" /> TikTok
+              </h2>
+              <a 
+                href="https://www.tiktok.com/@bokasyarnmarket" 
+                target="_blank" 
+                rel="noreferrer"
+                className="btn btn-ghost btn-sm flex items-center gap-2 text-sm"
+              >
+                @bokasyarnmarket <ExternalLink size={14} />
               </a>
-              <a href="https://tiktok.com" target="_blank" rel="noreferrer" className="btn btn-ghost btn-sm" style={{ flex: 1, justifyContent: 'center' }}>
-                TikTok
-              </a>
+            </div>
+            
+            <div className="card w-full min-h-[600px] p-0 overflow-hidden flex flex-col relative border border-[var(--color-border)] shadow-md bg-[var(--color-bg-primary)]">
+              {/* 
+                === ELFSIGHT / CURATOR TIKTOK WIDGET GOES HERE ===
+                Paste your TikTok embed code below, replacing the placeholder div. 
+              */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 bg-[var(--color-bg-secondary)] m-4 rounded-xl border-2 border-dashed border-[var(--color-border)]">
+                <Video size={48} className="text-gray-400 mb-4 opacity-50" />
+                <h3 className="text-xl font-bold mb-2 text-[var(--color-text-primary)]">Awaiting TikTok Widget</h3>
+                <p className="text-[var(--color-text-secondary)] mb-6 max-w-sm">
+                  Please paste your Elfsight or Curator.io TikTok widget code into <code>app/(site)/news/page.tsx</code> to display your live feed here.
+                </p>
+                <div className="flex gap-2">
+                  <div className="w-8 h-12 bg-gray-200/20 rounded animate-pulse"></div>
+                  <div className="w-8 h-12 bg-gray-200/20 rounded animate-pulse" style={{ animationDelay: '150ms' }}></div>
+                  <div className="w-8 h-12 bg-gray-200/20 rounded animate-pulse" style={{ animationDelay: '300ms' }}></div>
+                </div>
+              </div>
             </div>
           </div>
           
         </div>
+
+        <div className="mt-16 text-center">
+          <p className="text-[var(--color-text-muted)] mb-4">Can't wait for the live feed?</p>
+          <div className="flex justify-center gap-4">
+            <a href="https://www.instagram.com/bokasyarnmarket27?igsh=M2JiODh0NWRuZ2Q5" target="_blank" rel="noreferrer" className="btn btn-primary bg-[#E1306C] border-[#E1306C] text-white hover:opacity-90">
+              <Camera size={18} /> Follow on Instagram
+            </a>
+            <a href="https://www.tiktok.com/@bokasyarnmarket" target="_blank" rel="noreferrer" className="btn btn-primary bg-black border-black text-white hover:bg-gray-800">
+              <Video size={18} /> Follow on TikTok
+            </a>
+          </div>
+        </div>
+
       </div>
-      
-      <style>{`
-        @media (max-width: 900px) {
-          .container > div:last-child {
-            grid-template-columns: 1fr !important;
-          }
-        }
-      `}</style>
     </div>
   )
 }
