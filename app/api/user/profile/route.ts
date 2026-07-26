@@ -21,6 +21,14 @@ export async function GET() {
       phone: user.phone,
       role: user.role,
       photoURL: user.photoURL,
+      username: user.username,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      nickname: user.nickname,
+      website: user.website,
+      telegram: user.telegram,
+      whatsapp: user.whatsapp,
+      bio: user.bio,
       createdAt: user.createdAt
     })
   } catch (error: any) {
@@ -38,7 +46,10 @@ export async function PUT(req: Request) {
     }
 
     const body = await req.json()
-    const { displayName, phone } = body
+    const { 
+      displayName, phone, username, firstName, lastName, 
+      nickname, website, telegram, whatsapp, bio, photoURL 
+    } = body
 
     if (!displayName) {
       return NextResponse.json({ error: 'Display name is required' }, { status: 400 })
@@ -50,8 +61,17 @@ export async function PUT(req: Request) {
       userId,
       { 
         $set: { 
-          displayName: displayName,
-          phone: phone 
+          displayName,
+          phone,
+          username,
+          firstName,
+          lastName,
+          nickname,
+          website,
+          telegram,
+          whatsapp,
+          bio,
+          photoURL
         } 
       },
       { new: true }
@@ -69,7 +89,15 @@ export async function PUT(req: Request) {
         displayName: updatedUser.displayName,
         phone: updatedUser.phone,
         role: updatedUser.role,
-        photoURL: updatedUser.photoURL
+        photoURL: updatedUser.photoURL,
+        username: updatedUser.username,
+        firstName: updatedUser.firstName,
+        lastName: updatedUser.lastName,
+        nickname: updatedUser.nickname,
+        website: updatedUser.website,
+        telegram: updatedUser.telegram,
+        whatsapp: updatedUser.whatsapp,
+        bio: updatedUser.bio
       }
     })
 
