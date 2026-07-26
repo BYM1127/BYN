@@ -73,47 +73,62 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Avatar placeholder */}
+          {/* Boka — Founder */}
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div
               style={{
                 width: 'min(320px, 100%)',
                 aspectRatio: '4/5',
                 borderRadius: 'var(--radius-2xl)',
-                background: 'linear-gradient(135deg, var(--color-crochet-dim), var(--color-photography-dim), var(--color-webdesign-dim))',
                 border: '1px solid var(--color-border)',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '1rem',
                 position: 'relative',
                 overflow: 'hidden',
               }}
             >
-              <div style={{ fontSize: '6rem' }}>👩🏾‍🎨</div>
-              <div style={{ textAlign: 'center' }}>
-                <div className="font-serif" style={{ fontSize: '1.25rem', fontWeight: 700 }}>Boka</div>
-                <div style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)' }}>BYM Studio Founder</div>
-              </div>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                {[<Scissors key="s" size={16} style={{ color: 'var(--color-crochet)' }} />, <Camera key="c" size={16} style={{ color: 'var(--color-photography)' }} />, <Monitor key="m" size={16} style={{ color: 'var(--color-webdesign)' }} />].map((icon, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      width: 36,
-                      height: 36,
-                      borderRadius: '50%',
-                      background: 'var(--color-bg-card)',
-                      border: '1px solid var(--color-border)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    {icon}
-                  </div>
-                ))}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/boka-founder.jpg"
+                alt="Boka — BYM Studio Founder"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              {/* Name overlay */}
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
+                  padding: '2.5rem 1.25rem 1.25rem',
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <div>
+                  <div className="font-serif" style={{ fontSize: '1.25rem', fontWeight: 700, color: '#fff' }}>Boka</div>
+                  <div style={{ fontSize: '0.82rem', color: 'rgba(255,255,255,0.7)' }}>BYM Studio Founder</div>
+                </div>
+                <div style={{ display: 'flex', gap: '0.4rem' }}>
+                  {[<Scissors key="s" size={14} style={{ color: 'var(--color-crochet)' }} />, <Camera key="c" size={14} style={{ color: 'var(--color-photography)' }} />, <Monitor key="m" size={14} style={{ color: 'var(--color-webdesign)' }} />].map((icon, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        width: 32,
+                        height: 32,
+                        borderRadius: '50%',
+                        background: 'rgba(255,255,255,0.15)',
+                        backdropFilter: 'blur(8px)',
+                        border: '1px solid rgba(255,255,255,0.2)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      {icon}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
