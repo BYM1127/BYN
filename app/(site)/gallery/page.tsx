@@ -1,37 +1,10 @@
 'use client'
 
-import { useState } from 'react'
-import { ImageIcon, Scissors, Camera, Monitor } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { ImageIcon, Scissors, Camera, Monitor, Loader2 } from 'lucide-react'
+import { getPortfolioItems, PortfolioItemData as PortfolioItem } from '@/lib/actions/portfolio'
 
 type Filter = 'all' | 'crochet' | 'photography' | 'webdesign'
-
-const ITEMS = [
-  { id: '2', pillar: 'photography', title: 'Golden Hour Portrait', imageUrl: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=600&auto=format&fit=crop', emoji: '🌅', tags: ['portrait', 'outdoor'] },
-  { id: '3', pillar: 'webdesign', title: 'BMZtrial1', imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop', projectUrl: 'https://github.com/BYM1127/BMZtrial1', emoji: '🌸', tags: ['business', 'github'] },
-  { id: 'c1', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20240311_082604_436.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
-  { id: 'c2', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20240311_082604_490.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
-  { id: '5', pillar: 'photography', title: 'Family at Sunset', imageUrl: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=600&auto=format&fit=crop', emoji: '👨‍👩‍👧', tags: ['family', 'outdoor'] },
-  { id: '6', pillar: 'webdesign', title: 'DkLC - Catering', imageUrl: 'https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=600&auto=format&fit=crop', projectUrl: 'https://github.com/BYM1127/DkLC', emoji: '🍲', tags: ['catering', 'github'] },
-  { id: 'c3', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20240322_203625_217.webp', emoji: '🧶', tags: ['crochet', 'handmade'] },
-  { id: 'c4', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20240327_184936_893.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
-  { id: '8', pillar: 'photography', title: 'Maternity Glow Session', imageUrl: 'https://images.unsplash.com/photo-1519064438302-7634f1b40d6c?q=80&w=600&auto=format&fit=crop', emoji: '🤰', tags: ['maternity', 'studio'] },
-  { id: '9', pillar: 'webdesign', title: 'IMELA-PROJECTS', imageUrl: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=600&auto=format&fit=crop', projectUrl: 'https://github.com/BYM1127/IMELA-PROJECTS', emoji: '💡', tags: ['electrical', 'solar'] },
-  { id: 'c5', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20240327_184936_929.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
-  { id: 'c6', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20240331_140012_639.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
-  { id: 'c7', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20240331_140012_664.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
-  { id: '11', pillar: 'photography', title: 'Event Coverage', imageUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=600&auto=format&fit=crop', emoji: '🎉', tags: ['events', 'coverage'] },
-  { id: '13', pillar: 'photography', title: 'Creative Studio Headshot', imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=600&auto=format&fit=crop', emoji: '📷', tags: ['headshot', 'studio'] },
-  { id: 'c8', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20260715_182215_1.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
-  { id: 'c9', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20260715_182218_1.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
-  { id: 'c10', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20260715_182220_1.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
-  { id: '15', pillar: 'photography', title: 'Urban Lifestyle Shoot', imageUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop', emoji: '🌆', tags: ['lifestyle', 'urban'] },
-  { id: 'c11', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20260715_182222.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
-  { id: 'c12', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20260715_182224_1.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
-  { id: 'c13', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_3932.JPG', emoji: '🧶', tags: ['crochet', 'handmade'] },
-  { id: 'c14', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_3933.JPG', emoji: '🧶', tags: ['crochet', 'handmade'] },
-  { id: 'c15', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_3934.JPG', emoji: '🧶', tags: ['crochet', 'handmade'] },
-  { id: 'c16', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_3935.JPG', emoji: '🧶', tags: ['crochet', 'handmade'] },
-]
 
 const FILTER_OPTIONS: { value: Filter; label: string; icon: React.ReactNode; color: string }[] = [
   { value: 'all',         label: 'All Work',    icon: <ImageIcon size={14} />,  color: 'var(--color-gold)' },
@@ -55,11 +28,31 @@ const PILLAR_LABEL: Record<string, string> = {
   photography: 'Photography',
   webdesign:   'Web Design',
 }
+const PILLAR_EMOJI: Record<string, string> = {
+  crochet:     '🧶',
+  photography: '📷',
+  webdesign:   '💻',
+}
 
 export default function GalleryPage() {
   const [filter, setFilter] = useState<Filter>('all')
+  const [items, setItems] = useState<PortfolioItem[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const filtered = filter === 'all' ? ITEMS : ITEMS.filter((i) => i.pillar === filter)
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const data = await getPortfolioItems()
+        setItems(data)
+      } catch (error) {
+        console.error('Error fetching gallery items:', error)
+      }
+      setLoading(false)
+    }
+    fetchItems()
+  }, [])
+
+  const filtered = filter === 'all' ? items : items.filter((i) => i.pillar === filter)
 
   return (
     <>
@@ -73,7 +66,7 @@ export default function GalleryPage() {
             Our Creative Work
           </h1>
           <p style={{ color: 'var(--color-text-secondary)', maxWidth: 480, margin: '0 auto' }}>
-            A look at crochet pieces, photography sessions, and website projects from BYM Studio.
+            {loading ? 'Loading collection...' : `A look at ${items.length} crochet pieces, photography sessions, and website projects from BYM Studio.`}
           </p>
         </div>
       </section>
@@ -103,9 +96,11 @@ export default function GalleryPage() {
                 }}
               >
                 {opt.icon} {opt.label}
-                <span style={{ marginLeft: '0.25rem', fontSize: '0.75rem', opacity: 0.7 }}>
-                  ({opt.value === 'all' ? ITEMS.length : ITEMS.filter((i) => i.pillar === opt.value).length})
-                </span>
+                {!loading && (
+                  <span style={{ marginLeft: '0.25rem', fontSize: '0.75rem', opacity: 0.7 }}>
+                    ({opt.value === 'all' ? items.length : items.filter((i) => i.pillar === opt.value).length})
+                  </span>
+                )}
               </button>
             ))}
           </div>
@@ -115,93 +110,98 @@ export default function GalleryPage() {
       {/* Gallery grid */}
       <section style={{ padding: '2.5rem 1.5rem 5rem' }}>
         <div className="container">
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 240px), 1fr))',
-              gap: '1.25rem',
-            }}
-          >
-            {filtered.map((item, i) => (
-              <div
-                key={item.id}
-                style={{
-                  background: 'var(--color-bg-card)',
-                  border: '1px solid var(--color-border)',
-                  borderRadius: 'var(--radius-xl)',
-                  overflow: 'hidden',
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer',
-                  aspectRatio: i % 5 === 0 ? '4/5' : '1',
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-4px)'
-                  e.currentTarget.style.boxShadow = `0 12px 40px ${PILLAR_DIM[item.pillar]}`
-                  e.currentTarget.style.borderColor = `${PILLAR_COLOR[item.pillar]}44`
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = ''
-                  e.currentTarget.style.boxShadow = ''
-                  e.currentTarget.style.borderColor = 'var(--color-border)'
-                }}
-              >
-                {/* Image placeholder */}
+          {loading ? (
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '4rem' }}>
+              <Loader2 size={32} className="animate-spin-slow" style={{ color: 'var(--color-gold)' }} />
+            </div>
+          ) : (
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 240px), 1fr))',
+                gap: '1.25rem',
+              }}
+            >
+              {filtered.map((item, i) => (
                 <div
+                  key={item.id || i}
                   style={{
-                    flex: 1,
-                    background: `linear-gradient(135deg, ${PILLAR_DIM[item.pillar]}, rgba(255,255,255,0.01))`,
-                    position: 'relative',
+                    background: 'var(--color-bg-card)',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-xl)',
                     overflow: 'hidden',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    aspectRatio: i % 5 === 0 ? '4/5' : '1',
+                    display: 'flex',
+                    flexDirection: 'column',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-4px)'
+                    e.currentTarget.style.boxShadow = `0 12px 40px ${PILLAR_DIM[item.pillar]}`
+                    e.currentTarget.style.borderColor = `${PILLAR_COLOR[item.pillar]}44`
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = ''
+                    e.currentTarget.style.boxShadow = ''
+                    e.currentTarget.style.borderColor = 'var(--color-border)'
                   }}
                 >
-                  {item.imageUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={item.imageUrl} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  ) : (
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', fontSize: '3.5rem' }}>{item.emoji}</div>
-                  )}
-                  {item.projectUrl && (
-                    <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.5)', opacity: 0, transition: 'opacity 0.2s', cursor: 'pointer' }}
-                         onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
-                         onMouseLeave={(e) => e.currentTarget.style.opacity = '0'}
-                         onClick={(e) => { e.stopPropagation(); window.open(item.projectUrl, '_blank') }}
-                    >
-                      <span className="btn btn-web btn-sm">View on GitHub</span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Caption */}
-                <div style={{ padding: '0.85rem 1rem', borderTop: '1px solid var(--color-border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <div>
-                    <div style={{ fontWeight: 600, fontSize: '0.82rem', color: 'var(--color-text-primary)' }}>
-                      {item.title}
-                    </div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', marginTop: '0.1rem' }}>
-                      {item.tags.join(' · ')}
-                    </div>
-                  </div>
-                  <span
+                  {/* Image placeholder */}
+                  <div
                     style={{
-                      fontSize: '0.65rem',
-                      fontWeight: 600,
-                      letterSpacing: '0.06em',
-                      textTransform: 'uppercase',
-                      color: PILLAR_COLOR[item.pillar],
-                      background: PILLAR_DIM[item.pillar],
-                      padding: '0.2rem 0.6rem',
-                      borderRadius: 'var(--radius-full)',
-                      whiteSpace: 'nowrap',
+                      flex: 1,
+                      background: `linear-gradient(135deg, ${PILLAR_DIM[item.pillar]}, rgba(255,255,255,0.01))`,
+                      position: 'relative',
+                      overflow: 'hidden',
                     }}
                   >
-                    {PILLAR_LABEL[item.pillar]}
-                  </span>
+                    {item.imageUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={item.imageUrl} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', fontSize: '3.5rem' }}>
+                        {PILLAR_EMOJI[item.pillar] || '✨'}
+                      </div>
+                    )}
+                  </div>
+  
+                  {/* Caption */}
+                  <div style={{ padding: '0.85rem 1rem', borderTop: '1px solid var(--color-border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <div>
+                      <div style={{ fontWeight: 600, fontSize: '0.82rem', color: 'var(--color-text-primary)' }}>
+                        {item.title}
+                      </div>
+                      <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', marginTop: '0.1rem' }}>
+                        {item.tags?.join(' · ')}
+                      </div>
+                    </div>
+                    <span
+                      style={{
+                        fontSize: '0.65rem',
+                        fontWeight: 600,
+                        letterSpacing: '0.06em',
+                        textTransform: 'uppercase',
+                        color: PILLAR_COLOR[item.pillar],
+                        background: PILLAR_DIM[item.pillar],
+                        padding: '0.2rem 0.6rem',
+                        borderRadius: 'var(--radius-full)',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {PILLAR_LABEL[item.pillar]}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
+          
+          {!loading && filtered.length === 0 && (
+            <div style={{ textAlign: 'center', padding: '5rem 1rem', color: 'var(--color-text-muted)' }}>
+              No portfolio pieces found.
+            </div>
+          )}
         </div>
       </section>
     </>
