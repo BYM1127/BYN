@@ -182,7 +182,7 @@ export default function Navbar() {
                   )}
                 </Link>
 
-                {/* Dropdown */}
+                {/* Dropdown — wrapper has no gap so mouse never leaves parent */}
                 {item.children && openDrop === item.href && (
                   <div
                     style={{
@@ -190,43 +190,49 @@ export default function Navbar() {
                       top: '100%',
                       left: '50%',
                       transform: 'translateX(-50%)',
-                      marginTop: '0.5rem',
-                      background: 'var(--color-bg-card)',
-                      backdropFilter: 'blur(20px)',
-                      border: '1px solid var(--color-border)',
-                      borderRadius: 'var(--radius-lg)',
-                      padding: '0.5rem',
-                      minWidth: 180,
-                      boxShadow: '0 16px 40px rgba(0,0,0,0.5)',
-                      animation: 'fade-up 0.15s ease',
+                      paddingTop: '0.5rem',
                     }}
                   >
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.href}
-                        href={child.href}
-                        style={{
-                          display: 'block',
-                          padding: '0.6rem 1rem',
-                          borderRadius: 'var(--radius-md)',
-                          fontSize: '0.85rem',
-                          color: 'var(--color-text-secondary)',
-                          transition: 'all 0.15s',
-                          textDecoration: 'none',
-                          whiteSpace: 'nowrap',
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.background = 'var(--color-border)'
-                          e.currentTarget.style.color = 'var(--color-text-primary)'
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.background = 'transparent'
-                          e.currentTarget.style.color = 'var(--color-text-secondary)'
-                        }}
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
+                    <div
+                      style={{
+                        background: 'var(--color-bg-card)',
+                        backdropFilter: 'blur(20px)',
+                        border: '1px solid var(--color-border)',
+                        borderRadius: 'var(--radius-lg)',
+                        padding: '0.5rem',
+                        minWidth: 180,
+                        boxShadow: '0 16px 40px rgba(0,0,0,0.5)',
+                        animation: 'fade-up 0.15s ease',
+                      }}
+                    >
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          onClick={() => setOpenDrop(null)}
+                          style={{
+                            display: 'block',
+                            padding: '0.6rem 1rem',
+                            borderRadius: 'var(--radius-md)',
+                            fontSize: '0.85rem',
+                            color: 'var(--color-text-secondary)',
+                            transition: 'all 0.15s',
+                            textDecoration: 'none',
+                            whiteSpace: 'nowrap',
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = 'var(--color-border)'
+                            e.currentTarget.style.color = 'var(--color-text-primary)'
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = 'transparent'
+                            e.currentTarget.style.color = 'var(--color-text-secondary)'
+                          }}
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
