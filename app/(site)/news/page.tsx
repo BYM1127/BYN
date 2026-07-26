@@ -36,21 +36,20 @@ export default function NewsPage() {
               </a>
             </div>
             
-            <div className="card w-full min-h-[600px] p-0 overflow-hidden flex flex-col relative border border-[var(--color-border)] shadow-md bg-[var(--color-bg-primary)]">
-              {/* 
-                === ELFSIGHT / CURATOR INSTAGRAM WIDGET GOES HERE ===
-                Paste your Instagram embed code below, replacing the placeholder div. 
-              */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 bg-[var(--color-bg-secondary)] m-4 rounded-xl border-2 border-dashed border-[var(--color-border)]">
-                <Camera size={48} className="text-gray-400 mb-4 opacity-50" />
-                <h3 className="text-xl font-bold mb-2 text-[var(--color-text-primary)]">Awaiting Instagram Widget</h3>
-                <p className="text-[var(--color-text-secondary)] mb-6 max-w-sm">
-                  Please paste your Elfsight or Curator.io Instagram widget code into <code>app/(site)/news/page.tsx</code> to display your live feed here.
+            <div className="w-full min-h-[600px] flex flex-col relative bg-[var(--color-bg-primary)] rounded-xl overflow-hidden">
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 bg-[var(--color-bg-secondary)] border-2 border-dashed border-[var(--color-border)] rounded-xl">
+                <Camera size={48} className="text-[#E1306C] mb-4" />
+                <h3 className="text-xl font-bold mb-2 text-[var(--color-text-primary)]">Instagram Restriction</h3>
+                <p className="text-[var(--color-text-secondary)] mb-4 max-w-sm">
+                  Unlike TikTok, Instagram **completely blocks** websites from embedding live profiles directly. They only allow embedding single posts.
                 </p>
-                <div className="flex gap-2">
-                  <div className="w-12 h-12 bg-gray-200/20 rounded animate-pulse"></div>
-                  <div className="w-12 h-12 bg-gray-200/20 rounded animate-pulse" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-12 h-12 bg-gray-200/20 rounded animate-pulse" style={{ animationDelay: '300ms' }}></div>
+                <p className="text-[var(--color-text-secondary)] mb-6 max-w-sm font-semibold">
+                  To get around this block, you must use a free widget provider like Elfsight.com or Curator.io to generate an embed code.
+                </p>
+                <div className="flex gap-2 opacity-50">
+                  <div className="w-12 h-12 bg-gray-300 rounded"></div>
+                  <div className="w-12 h-12 bg-gray-300 rounded"></div>
+                  <div className="w-12 h-12 bg-gray-300 rounded"></div>
                 </div>
               </div>
             </div>
@@ -72,23 +71,19 @@ export default function NewsPage() {
               </a>
             </div>
             
-            <div className="card w-full min-h-[600px] p-0 overflow-hidden flex flex-col relative border border-[var(--color-border)] shadow-md bg-[var(--color-bg-primary)]">
-              {/* 
-                === ELFSIGHT / CURATOR TIKTOK WIDGET GOES HERE ===
-                Paste your TikTok embed code below, replacing the placeholder div. 
-              */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 bg-[var(--color-bg-secondary)] m-4 rounded-xl border-2 border-dashed border-[var(--color-border)]">
-                <Video size={48} className="text-gray-400 mb-4 opacity-50" />
-                <h3 className="text-xl font-bold mb-2 text-[var(--color-text-primary)]">Awaiting TikTok Widget</h3>
-                <p className="text-[var(--color-text-secondary)] mb-6 max-w-sm">
-                  Please paste your Elfsight or Curator.io TikTok widget code into <code>app/(site)/news/page.tsx</code> to display your live feed here.
-                </p>
-                <div className="flex gap-2">
-                  <div className="w-8 h-12 bg-gray-200/20 rounded animate-pulse"></div>
-                  <div className="w-8 h-12 bg-gray-200/20 rounded animate-pulse" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-8 h-12 bg-gray-200/20 rounded animate-pulse" style={{ animationDelay: '300ms' }}></div>
-                </div>
-              </div>
+            <div className="w-full flex justify-center bg-[var(--color-bg-secondary)] rounded-xl border border-[var(--color-border)] overflow-hidden">
+              <blockquote 
+                className="tiktok-embed" 
+                cite="https://www.tiktok.com/@bokasyarnmarket" 
+                data-unique-id="bokasyarnmarket" 
+                data-embed-type="creator" 
+                style={{ maxWidth: '100%', minWidth: '288px' }}
+              >
+                <section>
+                  <a target="_blank" href="https://www.tiktok.com/@bokasyarnmarket?refer=creator_embed">@bokasyarnmarket</a>
+                </section>
+              </blockquote>
+              <script async src="https://www.tiktok.com/embed.js"></script>
             </div>
           </div>
           
