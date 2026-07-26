@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/lib/auth-context'
 import { useRouter } from 'next/navigation'
-import { User, Phone, Mail, ShoppingBag, Settings, LogOut, CheckCircle, AlertCircle } from 'lucide-react'
+import { User, Phone, Mail, ShoppingBag, Settings, LogOut, CheckCircle, AlertCircle, Camera, Loader2, ShieldCheck } from 'lucide-react'
 import Link from 'next/link'
 
 export default function ProfilePage() {
@@ -31,7 +31,7 @@ export default function ProfilePage() {
         .then(data => {
           if (!data.error) {
             setFullProfile(data)
-            setDisplayName(data.displayName || '')
+            setDisplayName(data.displayName || user.displayName || '')
             setPhone(data.phone || '')
           }
         })
@@ -40,8 +40,8 @@ export default function ProfilePage() {
 
   if (loading || !user) {
     return (
-      <div style={{ paddingTop: '8rem', minHeight: '100vh', display: 'flex', justifyContent: 'center' }}>
-        <div className="w-8 h-8 border-4 border-[var(--color-crochet)] border-t-transparent rounded-full animate-spin"></div>
+      <div style={{ paddingTop: '8rem', minHeight: '100vh', display: 'flex', justifyContent: 'center', background: 'var(--color-bg-secondary)' }}>
+        <Loader2 className="w-10 h-10 animate-spin text-[var(--color-crochet)]" />
       </div>
     )
   }
@@ -80,60 +80,94 @@ export default function ProfilePage() {
   // Get first letter for avatar fallback
   const firstLetter = fullProfile?.displayName?.charAt(0)?.toUpperCase() || user?.displayName?.charAt(0)?.toUpperCase() || 'U'
   const memberSince = fullProfile?.createdAt ? new Date(fullProfile.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : 'Recently'
+  const isAdmin = fullProfile?.role === 'admin' || user.role === 'admin'
 
   return (
-    <div style={{ paddingTop: '7rem', paddingBottom: '6rem', minHeight: '100vh', background: 'var(--color-bg-secondary)' }}>
-      <div className="container" style={{ maxWidth: '900px' }}>
-        
-        <h1 className="font-serif text-3xl font-bold mb-8 text-[var(--color-text-primary)]">My Profile</h1>
+    <div style={{ paddingTop: '7rem', paddingBottom: '6rem', minHeight: '100vh', position: 'relative', overflow: 'hidden' }}>
+      {/* Background Orbs */}
+      <div style={{ position: 'absolute', top: -150, left: -100, width: 500, height: 500, background: 'radial-gradient(circle, rgba(224,122,95,0.1) 0%, transparent 70%)', borderRadius: '50%', zIndex: -1 }}></div>
+      <div style={{ position: 'absolute', bottom: -100, right: -50, width: 400, height: 400, background: 'radial-gradient(circle, rgba(132,165,157,0.1) 0%, transparent 70%)', borderRadius: '50%', zIndex: -1 }}></div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="container" style={{ maxWidth: '1000px' }}>
+        
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="font-serif text-4xl font-bold text-[var(--color-text-primary)]">
+            My Space
+          </h1>
+          {isAdmin && (
+            <Link href="/admin" className="flex items-center gap-2 px-4 py-2 bg-[var(--color-photography-dim)] text-[var(--color-photography)] rounded-full text-sm font-semibold hover:bg-[var(--color-photography)] hover:text-white transition-all shadow-sm">
+              <ShieldCheck size={16} /> Admin Dashboard
+            </Link>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Sidebar */}
-          <div className="col-span-1 flex flex-col gap-4">
+          <div className="col-span-1 lg:col-span-4 flex flex-col gap-6">
             {/* User Card */}
-            <div className="card p-6 flex flex-col items-center text-center">
+            <div className="relative p-8 flex flex-col items-center text-center overflow-hidden rounded-[2rem] border border-[var(--color-border)] shadow-xl" style={{ background: 'rgba(255, 255, 255, 0.65)', backdropFilter: 'blur(20px)' }}>
+              
               <div 
-                className="w-24 h-24 rounded-full mb-4 flex items-center justify-center text-3xl font-bold text-white shadow-lg"
+                className="relative w-28 h-28 rounded-full mb-5 flex items-center justify-center text-4xl font-bold text-white shadow-2xl transition-transform hover:scale-105 duration-300"
                 style={{ background: 'linear-gradient(135deg, var(--color-crochet), var(--color-photography))' }}
               >
                 {firstLetter}
+                <button className="absolute bottom-0 right-0 p-2 bg-white text-[var(--color-text-primary)] rounded-full shadow-lg border border-gray-100 hover:bg-gray-50 transition-colors">
+                  <Camera size={14} />
+                </button>
               </div>
-              <h2 className="text-xl font-bold mb-1 text-[var(--color-text-primary)]">{fullProfile?.displayName || user.displayName || 'User'}</h2>
-              <p className="text-sm text-[var(--color-text-muted)] mb-4">{user.email}</p>
-              <div className="bg-[var(--color-bg-secondary)] px-4 py-2 rounded-full text-xs font-semibold text-[var(--color-text-secondary)]">
+              <h2 className="text-2xl font-bold mb-1 text-[var(--color-text-primary)] tracking-tight">{fullProfile?.displayName || user.displayName || 'User'}</h2>
+              <p className="text-sm text-[var(--color-text-muted)] mb-5">{user.email}</p>
+              
+              <div className="w-full h-px bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent mb-5"></div>
+              
+              <div className="bg-[var(--color-bg-secondary)] px-5 py-2.5 rounded-full text-xs font-semibold text-[var(--color-text-secondary)] shadow-inner border border-gray-100/50">
                 Member since {memberSince}
               </div>
             </div>
 
             {/* Quick Links */}
-            <div className="card overflow-hidden">
-              <Link href="/my-orders" className="flex items-center gap-3 p-4 hover:bg-[var(--color-bg-secondary)] transition-colors border-b border-[var(--color-border)] text-[var(--color-text-primary)] font-medium">
-                <ShoppingBag size={18} className="text-[var(--color-crochet)]" />
+            <div className="rounded-[1.5rem] overflow-hidden border border-[var(--color-border)] shadow-lg" style={{ background: 'rgba(255, 255, 255, 0.65)', backdropFilter: 'blur(20px)' }}>
+              <Link href="/my-orders" className="flex items-center gap-4 p-5 hover:bg-white/60 transition-all border-b border-[var(--color-border)] text-[var(--color-text-primary)] font-semibold group">
+                <div className="p-2 rounded-lg bg-[var(--color-crochet-dim)] text-[var(--color-crochet)] group-hover:scale-110 transition-transform">
+                  <ShoppingBag size={18} />
+                </div>
                 My Orders
               </Link>
               <button 
                 onClick={() => { signOut(); router.push('/'); }}
-                className="w-full flex items-center gap-3 p-4 hover:bg-[var(--color-bg-secondary)] transition-colors text-[var(--color-text-primary)] font-medium text-left"
+                className="w-full flex items-center gap-4 p-5 hover:bg-red-50/50 transition-all text-[var(--color-text-primary)] font-semibold text-left group"
               >
-                <LogOut size={18} className="text-red-500" />
+                <div className="p-2 rounded-lg bg-red-50 text-red-500 group-hover:scale-110 transition-transform">
+                  <LogOut size={18} />
+                </div>
                 Sign Out
               </button>
             </div>
           </div>
 
           {/* Main Content */}
-          <div className="col-span-1 md:col-span-2">
-            <div className="card p-6 md:p-8">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold flex items-center gap-2 text-[var(--color-text-primary)]">
-                  <Settings size={20} className="text-[var(--color-photography)]" />
+          <div className="col-span-1 lg:col-span-8">
+            <div className="p-8 md:p-10 rounded-[2rem] border border-[var(--color-border)] shadow-xl relative overflow-hidden h-full" style={{ background: 'rgba(255, 255, 255, 0.65)', backdropFilter: 'blur(20px)' }}>
+              
+              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[var(--color-gold)] to-transparent opacity-5 rounded-bl-[100%] pointer-events-none"></div>
+
+              <div className="flex justify-between items-center mb-8 relative z-10">
+                <h2 className="text-2xl font-bold flex items-center gap-3 text-[var(--color-text-primary)]">
+                  <div className="p-2.5 rounded-xl bg-[var(--color-photography-dim)] text-[var(--color-photography)] shadow-sm">
+                    <Settings size={20} />
+                  </div>
                   Account Details
                 </h2>
                 {!isEditing && (
                   <button 
-                    onClick={() => setIsEditing(true)}
-                    className="btn btn-ghost btn-sm text-[var(--color-photography)]"
+                    onClick={() => {
+                      setDisplayName(fullProfile?.displayName || user.displayName || '');
+                      setPhone(fullProfile?.phone || '');
+                      setIsEditing(true);
+                    }}
+                    className="px-5 py-2 rounded-full font-semibold text-sm border-2 border-[var(--color-photography)] text-[var(--color-photography)] hover:bg-[var(--color-photography)] hover:text-white transition-all shadow-sm hover:shadow-md"
                   >
                     Edit Profile
                   </button>
@@ -141,92 +175,98 @@ export default function ProfilePage() {
               </div>
 
               {message && (
-                <div className={`p-4 rounded-lg mb-6 flex items-center gap-3 ${
+                <div className={`p-4 rounded-xl mb-8 flex items-center gap-3 animate-in fade-in slide-in-from-top-4 ${
                   message.type === 'success' 
-                    ? 'bg-green-500/10 text-green-600 border border-green-500/20' 
-                    : 'bg-red-500/10 text-red-600 border border-red-500/20'
+                    ? 'bg-green-50 text-green-700 border border-green-200 shadow-sm' 
+                    : 'bg-red-50 text-red-700 border border-red-200 shadow-sm'
                 }`}>
-                  {message.type === 'success' ? <CheckCircle size={18} /> : <AlertCircle size={18} />}
-                  <span className="text-sm font-medium">{message.text}</span>
+                  {message.type === 'success' ? <CheckCircle size={20} className="text-green-500" /> : <AlertCircle size={20} className="text-red-500" />}
+                  <span className="text-sm font-semibold">{message.text}</span>
                 </div>
               )}
 
               {isEditing ? (
-                <form onSubmit={handleSave} className="flex flex-col gap-5">
-                  <div>
-                    <label className="block text-sm font-semibold mb-2 text-[var(--color-text-secondary)]">Display Name</label>
-                    <div className="relative">
-                      <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
-                      <input 
-                        type="text" 
-                        value={displayName}
-                        onChange={(e) => setDisplayName(e.target.value)}
-                        className="w-full bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg py-2.5 pl-10 pr-4 text-[var(--color-text-primary)] focus:outline-none focus:border-[var(--color-crochet)]"
-                        required
-                      />
+                <form onSubmit={handleSave} className="flex flex-col gap-6 relative z-10">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-bold mb-2 text-[var(--color-text-secondary)] uppercase tracking-wider">Display Name</label>
+                      <div className="relative group">
+                        <User size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] group-focus-within:text-[var(--color-photography)] transition-colors" />
+                        <input 
+                          type="text" 
+                          value={displayName}
+                          onChange={(e) => setDisplayName(e.target.value)}
+                          className="w-full bg-white/80 border-2 border-transparent shadow-sm rounded-xl py-3 pl-12 pr-4 text-[var(--color-text-primary)] focus:outline-none focus:border-[var(--color-photography)] focus:bg-white transition-all font-medium"
+                          required
+                          placeholder="Your full name"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-bold mb-2 text-[var(--color-text-secondary)] uppercase tracking-wider">Phone Number</label>
+                      <div className="relative group">
+                        <Phone size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] group-focus-within:text-[var(--color-photography)] transition-colors" />
+                        <input 
+                          type="tel" 
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          placeholder="+1 (555) 000-0000"
+                          className="w-full bg-white/80 border-2 border-transparent shadow-sm rounded-xl py-3 pl-12 pr-4 text-[var(--color-text-primary)] focus:outline-none focus:border-[var(--color-photography)] focus:bg-white transition-all font-medium"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-bold mb-2 text-[var(--color-text-secondary)] uppercase tracking-wider">Email Address</label>
+                      <div className="relative">
+                        <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
+                        <input 
+                          type="email" 
+                          value={user.email || ''}
+                          disabled
+                          className="w-full bg-gray-100/50 border-2 border-transparent shadow-inner rounded-xl py-3 pl-12 pr-4 text-[var(--color-text-muted)] cursor-not-allowed font-medium"
+                        />
+                      </div>
+                      <p className="text-xs text-[var(--color-text-muted)] mt-2 font-medium">Email address cannot be changed.</p>
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-semibold mb-2 text-[var(--color-text-secondary)]">Phone Number</label>
-                    <div className="relative">
-                      <Phone size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
-                      <input 
-                        type="tel" 
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        placeholder="+1 (555) 000-0000"
-                        className="w-full bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg py-2.5 pl-10 pr-4 text-[var(--color-text-primary)] focus:outline-none focus:border-[var(--color-crochet)]"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-semibold mb-2 text-[var(--color-text-secondary)]">Email Address</label>
-                    <div className="relative">
-                      <Mail size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
-                      <input 
-                        type="email" 
-                        value={user.email || ''}
-                        disabled
-                        className="w-full bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-lg py-2.5 pl-10 pr-4 text-[var(--color-text-muted)] cursor-not-allowed opacity-70"
-                      />
-                    </div>
-                    <p className="text-xs text-[var(--color-text-muted)] mt-1.5">Email address cannot be changed.</p>
-                  </div>
-
-                  <div className="flex gap-3 mt-4">
+                  <div className="flex gap-4 mt-6 pt-6 border-t border-[var(--color-border)]">
                     <button 
                       type="submit" 
                       disabled={isSaving}
-                      className="btn btn-primary"
+                      className="px-8 py-3 bg-[var(--color-photography)] text-white rounded-xl font-bold shadow-lg shadow-[var(--color-photography-dim)] hover:translate-y-[-2px] hover:shadow-xl transition-all disabled:opacity-70 disabled:cursor-wait flex items-center gap-2"
                     >
-                      {isSaving ? 'Saving...' : 'Save Changes'}
+                      {isSaving && <Loader2 size={16} className="animate-spin" />}
+                      {isSaving ? 'Saving Changes...' : 'Save Changes'}
                     </button>
                     <button 
                       type="button" 
                       onClick={() => setIsEditing(false)}
                       disabled={isSaving}
-                      className="btn btn-ghost"
+                      className="px-8 py-3 bg-white text-[var(--color-text-secondary)] border border-gray-200 rounded-xl font-bold hover:bg-gray-50 transition-colors"
                     >
                       Cancel
                     </button>
                   </div>
                 </form>
               ) : (
-                <div className="flex flex-col gap-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                      <div className="text-xs uppercase tracking-wider font-bold text-[var(--color-text-muted)] mb-1">Display Name</div>
-                      <div className="text-[var(--color-text-primary)] font-medium">{fullProfile?.displayName || user.displayName || 'Not set'}</div>
+                <div className="flex flex-col gap-8 relative z-10 mt-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <div className="bg-white/50 p-6 rounded-2xl border border-gray-100 shadow-sm">
+                      <div className="text-xs uppercase tracking-widest font-bold text-[var(--color-text-muted)] mb-2">Display Name</div>
+                      <div className="text-lg text-[var(--color-text-primary)] font-semibold">{fullProfile?.displayName || user.displayName || 'Not set'}</div>
                     </div>
-                    <div>
-                      <div className="text-xs uppercase tracking-wider font-bold text-[var(--color-text-muted)] mb-1">Email Address</div>
-                      <div className="text-[var(--color-text-primary)] font-medium">{user.email}</div>
+                    
+                    <div className="bg-white/50 p-6 rounded-2xl border border-gray-100 shadow-sm">
+                      <div className="text-xs uppercase tracking-widest font-bold text-[var(--color-text-muted)] mb-2">Email Address</div>
+                      <div className="text-lg text-[var(--color-text-primary)] font-semibold">{user.email}</div>
                     </div>
-                    <div>
-                      <div className="text-xs uppercase tracking-wider font-bold text-[var(--color-text-muted)] mb-1">Phone Number</div>
-                      <div className="text-[var(--color-text-primary)] font-medium">{fullProfile?.phone || 'Not set'}</div>
+                    
+                    <div className="bg-white/50 p-6 rounded-2xl border border-gray-100 shadow-sm sm:col-span-2">
+                      <div className="text-xs uppercase tracking-widest font-bold text-[var(--color-text-muted)] mb-2">Phone Number</div>
+                      <div className="text-lg text-[var(--color-text-primary)] font-semibold">{fullProfile?.phone || <span className="text-gray-400 italic">Not provided</span>}</div>
                     </div>
                   </div>
                 </div>
@@ -239,3 +279,4 @@ export default function ProfilePage() {
     </div>
   )
 }
+

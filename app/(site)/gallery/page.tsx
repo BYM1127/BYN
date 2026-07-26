@@ -6,22 +6,31 @@ import { ImageIcon, Scissors, Camera, Monitor } from 'lucide-react'
 type Filter = 'all' | 'crochet' | 'photography' | 'webdesign'
 
 const ITEMS = [
-  { id: '1', pillar: 'crochet', title: 'Summer Boho Tote Bag', imageUrl: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=600&auto=format&fit=crop', emoji: '👜', tags: ['bags', 'summer'] },
   { id: '2', pillar: 'photography', title: 'Golden Hour Portrait', imageUrl: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=600&auto=format&fit=crop', emoji: '🌅', tags: ['portrait', 'outdoor'] },
   { id: '3', pillar: 'webdesign', title: 'BMZtrial1', imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&auto=format&fit=crop', projectUrl: 'https://github.com/BYM1127/BMZtrial1', emoji: '🌸', tags: ['business', 'github'] },
-  { id: '4', pillar: 'crochet', title: 'Chunky Hand-Knit Throw', imageUrl: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=600&auto=format&fit=crop', emoji: '🌈', tags: ['home', 'blanket'] },
+  { id: 'c1', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20240311_082604_436.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
+  { id: 'c2', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20240311_082604_490.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
   { id: '5', pillar: 'photography', title: 'Family at Sunset', imageUrl: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=600&auto=format&fit=crop', emoji: '👨‍👩‍👧', tags: ['family', 'outdoor'] },
   { id: '6', pillar: 'webdesign', title: 'DkLC - Catering', imageUrl: 'https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=600&auto=format&fit=crop', projectUrl: 'https://github.com/BYM1127/DkLC', emoji: '🍲', tags: ['catering', 'github'] },
-  { id: '7', pillar: 'crochet', title: 'Granny Square Crop Top', imageUrl: 'https://images.unsplash.com/photo-1620799140188-3b2a02fd9a77?q=80&w=600&auto=format&fit=crop', emoji: '👗', tags: ['tops', 'vintage'] },
+  { id: 'c3', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20240322_203625_217.webp', emoji: '🧶', tags: ['crochet', 'handmade'] },
+  { id: 'c4', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20240327_184936_893.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
   { id: '8', pillar: 'photography', title: 'Maternity Glow Session', imageUrl: 'https://images.unsplash.com/photo-1519064438302-7634f1b40d6c?q=80&w=600&auto=format&fit=crop', emoji: '🤰', tags: ['maternity', 'studio'] },
   { id: '9', pillar: 'webdesign', title: 'IMELA-PROJECTS', imageUrl: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=600&auto=format&fit=crop', projectUrl: 'https://github.com/BYM1127/IMELA-PROJECTS', emoji: '💡', tags: ['electrical', 'solar'] },
-  { id: '10', pillar: 'crochet', title: 'Plush Baby Bear Beanie', imageUrl: 'https://images.unsplash.com/photo-1519689680058-324335c77eba?q=80&w=600&auto=format&fit=crop', emoji: '🍼', tags: ['baby', 'beanie'] },
+  { id: 'c5', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20240327_184936_929.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
+  { id: 'c6', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20240331_140012_639.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
+  { id: 'c7', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20240331_140012_664.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
   { id: '11', pillar: 'photography', title: 'Event Coverage', imageUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=600&auto=format&fit=crop', emoji: '🎉', tags: ['events', 'coverage'] },
-  { id: '12', pillar: 'crochet', title: 'Textured Throw Pillow', imageUrl: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=600&auto=format&fit=crop', emoji: '🏡', tags: ['home', 'decor'] },
   { id: '13', pillar: 'photography', title: 'Creative Studio Headshot', imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=600&auto=format&fit=crop', emoji: '📷', tags: ['headshot', 'studio'] },
-  { id: '14', pillar: 'crochet', title: 'Pastel Cardigan', imageUrl: 'https://images.unsplash.com/photo-1620799139886-c3cc26511cc5?q=80&w=600&auto=format&fit=crop', emoji: '👚', tags: ['tops', 'apparel'] },
+  { id: 'c8', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20260715_182215_1.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
+  { id: 'c9', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20260715_182218_1.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
+  { id: 'c10', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20260715_182220_1.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
   { id: '15', pillar: 'photography', title: 'Urban Lifestyle Shoot', imageUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop', emoji: '🌆', tags: ['lifestyle', 'urban'] },
-  { id: '16', pillar: 'crochet', title: 'Boho Wall Hanging', imageUrl: 'https://images.unsplash.com/photo-1528610664654-e91b635293ee?q=80&w=600&auto=format&fit=crop', emoji: '✨', tags: ['decor', 'home'] },
+  { id: 'c11', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20260715_182222.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
+  { id: 'c12', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_20260715_182224_1.jpg', emoji: '🧶', tags: ['crochet', 'handmade'] },
+  { id: 'c13', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_3932.JPG', emoji: '🧶', tags: ['crochet', 'handmade'] },
+  { id: 'c14', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_3933.JPG', emoji: '🧶', tags: ['crochet', 'handmade'] },
+  { id: 'c15', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_3934.JPG', emoji: '🧶', tags: ['crochet', 'handmade'] },
+  { id: 'c16', pillar: 'crochet', title: 'Crochet Work', imageUrl: '/crochet/IMG_3935.JPG', emoji: '🧶', tags: ['crochet', 'handmade'] },
 ]
 
 const FILTER_OPTIONS: { value: Filter; label: string; icon: React.ReactNode; color: string }[] = [
