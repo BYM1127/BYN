@@ -28,6 +28,9 @@ export const metadata: Metadata = {
     siteName: 'BYM Studio',
   },
   twitter: { card: 'summary_large_image' },
+  verification: {
+    google: '8vzcyzagAbVVTLWLaxAHfilUczZzXZrtaggkn9pqqQ0',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
