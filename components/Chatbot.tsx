@@ -104,7 +104,7 @@ export default function Chatbot() {
       {/* Chat toggle button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-24 right-6 z-50 flex items-center justify-center w-14 h-14 bg-gradient-to-br from-[#E07A5F] to-[#81B29A] text-white rounded-full shadow-lg hover:scale-110 transition-all duration-300"
+        className="fixed bottom-24 right-4 sm:right-6 z-50 flex items-center justify-center w-14 h-14 bg-gradient-to-br from-[#E07A5F] to-[#81B29A] text-white rounded-full shadow-lg hover:scale-110 transition-all duration-300"
         aria-label="Toggle chat assistant"
       >
         {isOpen ? <X size={24} /> : <MessageCircle size={28} />}
@@ -113,8 +113,8 @@ export default function Chatbot() {
       {/* Chat window */}
       {isOpen && (
         <div 
-          className="fixed bottom-40 right-6 z-50 w-[350px] max-w-[calc(100vw-3rem)] bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl shadow-2xl flex flex-col overflow-hidden"
-          style={{ height: '500px', maxHeight: 'calc(100vh - 12rem)' }}
+          className="fixed bottom-24 right-4 sm:bottom-40 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[350px] bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+          style={{ height: '600px', maxHeight: 'calc(100vh - 7rem)' }}
         >
           {/* Header */}
           <div className="bg-gradient-to-r from-[var(--color-crochet)] to-[var(--color-photography)] p-4 text-white flex justify-between items-center">
