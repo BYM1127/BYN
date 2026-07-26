@@ -120,13 +120,13 @@ export default function Navbar() {
             <img 
               src="/logo-light.png" 
               alt="Bokas Yarn Market & Studio" 
-              className="h-10 w-auto object-contain block dark:hidden" 
+              className="h-10 w-auto object-contain logo-light" 
             />
             {/* Dark Mode Logo (Purple) */}
             <img 
               src="/logo-dark.png" 
               alt="Bokas Yarn Market & Studio" 
-              className="h-10 w-auto object-contain hidden dark:block" 
+              className="h-10 w-auto object-contain logo-dark" 
             />
           </Link>
 
