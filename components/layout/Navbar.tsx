@@ -14,6 +14,7 @@ import {
   LayoutDashboard,
   ShoppingBag,
   ChevronDown,
+  User,
 } from 'lucide-react'
 import { useAuth } from '@/lib/auth-context'
 import { ThemeToggle } from '@/components/ThemeToggle'
@@ -278,9 +279,9 @@ export default function Navbar() {
                     Admin
                   </Link>
                 )}
-                <Link href="/my-orders" className="btn btn-ghost btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                  <ShoppingBag size={14} />
-                  My Orders
+                <Link href="/profile" className="btn btn-ghost btn-sm" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                  <User size={14} />
+                  My Profile
                 </Link>
                 <button
                   onClick={() => signOut()}
@@ -400,8 +401,8 @@ export default function Navbar() {
           <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             {user ? (
               <>
-                <Link href="/my-orders" className="btn btn-ghost">
-                  My Orders
+                <Link href="/profile" className="btn btn-ghost">
+                  My Profile
                 </Link>
                 {isAdmin && (
                   <Link href="/admin" className="btn btn-ghost">
