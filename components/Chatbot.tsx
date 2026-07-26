@@ -137,10 +137,10 @@ export default function Chatbot() {
             {messages.map((msg) => (
               <div key={msg.id} className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}>
                 <div 
-                  className={`max-w-[85%] rounded-2xl p-3 text-sm shadow-sm ${
+                  className={`max-w-[85%] rounded-2xl p-3.5 text-sm shadow-sm ${
                     msg.type === 'user' 
-                      ? 'bg-[var(--color-text-primary)] text-[var(--color-bg-primary)] rounded-tr-sm' 
-                      : 'bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] border border-[var(--color-border)] rounded-tl-sm'
+                      ? 'bg-[var(--color-crochet)] text-white rounded-tr-sm font-medium' 
+                      : 'bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] border border-[var(--color-border)] rounded-tl-sm leading-relaxed'
                   }`}
                 >
                   {msg.text}
@@ -169,15 +169,15 @@ export default function Chatbot() {
           </div>
 
           {/* Input / Options area */}
-          <div className="p-3 border-t border-[var(--color-border)] bg-[var(--color-bg-card)]">
+          <div className="p-4 border-t border-[var(--color-border)] bg-[var(--color-bg-card)] shrink-0">
             {showOptions ? (
               <div className="flex flex-col gap-2">
-                <div className="text-xs text-center text-[var(--color-text-muted)] mb-1">Choose an option below</div>
+                <div className="text-xs text-center text-[var(--color-text-muted)] mb-2 uppercase tracking-wider font-semibold">Choose an option below</div>
                 {OPTIONS.map((opt) => (
                   <button
                     key={opt.id}
                     onClick={() => handleOptionClick(opt.id, opt.text)}
-                    className="w-full text-left px-4 py-2 text-sm rounded-full border border-[var(--color-border)] hover:bg-[var(--color-bg-secondary)] hover:border-[var(--color-crochet)] transition-colors text-[var(--color-text-primary)]"
+                    className="w-full text-left px-4 py-2.5 text-sm rounded-full border border-[var(--color-border)] bg-[var(--color-bg-primary)] hover:bg-[var(--color-bg-secondary)] hover:border-[var(--color-crochet)] transition-all text-[var(--color-text-primary)] shadow-sm hover:shadow"
                   >
                     {opt.label}
                   </button>
