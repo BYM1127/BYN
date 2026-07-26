@@ -69,14 +69,11 @@ export default async function NewsPage() {
                 Example: <div className="elfsight-app-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" data-elfsight-app-lazy></div>
               */}
               
-              <div style={{ background: 'rgba(255,255,255,0.02)', padding: '2rem', textAlign: 'center', borderRadius: 'var(--radius-lg)', border: '1px dashed var(--color-border)' }}>
-                <Camera size={32} style={{ margin: '0 auto 1rem', opacity: 0.5 }} />
-                <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', marginBottom: '1rem' }}>
-                  Your live Instagram and TikTok feed will appear here.
-                </p>
-                <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-                  (Awaiting Widget Integration Code)
-                </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem' }}>
+                <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=300&auto=format&fit=crop" alt="Feed 1" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
+                <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=300&auto=format&fit=crop" alt="Feed 2" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
+                <img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?q=80&w=300&auto=format&fit=crop" alt="Feed 3" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
+                <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=300&auto=format&fit=crop" alt="Feed 4" style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', borderRadius: 'var(--radius-md)' }} />
               </div>
             </div>
             
