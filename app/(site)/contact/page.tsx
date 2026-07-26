@@ -51,10 +51,34 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitting(true)
+    try {
+      await fetch('/api/activity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          action: 'EMAIL_CONTACT', 
+          user: form.name || 'Guest', 
+          details: `Email: ${form.email} | Type: ${form.type}` 
+        })
+      });
+    } catch (e) {
+      console.error(e)
+    }
     await new Promise((r) => setTimeout(r, 1000))
     setSubmitted(true)
     setSubmitting(false)
   }
+
+  const handleWhatsApp = (e: React.MouseEvent) => {
+    e.preventDefault();
+    fetch('/api/activity', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'WHATSAPP_CONTACT', user: 'Guest', details: 'Clicked WhatsApp link on Contact Page' })
+    }).catch(console.error).finally(() => {
+      window.open('https://wa.me/27000000000?text=Hi%20BYM%20Studio%2C%20I%27d%20like%20to%20enquire%20about%E2%80%A6', '_blank', 'noopener,noreferrer');
+    });
+  };
 
   return (
     <>
@@ -146,8 +170,7 @@ export default function ContactPage() {
               {/* WhatsApp CTA */}
               <a
                 href="https://wa.me/27000000000?text=Hi%20BYM%20Studio%2C%20I%27d%20like%20to%20enquire%20about…"
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={handleWhatsApp}
                 className="btn btn-photo"
                 style={{ width: '100%', justifyContent: 'center', textDecoration: 'none', display: 'flex' }}
               >

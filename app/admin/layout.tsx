@@ -5,12 +5,13 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import {
   LayoutDashboard, Scissors, Camera, Monitor, Settings, Star,
-  ImageIcon, LogOut, ChevronRight, Users, ShoppingBag, Newspaper
+  ImageIcon, LogOut, ChevronRight, Users, ShoppingBag, Newspaper, Activity
 } from 'lucide-react'
 import { AuthProvider, useAuth } from '@/lib/auth-context'
 
 const NAV = [
   { label: 'Dashboard', href: '/admin', icon: <LayoutDashboard size={16} /> },
+  { label: 'Activity Logs', href: '/admin/activity', icon: <Activity size={16} />, color: 'var(--color-gold)' },
   { label: 'Products', href: '/admin/products', icon: <ShoppingBag size={16} />, color: 'var(--color-crochet)' },
   { label: 'Orders', href: '/admin/orders', icon: <Scissors size={16} /> },
   { label: 'News / Blog', href: '/admin/news', icon: <Newspaper size={16} /> },

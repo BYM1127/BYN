@@ -33,6 +33,14 @@ export const authOptions: NextAuthOptions = {
           throw new Error('Incorrect password')
         }
 
+        // Log the activity
+        try {
+          const { logActivity } = await import('@/lib/logger')
+          await logActivity('LOGIN', user.email, `User logged in from sign in page`)
+        } catch (e) {
+          console.error("Failed to log activity:", e)
+        }
+
         return {
           id: user._id.toString(),
           email: user.email,

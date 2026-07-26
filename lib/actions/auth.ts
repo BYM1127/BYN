@@ -22,6 +22,13 @@ export async function registerUser(email: string, password: string, displayName:
       role: 'user',
     })
 
+    try {
+      const { logActivity } = await import('@/lib/logger')
+      await logActivity('REGISTER', email, `New user account created for ${displayName}`)
+    } catch (e) {
+      console.error(e)
+    }
+
     return { success: true }
   } catch (error: any) {
     console.error('Registration error:', error)

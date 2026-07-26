@@ -35,6 +35,13 @@ export async function POST(req: Request) {
       shippingAddress,
     })
 
+    try {
+      const { logActivity } = await import('@/lib/logger')
+      await logActivity('ORDER', shippingAddress.email || 'Guest', `Initiated checkout for R${totalAmount.toFixed(2)} (Order ID: ${order._id})`)
+    } catch (e) {
+      console.error(e)
+    }
+
     const payfastParams: Record<string, string> = {
       merchant_id: process.env.PAYFAST_MERCHANT_ID!,
       merchant_key: process.env.PAYFAST_MERCHANT_KEY!,
