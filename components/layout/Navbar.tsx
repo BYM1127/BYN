@@ -115,27 +115,20 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <Link
-            href="/"
-            style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', textDecoration: 'none' }}
-          >
-            <div
-              style={{
-                width: 38,
-                height: 38,
-                borderRadius: '50%',
-                background: 'linear-gradient(135deg, var(--color-crochet), var(--color-photography), var(--color-webdesign))',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '0.75rem',
-                fontWeight: 700,
-                color: '#fff',
-                fontFamily: 'var(--font-hand)',
-          <Link href="/" className="font-serif text-xl sm:text-2xl font-bold flex items-center gap-2 group">
-              <span className="text-[var(--color-crochet)] group-hover:scale-110 transition-transform">✧</span>
-              Bokas Yarn Market & Studio
-            </Link>
+          <Link href="/" className="flex items-center gap-2 group hover:opacity-80 transition-opacity">
+            {/* Light Mode Logo (Golden) */}
+            <img 
+              src="/logo-light.png" 
+              alt="Bokas Yarn Market & Studio" 
+              className="h-10 w-auto object-contain block dark:hidden" 
+            />
+            {/* Dark Mode Logo (Purple) */}
+            <img 
+              src="/logo-dark.png" 
+              alt="Bokas Yarn Market & Studio" 
+              className="h-10 w-auto object-contain hidden dark:block" 
+            />
+          </Link>
 
           {/* Desktop nav */}
           <div
