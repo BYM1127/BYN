@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import {
   Wand2,
   ChevronRight,
@@ -27,12 +28,12 @@ const PIECE_TYPES = [
 ]
 
 const STITCH_STYLES = [
-  { value: 'granny_square', label: 'Granny Square', desc: 'Classic, timeless pattern' },
-  { value: 'chunky',        label: 'Chunky / Textured', desc: 'Bold, cozy feel' },
-  { value: 'open_weave',    label: 'Open Weave', desc: 'Breezy and lightweight' },
-  { value: 'shell',         label: 'Shell Stitch', desc: 'Elegant, wave-like edges' },
-  { value: 'solid',         label: 'Solid / Dense', desc: 'Structured and sturdy' },
-  { value: 'mixed',         label: 'Mixed / Surprise Me', desc: 'Let the crafter decide' },
+  { value: 'granny_square', label: 'Granny Square', desc: 'Classic, timeless pattern', image: 'https://images.unsplash.com/photo-1605417011409-9b936d90a98f?q=80&w=800' },
+  { value: 'chunky',        label: 'Chunky / Textured', desc: 'Bold, cozy feel', image: 'https://images.unsplash.com/photo-1584988719266-9dc55030d5bd?q=80&w=800' },
+  { value: 'open_weave',    label: 'Open Weave', desc: 'Breezy and lightweight', image: 'https://images.unsplash.com/photo-1528610664654-e91b635293ee?q=80&w=800' },
+  { value: 'shell',         label: 'Shell Stitch', desc: 'Elegant, wave-like edges', image: 'https://images.unsplash.com/photo-1616428795552-8706d860d4ac?q=80&w=800' },
+  { value: 'solid',         label: 'Solid / Dense', desc: 'Structured and sturdy', image: 'https://images.unsplash.com/photo-1552579123-53531b79dcb6?q=80&w=800' },
+  { value: 'mixed',         label: 'Mixed / Surprise Me', desc: 'Let the crafter decide', image: 'https://images.unsplash.com/photo-1615800085899-73fb4dc31758?q=80&w=800' },
 ]
 
 const COLOUR_OPTIONS = [
@@ -320,29 +321,41 @@ export default function CrochetDesignPage() {
             <div>
               <h2 className="font-serif" style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>What style of stitch?</h2>
               <p style={{ marginBottom: '2rem' }}>Pick the vibe that feels right to you.</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1rem' }}>
                 {STITCH_STYLES.map((s) => (
                   <button
                     key={s.value}
                     onClick={() => update({ stitchStyle: s.value })}
                     style={{
                       display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      padding: '1.1rem 1.5rem',
+                      flexDirection: 'column',
                       borderRadius: 'var(--radius-xl)',
                       background: state.stitchStyle === s.value ? 'var(--color-crochet-dim)' : 'var(--color-bg-card)',
-                      border: `1px solid ${state.stitchStyle === s.value ? 'var(--color-crochet)' : 'var(--color-border)'}`,
+                      border: `2px solid ${state.stitchStyle === s.value ? 'var(--color-crochet)' : 'transparent'}`,
+                      boxShadow: state.stitchStyle === s.value ? '0 4px 12px rgba(0,0,0,0.05)' : '0 2px 8px rgba(0,0,0,0.02)',
                       cursor: 'pointer',
                       transition: 'all 0.2s',
                       textAlign: 'left',
+                      overflow: 'hidden',
+                      position: 'relative',
                     }}
                   >
-                    <div>
-                      <div style={{ fontWeight: 600, color: 'var(--color-text-primary)', marginBottom: '0.15rem' }}>{s.label}</div>
+                    <div style={{ position: 'relative', width: '100%', height: '140px', overflow: 'hidden' }}>
+                      <Image
+                        src={s.image}
+                        alt={s.label}
+                        fill
+                        style={{ objectFit: 'cover', transition: 'transform 0.4s ease' }}
+                        sizes="(max-width: 768px) 100vw, 300px"
+                      />
+                    </div>
+                    <div style={{ padding: '1.25rem 1rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
+                        <div style={{ fontWeight: 600, color: 'var(--color-text-primary)' }}>{s.label}</div>
+                        {state.stitchStyle === s.value && <Check size={16} style={{ color: 'var(--color-crochet)' }} />}
+                      </div>
                       <div style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)' }}>{s.desc}</div>
                     </div>
-                    {state.stitchStyle === s.value && <Check size={16} style={{ color: 'var(--color-crochet)', flexShrink: 0 }} />}
                   </button>
                 ))}
               </div>

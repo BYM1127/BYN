@@ -18,6 +18,10 @@ const ITEMS = [
   { id: '10', pillar: 'crochet', title: 'Plush Baby Bear Beanie', imageUrl: 'https://images.unsplash.com/photo-1519689680058-324335c77eba?q=80&w=600&auto=format&fit=crop', emoji: '🍼', tags: ['baby', 'beanie'] },
   { id: '11', pillar: 'photography', title: 'Event Coverage', imageUrl: 'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=600&auto=format&fit=crop', emoji: '🎉', tags: ['events', 'coverage'] },
   { id: '12', pillar: 'crochet', title: 'Textured Throw Pillow', imageUrl: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?q=80&w=600&auto=format&fit=crop', emoji: '🏡', tags: ['home', 'decor'] },
+  { id: '13', pillar: 'photography', title: 'Creative Studio Headshot', imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=600&auto=format&fit=crop', emoji: '📷', tags: ['headshot', 'studio'] },
+  { id: '14', pillar: 'crochet', title: 'Pastel Cardigan', imageUrl: 'https://images.unsplash.com/photo-1620799139886-c3cc26511cc5?q=80&w=600&auto=format&fit=crop', emoji: '👚', tags: ['tops', 'apparel'] },
+  { id: '15', pillar: 'photography', title: 'Urban Lifestyle Shoot', imageUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop', emoji: '🌆', tags: ['lifestyle', 'urban'] },
+  { id: '16', pillar: 'crochet', title: 'Boho Wall Hanging', imageUrl: 'https://images.unsplash.com/photo-1528610664654-e91b635293ee?q=80&w=600&auto=format&fit=crop', emoji: '✨', tags: ['decor', 'home'] },
 ]
 
 const FILTER_OPTIONS: { value: Filter; label: string; icon: React.ReactNode; color: string }[] = [

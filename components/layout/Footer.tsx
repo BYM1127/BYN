@@ -244,11 +244,19 @@ export default function Footer() {
           >
             &copy; {new Date().getFullYear()} BYM Studio. Made with
             <Heart size={12} style={{ color: 'var(--color-crochet)' }} />
-            by BokasYarnMarket Studio.
+            by BokasYarnMarket Studio. All Rights Reserved.
           </p>
-          <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
-            All custom pieces are handmade with love.
-          </p>
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <Link href="/policies/terms-of-service" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textDecoration: 'none' }}>
+              Terms of Service
+            </Link>
+            <Link href="/policies/privacy-policy" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textDecoration: 'none' }}>
+              Privacy Policy
+            </Link>
+            <Link href="/policies/refund-policy" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textDecoration: 'none' }}>
+              Refund Policy
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

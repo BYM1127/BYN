@@ -3,6 +3,7 @@ import './globals.css'
 import { AuthProvider } from '@/lib/auth-context'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import WhatsAppButton from '@/components/WhatsAppButton'
+import Chatbot from '@/components/Chatbot'
 
 import { CartProvider } from '@/lib/context/CartContext'
 
@@ -13,6 +14,9 @@ export const metadata: Metadata = {
   },
   description:
     'BYM Studio by BokasYarnMarket — handcrafted crochet pieces, professional photography sessions, and bespoke web design. Three creative services, one passionate studio.',
+  authors: [{ name: 'BokasYarnMarket Studio' }],
+  creator: 'BokasYarnMarket Studio',
+  publisher: 'BokasYarnMarket Studio',
   keywords: [
     'crochet', 'custom crochet', 'handmade', 'photography', 'portrait sessions',
     'web design', 'website development', 'BYM Studio', 'BokasYarnMarket',
@@ -35,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <CartProvider>
               {children}
               <WhatsAppButton />
+              <Chatbot />
             </CartProvider>
           </AuthProvider>
         </ThemeProvider>
