@@ -1,38 +1,98 @@
 import Link from 'next/link'
-import { Scissors, Camera, Monitor, Star, ArrowRight, TrendingUp, Clock } from 'lucide-react'
+import { Scissors, Camera, Monitor, Star, ArrowRight, TrendingUp, Clock, Package, DollarSign } from 'lucide-react'
+import dbConnect from '@/lib/db'
+import Order from '@/models/Order'
 
-const STATS = [
-  { label: 'Crochet Orders', value: '12', change: '+3 this week', color: 'var(--color-crochet)', icon: <Scissors size={18} />, href: '/admin/crochet' },
-  { label: 'Photo Bookings', value: '5', change: '+1 this week', color: 'var(--color-photography)', icon: <Camera size={18} />, href: '/admin/photography' },
-  { label: 'Web Enquiries', value: '8', change: '+2 this week', color: 'var(--color-webdesign)', icon: <Monitor size={18} />, href: '/admin/web' },
-  { label: 'Pending Reviews', value: '3', change: 'Need moderation', color: 'var(--color-gold)', icon: <Star size={18} />, href: '/admin/reviews' },
-]
+export const revalidate = 0
 
-const RECENT_ORDERS = [
-  { id: '1', name: 'Custom Boho Bag', customer: 'Thandi M.', status: 'in_production', pillar: 'crochet', date: '2026-07-14' },
-  { id: '2', name: 'Portrait Session', customer: 'Lerato K.', status: 'confirmed', pillar: 'photography', date: '2026-07-13' },
-  { id: '3', name: 'Business Website', customer: 'Amirah S.', status: 'quoted', pillar: 'webdesign', date: '2026-07-12' },
-  { id: '4', name: 'Baby Blanket', customer: 'Sarah N.', status: 'pending_review', pillar: 'crochet', date: '2026-07-12' },
-  { id: '5', name: 'Family Session', customer: 'Dlamini Family', status: 'pending', pillar: 'photography', date: '2026-07-11' },
-]
+const PILLAR_COLOR: Record<string, string> = {
+  crochet: 'var(--color-crochet)',
+  photography: 'var(--color-photography)',
+  webdesign: 'var(--color-webdesign)',
+}
+const PILLAR_ICON: Record<string, React.ReactNode> = {
+  crochet: <Scissors size={18} />,
+  photography: <Camera size={18} />,
+  webdesign: <Monitor size={18} />,
+}
+const PILLAR_LABEL: Record<string, string> = {
+  crochet: 'Crochet Orders',
+  photography: 'Photo Bookings',
+  webdesign: 'Web Enquiries',
+}
+const PILLAR_HREF: Record<string, string> = {
+  crochet: '/admin/crochet',
+  photography: '/admin/photography',
+  webdesign: '/admin/web',
+}
 
-const PILLAR_COLOR: Record<string, string> = { crochet: 'var(--color-crochet)', photography: 'var(--color-photography)', webdesign: 'var(--color-webdesign)' }
-const STATUS_LABEL: Record<string, string> = { in_production: 'In Production', confirmed: 'Confirmed', quoted: 'Quoted', pending_review: 'Pending Review', pending: 'Pending' }
+const STATUS_LABEL: Record<string, string> = {
+  in_production: 'In Production',
+  confirmed: 'Confirmed',
+  quoted: 'Quoted',
+  pending_review: 'Pending Review',
+  pending: 'Pending',
+  accepted: 'Accepted',
+  deposit_paid: 'Deposit Paid',
+  ready: 'Ready',
+  delivered: 'Delivered',
+  completed: 'Completed',
+  cancelled: 'Cancelled',
+  processing: 'Processing',
+  shipped: 'Shipped',
+  reviewing: 'Reviewing',
+}
 
-export default function AdminDashboardPage() {
+export default async function AdminDashboardPage() {
+  await dbConnect()
+
+  const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+
+  // Live stats
+  const [
+    crochetTotal, crochetWeek,
+    photoTotal, photoWeek,
+    webTotal, webWeek,
+    pendingReview,
+    recentOrders,
+    revenueResult,
+  ] = await Promise.all([
+    Order.countDocuments({ pillar: 'crochet' }),
+    Order.countDocuments({ pillar: 'crochet', createdAt: { $gte: oneWeekAgo } }),
+    Order.countDocuments({ pillar: 'photography' }),
+    Order.countDocuments({ pillar: 'photography', createdAt: { $gte: oneWeekAgo } }),
+    Order.countDocuments({ pillar: 'webdesign' }),
+    Order.countDocuments({ pillar: 'webdesign', createdAt: { $gte: oneWeekAgo } }),
+    Order.countDocuments({ status: 'pending_review' }),
+    Order.find({}).sort({ createdAt: -1 }).limit(5).populate('userId', 'displayName email').lean(),
+    Order.aggregate([
+      { $match: { paymentStatus: 'paid' } },
+      { $group: { _id: null, total: { $sum: '$totalAmount' } } }
+    ]),
+  ])
+
+  const stats = [
+    { label: PILLAR_LABEL.crochet, value: crochetTotal.toString(), change: `+${crochetWeek} this week`, color: PILLAR_COLOR.crochet, icon: PILLAR_ICON.crochet, href: PILLAR_HREF.crochet },
+    { label: PILLAR_LABEL.photography, value: photoTotal.toString(), change: `+${photoWeek} this week`, color: PILLAR_COLOR.photography, icon: PILLAR_ICON.photography, href: PILLAR_HREF.photography },
+    { label: PILLAR_LABEL.webdesign, value: webTotal.toString(), change: `+${webWeek} this week`, color: PILLAR_COLOR.webdesign, icon: PILLAR_ICON.webdesign, href: PILLAR_HREF.webdesign },
+    { label: 'Pending Review', value: pendingReview.toString(), change: 'Need attention', color: 'var(--color-gold)', icon: <Star size={18} />, href: '/admin/orders' },
+  ]
+
+  const totalRevenue = revenueResult?.[0]?.total || 0
+
   return (
     <div style={{ padding: '2rem' }}>
       {/* Header */}
       <div style={{ marginBottom: '2.5rem' }}>
         <h1 className="font-serif" style={{ fontSize: '2rem', marginBottom: '0.35rem' }}>Dashboard</h1>
         <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>
-          Welcome back! Here's what's happening at BYM Studio.
+          Welcome back! Here&apos;s what&apos;s happening at BYM Studio.
         </p>
       </div>
 
       {/* Stats grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 200px), 1fr))', gap: '1.25rem', marginBottom: '2.5rem' }}>
-        {STATS.map((s) => (
+        {stats.map((s) => (
           <Link
             key={s.label}
             href={s.href}
@@ -60,44 +120,70 @@ export default function AdminDashboardPage() {
         ))}
       </div>
 
+      {/* Revenue card */}
+      {totalRevenue > 0 && (
+        <div className="card" style={{ padding: '1.5rem', marginBottom: '2.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ width: 48, height: 48, borderRadius: 'var(--radius-lg)', background: 'var(--color-gold-dim)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-gold)' }}>
+            <DollarSign size={22} />
+          </div>
+          <div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600, marginBottom: '0.15rem' }}>Total Revenue (Paid)</div>
+            <div style={{ fontSize: '1.75rem', fontWeight: 700, fontFamily: 'var(--font-serif)', color: 'var(--color-gold)' }}>R{totalRevenue.toLocaleString()}</div>
+          </div>
+        </div>
+      )}
+
       {/* Recent activity */}
       <div>
         <h2 style={{ fontWeight: 600, fontSize: '1rem', marginBottom: '1.25rem', color: 'var(--color-text-secondary)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
           Recent Orders
         </h2>
         <div style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-xl)', overflow: 'hidden' }}>
-          {RECENT_ORDERS.map((o, i) => (
-            <div
-              key={o.id}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '1rem',
-                padding: '1rem 1.25rem',
-                borderBottom: i < RECENT_ORDERS.length - 1 ? '1px solid var(--color-border)' : 'none',
-                flexWrap: 'wrap',
-              }}
-            >
-              <div style={{ width: 8, height: 8, borderRadius: '50%', background: PILLAR_COLOR[o.pillar], flexShrink: 0 }} />
-              <div style={{ flex: 1, minWidth: 140 }}>
-                <div style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--color-text-primary)' }}>{o.name}</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>{o.customer}</div>
-              </div>
-              <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                <Clock size={11} />{o.date}
-              </div>
-              <span style={{
-                fontSize: '0.7rem',
-                fontWeight: 600,
-                padding: '0.25rem 0.65rem',
-                borderRadius: 'var(--radius-full)',
-                background: `${PILLAR_COLOR[o.pillar]}18`,
-                color: PILLAR_COLOR[o.pillar],
-              }}>
-                {STATUS_LABEL[o.status] ?? o.status}
-              </span>
+          {recentOrders.length === 0 ? (
+            <div style={{ padding: '3rem 2rem', textAlign: 'center', color: 'var(--color-text-muted)' }}>
+              <Package size={36} style={{ opacity: 0.4, margin: '0 auto 0.75rem' }} />
+              <p>No orders yet. They will appear here once customers start ordering.</p>
             </div>
-          ))}
+          ) : (
+            recentOrders.map((o: any, i: number) => {
+              const name = o.userId?.displayName || o.shippingAddress?.fullName || o.data?.name || 'Guest'
+              const itemName = o.lineItems?.[0]?.title || o.data?.product || o.data?.package || o.data?.projectType || 'Order'
+              const pillarColor = PILLAR_COLOR[o.pillar] || 'var(--color-text-muted)'
+
+              return (
+                <div
+                  key={o._id.toString()}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    padding: '1rem 1.25rem',
+                    borderBottom: i < recentOrders.length - 1 ? '1px solid var(--color-border)' : 'none',
+                    flexWrap: 'wrap',
+                  }}
+                >
+                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: pillarColor, flexShrink: 0 }} />
+                  <div style={{ flex: 1, minWidth: 140 }}>
+                    <div style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--color-text-primary)' }}>{itemName}</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>{name}</div>
+                  </div>
+                  <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                    <Clock size={11} />{o.createdAt ? new Date(o.createdAt).toLocaleDateString() : '—'}
+                  </div>
+                  <span style={{
+                    fontSize: '0.7rem',
+                    fontWeight: 600,
+                    padding: '0.25rem 0.65rem',
+                    borderRadius: 'var(--radius-full)',
+                    background: `${pillarColor}18`,
+                    color: pillarColor,
+                  }}>
+                    {STATUS_LABEL[o.status] ?? o.status}
+                  </span>
+                </div>
+              )
+            })
+          )}
         </div>
       </div>
 
@@ -107,7 +193,7 @@ export default function AdminDashboardPage() {
           { label: 'Manage Crochet Orders', href: '/admin/crochet', color: 'var(--color-crochet)' },
           { label: 'Photography Bookings', href: '/admin/photography', color: 'var(--color-photography)' },
           { label: 'Web Enquiries', href: '/admin/web', color: 'var(--color-webdesign)' },
-          { label: 'Moderate Reviews', href: '/admin/reviews', color: 'var(--color-gold)' },
+          { label: 'Manage Gallery', href: '/admin/gallery', color: 'var(--color-gold)' },
         ].map((l) => (
           <Link
             key={l.href}

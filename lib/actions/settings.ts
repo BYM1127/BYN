@@ -13,6 +13,7 @@ export interface SiteSettingsData {
   instagramUrl?: string
   tiktokUrl?: string
   facebookUrl?: string
+  whatsappNumber?: string
   updatedAt?: any
 }
 
