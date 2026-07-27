@@ -16,7 +16,7 @@ export default async function AdminProductsPage() {
           <h1 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '0.25rem' }}>Products</h1>
           <p style={{ color: 'var(--color-text-secondary)' }}>Manage your e-commerce inventory.</p>
         </div>
-        <Link href="/admin/products/new" className="btn btn-primary btn-sm">
+        <Link href="/products/new" className="btn btn-primary btn-sm">
           <Plus size={16} /> Add Product
         </Link>
       </div>

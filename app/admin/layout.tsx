@@ -11,17 +11,17 @@ import {
 import { AuthProvider, useAuth } from '@/lib/auth-context'
 
 const NAV = [
-  { label: 'Dashboard', href: '/admin', icon: <LayoutDashboard size={16} />, exact: true },
-  { label: 'Activity Logs', href: '/admin/activity', icon: <Activity size={16} />, color: 'var(--color-gold)' },
-  { label: 'Products', href: '/admin/products', icon: <ShoppingBag size={16} />, color: 'var(--color-crochet)' },
-  { label: 'Orders', href: '/admin/orders', icon: <Scissors size={16} /> },
-  { label: 'News / Blog', href: '/admin/news', icon: <Newspaper size={16} /> },
-  { label: 'Photography', href: '/admin/photography', icon: <Camera size={16} />, color: 'var(--color-photography)' },
-  { label: 'Web Projects', href: '/admin/web', icon: <Monitor size={16} />, color: 'var(--color-webdesign)' },
-  { label: 'Gallery', href: '/admin/gallery', icon: <ImageIcon size={16} /> },
-  { label: 'Reviews', href: '/admin/reviews', icon: <Star size={16} /> },
-  { label: 'Customers', href: '/admin/customers', icon: <Users size={16} /> },
-  { label: 'Settings', href: '/admin/settings', icon: <Settings size={16} /> },
+  { label: 'Dashboard', href: '/', icon: <LayoutDashboard size={16} />, exact: true },
+  { label: 'Activity Logs', href: '/activity', icon: <Activity size={16} />, color: 'var(--color-gold)' },
+  { label: 'Products', href: '/products', icon: <ShoppingBag size={16} />, color: 'var(--color-crochet)' },
+  { label: 'Orders', href: '/orders', icon: <Scissors size={16} /> },
+  { label: 'News / Blog', href: '/news', icon: <Newspaper size={16} /> },
+  { label: 'Photography', href: '/photography', icon: <Camera size={16} />, color: 'var(--color-photography)' },
+  { label: 'Web Projects', href: '/web', icon: <Monitor size={16} />, color: 'var(--color-webdesign)' },
+  { label: 'Gallery', href: '/gallery', icon: <ImageIcon size={16} /> },
+  { label: 'Reviews', href: '/reviews', icon: <Star size={16} /> },
+  { label: 'Customers', href: '/customers', icon: <Users size={16} /> },
+  { label: 'Settings', href: '/settings', icon: <Settings size={16} /> },
 ]
 
 function isActive(pathname: string, href: string, exact?: boolean) {
