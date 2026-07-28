@@ -57,6 +57,7 @@ export async function POST(req: Request) {
         <p><strong>Custom Size Note:</strong> ${form.customSizeNote || 'None'}</p>
         <p><strong>Vision/Inspiration:</strong><br/>${form.inspirationNote || 'None'}</p>
         <p><strong>Reference Link:</strong> ${form.referenceLink ? `<a href="${form.referenceLink}">${form.referenceLink}</a>` : 'None'}</p>
+        ${form.referenceImage ? `<p><strong>Uploaded Reference Picture:</strong><br/><img src="${form.referenceImage}" style="max-width:400px; border-radius:8px; margin-top:8px;" alt="Customer Reference" /></p>` : ''}
         <p><strong>Customer Notes:</strong><br/>${form.customerNotes || 'None'}</p>
       `
     } else {

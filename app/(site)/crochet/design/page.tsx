@@ -8,9 +8,10 @@ import {
   ChevronRight,
   ChevronLeft,
   Check,
-  Scissors,
   Upload,
   Send,
+  X,
+  ImageIcon,
 } from 'lucide-react'
 
 // ── Wizard data ────────────────────────────────────────────────────────────
@@ -27,12 +28,48 @@ const PIECE_TYPES = [
 ]
 
 const STITCH_STYLES = [
-  { value: 'granny_square', label: 'Granny Square', desc: 'Classic, timeless pattern', image: 'https://images.unsplash.com/photo-1605417011409-9b936d90a98f?q=80&w=800' },
-  { value: 'chunky',        label: 'Chunky / Textured', desc: 'Bold, cozy feel', image: 'https://images.unsplash.com/photo-1584988719266-9dc55030d5bd?q=80&w=800' },
-  { value: 'open_weave',    label: 'Open Weave', desc: 'Breezy and lightweight', image: 'https://images.unsplash.com/photo-1528610664654-e91b635293ee?q=80&w=800' },
-  { value: 'shell',         label: 'Shell Stitch', desc: 'Elegant, wave-like edges', image: 'https://images.unsplash.com/photo-1616428795552-8706d860d4ac?q=80&w=800' },
-  { value: 'solid',         label: 'Solid / Dense', desc: 'Structured and sturdy', image: 'https://images.unsplash.com/photo-1552579123-53531b79dcb6?q=80&w=800' },
-  { value: 'mixed',         label: 'Mixed / Surprise Me', desc: 'Let the crafter decide', image: 'https://images.unsplash.com/photo-1615800085899-73fb4dc31758?q=80&w=800' },
+  {
+    value: 'single_crochet',
+    label: 'Single Crochet (Dense & Sturdy)',
+    desc: 'Tight, durable stitch structure ideal for bags and structured items.',
+    image: 'https://images.unsplash.com/photo-1552579123-53531b79dcb6?q=80&w=800',
+  },
+  {
+    value: 'double_crochet',
+    label: 'Double Crochet (Classic & Fluid)',
+    desc: 'Standard versatile stitch pattern with a gentle drape.',
+    image: 'https://images.unsplash.com/photo-1584988719266-9dc55030d5bd?q=80&w=800',
+  },
+  {
+    value: 'granny_square',
+    label: 'Granny Square Motif',
+    desc: 'Classic vintage square motif pattern.',
+    image: 'https://images.unsplash.com/photo-1605417011409-9b936d90a98f?q=80&w=800',
+  },
+  {
+    value: 'waffle_stitch',
+    label: 'Waffle / 3D Textured Stitch',
+    desc: 'Deep 3D waffle texture, extra cozy, thick and warm.',
+    image: 'https://images.unsplash.com/photo-1615800085899-73fb4dc31758?q=80&w=800',
+  },
+  {
+    value: 'moss_stitch',
+    label: 'Moss / Linen Stitch',
+    desc: 'Modern woven appearance with clean, subtle texture.',
+    image: 'https://images.unsplash.com/photo-1528610664654-e91b635293ee?q=80&w=800',
+  },
+  {
+    value: 'shell_wave',
+    label: 'Shell & Ripple Wave Stitch',
+    desc: 'Decorative fan wave design with scalloped edges.',
+    image: 'https://images.unsplash.com/photo-1616428795552-8706d860d4ac?q=80&w=800',
+  },
+  {
+    value: 'custom_pattern',
+    label: 'Custom Pattern / From Reference Photo',
+    desc: 'Upload your own reference picture in Step 5 for a custom stitch request.',
+    image: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?q=80&w=800',
+  },
 ]
 
 const COLOUR_OPTIONS = [
@@ -47,7 +84,7 @@ const COLOUR_OPTIONS = [
   { value: 'blush',       label: 'Blush',        hex: '#F2C4CE' },
   { value: 'cobalt',      label: 'Cobalt Blue',  hex: '#2962FF' },
   { value: 'lavender',    label: 'Lavender',     hex: '#B39DDB' },
-  { value: 'custom',      label: 'Custom / Tell me', hex: '#8B5CF6' },
+  { value: 'custom',      label: 'Custom Palette / Tell me', hex: '#8B5CF6' },
 ]
 
 const SIZES = [
@@ -64,7 +101,7 @@ const STEPS = [
   { id: 2, label: 'Stitch Style', desc: 'Pick a pattern vibe' },
   { id: 3, label: 'Colours',      desc: 'Choose your palette' },
   { id: 4, label: 'Size & Fit',   desc: 'How big / what fit?' },
-  { id: 5, label: 'Your Vision',  desc: 'Details & inspiration' },
+  { id: 5, label: 'Your Vision',  desc: 'Details & reference photo' },
   { id: 6, label: 'Review',       desc: 'Confirm & submit' },
 ]
 
@@ -77,6 +114,7 @@ interface WizardState {
   inspirationNote: string
   customerNotes: string
   referenceLink: string
+  referenceImage: string
   name: string
   email: string
   phone: string
@@ -91,6 +129,7 @@ const EMPTY: WizardState = {
   inspirationNote: '',
   customerNotes: '',
   referenceLink: '',
+  referenceImage: '',
   name: '',
   email: '',
   phone: '',
@@ -98,9 +137,7 @@ const EMPTY: WizardState = {
 
 export default function CrochetDesignPage() {
   const [step, setStep] = useState(1)
-  const [state, setState] = useState<WizardState>({
-    ...EMPTY,
-  })
+  const [state, setState] = useState<WizardState>({ ...EMPTY })
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -137,7 +174,6 @@ export default function CrochetDesignPage() {
     setSubmitting(true)
     setError('')
     try {
-      // In production: write to Firestore crochet_orders collection
       const res = await fetch('/api/notify-admin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -170,8 +206,7 @@ export default function CrochetDesignPage() {
             Order Received!
           </h1>
           <p style={{ lineHeight: 1.7, marginBottom: '2rem' }}>
-            Thank you, <strong>{state.name}</strong>! Your custom crochet request has been sent. I'll review
-            your order and get back to you within 48 hours with a quote.
+            Thank you, <strong>{state.name}</strong>! Your custom crochet request has been received. I'll review your reference pictures and order details, then get back to you within 48 hours with a quote.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/crochet" className="btn btn-primary">
@@ -204,7 +239,7 @@ export default function CrochetDesignPage() {
             Design Your Own Crochet Piece
           </h1>
           <p style={{ color: 'var(--color-text-secondary)' }}>
-            Answer 6 quick questions and I'll craft your perfect piece.
+            Answer 6 quick questions, pick your stitch pattern, or upload a reference photo.
           </p>
         </div>
       </section>
@@ -310,9 +345,9 @@ export default function CrochetDesignPage() {
           {/* Step 2: Stitch Style */}
           {step === 2 && (
             <div>
-              <h2 className="font-serif" style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>What style of stitch?</h2>
-              <p style={{ marginBottom: '2rem' }}>Pick the vibe that feels right to you.</p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '1rem' }}>
+              <h2 className="font-serif" style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>Select your Stitch Pattern</h2>
+              <p style={{ marginBottom: '2rem' }}>Choose a stitch pattern below or select "Custom Pattern" to upload your own reference image in Step 5.</p>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1rem' }}>
                 {STITCH_STYLES.map((s) => (
                   <button
                     key={s.value}
@@ -322,8 +357,8 @@ export default function CrochetDesignPage() {
                       flexDirection: 'column',
                       borderRadius: 'var(--radius-xl)',
                       background: state.stitchStyle === s.value ? 'var(--color-crochet-dim)' : 'var(--color-bg-card)',
-                      border: `2px solid ${state.stitchStyle === s.value ? 'var(--color-crochet)' : 'transparent'}`,
-                      boxShadow: state.stitchStyle === s.value ? '0 4px 12px rgba(0,0,0,0.05)' : '0 2px 8px rgba(0,0,0,0.02)',
+                      border: `2px solid ${state.stitchStyle === s.value ? 'var(--color-crochet)' : 'var(--color-border)'}`,
+                      boxShadow: state.stitchStyle === s.value ? '0 4px 16px rgba(0,0,0,0.08)' : '0 2px 8px rgba(0,0,0,0.02)',
                       cursor: 'pointer',
                       transition: 'all 0.2s',
                       textAlign: 'left',
@@ -331,7 +366,7 @@ export default function CrochetDesignPage() {
                       position: 'relative',
                     }}
                   >
-                    <div style={{ position: 'relative', width: '100%', height: '140px', overflow: 'hidden' }}>
+                    <div style={{ position: 'relative', width: '100%', height: '140px', overflow: 'hidden', background: 'var(--color-bg-secondary)' }}>
                       <Image
                         src={s.image}
                         alt={s.label}
@@ -342,10 +377,10 @@ export default function CrochetDesignPage() {
                     </div>
                     <div style={{ padding: '1.25rem 1rem' }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
-                        <div style={{ fontWeight: 600, color: 'var(--color-text-primary)' }}>{s.label}</div>
-                        {state.stitchStyle === s.value && <Check size={16} style={{ color: 'var(--color-crochet)' }} />}
+                        <div style={{ fontWeight: 600, color: 'var(--color-text-primary)', fontSize: '0.9rem' }}>{s.label}</div>
+                        {state.stitchStyle === s.value && <Check size={16} style={{ color: 'var(--color-crochet)', flexShrink: 0 }} />}
                       </div>
-                      <div style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)' }}>{s.desc}</div>
+                      <div style={{ fontSize: '0.82rem', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>{s.desc}</div>
                     </div>
                   </button>
                 ))}
@@ -431,11 +466,104 @@ export default function CrochetDesignPage() {
             </div>
           )}
 
-          {/* Step 5: Vision */}
+          {/* Step 5: Vision & Reference Picture */}
           {step === 5 && (
             <div>
-              <h2 className="font-serif" style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>Your Vision</h2>
-              <p style={{ marginBottom: '2rem' }}>Describe anything specific you'd like — the more detail the better!</p>
+              <h2 className="font-serif" style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>Your Vision & Reference Picture</h2>
+              <p style={{ marginBottom: '2rem' }}>Upload a reference picture of what you want made or describe specific details.</p>
+
+              {/* Reference Picture File Upload */}
+              <div style={{ marginBottom: '1.5rem' }}>
+                <label className="label">Upload Reference Picture (optional)</label>
+                <div
+                  style={{
+                    border: '2px dashed var(--color-border)',
+                    borderRadius: 'var(--radius-xl)',
+                    padding: '1.5rem',
+                    textAlign: 'center',
+                    background: 'var(--color-bg-card)',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  {state.referenceImage ? (
+                    <div style={{ position: 'relative', display: 'inline-block' }}>
+                      <img
+                        src={state.referenceImage}
+                        alt="Reference upload preview"
+                        style={{ maxHeight: 200, borderRadius: 'var(--radius-lg)', objectFit: 'cover', border: '1px solid var(--color-border)' }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => update({ referenceImage: '' })}
+                        style={{
+                          position: 'absolute',
+                          top: -8,
+                          right: -8,
+                          background: 'var(--color-error)',
+                          color: '#fff',
+                          borderRadius: '50%',
+                          border: 'none',
+                          width: 26,
+                          height: 26,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+                        }}
+                        title="Remove image"
+                      >
+                        <X size={14} />
+                      </button>
+                    </div>
+                  ) : (
+                    <label
+                      style={{
+                        cursor: 'pointer',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 44,
+                          height: 44,
+                          borderRadius: '50%',
+                          background: 'var(--color-crochet-dim)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <Upload size={20} style={{ color: 'var(--color-crochet)' }} />
+                      </div>
+                      <span style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--color-text-primary)' }}>
+                        Click to upload reference image
+                      </span>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>
+                        Upload a photo of a stitch, pattern, or finished piece you love (PNG, JPG, WEBP)
+                      </span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        style={{ display: 'none' }}
+                        onChange={(e) => {
+                          const file = e.target.files?.[0]
+                          if (file) {
+                            const reader = new FileReader()
+                            reader.onloadend = () => {
+                              update({ referenceImage: reader.result as string })
+                            }
+                            reader.readAsDataURL(file)
+                          }
+                        }}
+                      />
+                    </label>
+                  )}
+                </div>
+              </div>
 
               <div style={{ marginBottom: '1.25rem' }}>
                 <label className="label" htmlFor="inspiration-note">
@@ -447,7 +575,7 @@ export default function CrochetDesignPage() {
                   placeholder="Describe the overall feel, specific features, intended use, gifting occasion, or anything else that would help me bring your vision to life…"
                   value={state.inspirationNote}
                   onChange={(e) => update({ inspirationNote: e.target.value })}
-                  style={{ minHeight: 130 }}
+                  style={{ minHeight: 110 }}
                 />
               </div>
 
@@ -458,7 +586,7 @@ export default function CrochetDesignPage() {
                 <textarea
                   id="customer-notes"
                   className="input"
-                  placeholder="Any allergies to certain yarns? Budget range? Deadline? Special packaging requests?"
+                  placeholder="Any yarn allergies? Budget target? Deadline? Special packaging requests?"
                   value={state.customerNotes}
                   onChange={(e) => update({ customerNotes: e.target.value })}
                   style={{ minHeight: 90 }}
@@ -467,7 +595,7 @@ export default function CrochetDesignPage() {
 
               <div style={{ marginBottom: '1.25rem' }}>
                 <label className="label" htmlFor="reference-link">
-                  Reference Image or Video Link (optional)
+                  Pinterest, Instagram or Video Link (optional)
                 </label>
                 <input
                   id="reference-link"
@@ -497,11 +625,20 @@ export default function CrochetDesignPage() {
                   { label: 'Stitch Style', value: STITCH_STYLES.find((s) => s.value === state.stitchStyle)?.label },
                   { label: 'Colours',      value: state.colours.map((c) => COLOUR_OPTIONS.find((o) => o.value === c)?.label).join(', ') },
                   { label: 'Size',         value: SIZES.find((s) => s.value === state.size)?.label },
-                  { label: 'Reference',    value: state.referenceLink ? <a href={state.referenceLink} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-crochet)', textDecoration: 'underline' }}>View Link</a> : '—' },
+                  {
+                    label: 'Reference Image',
+                    value: state.referenceImage ? (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <img src={state.referenceImage} alt="Uploaded reference" style={{ width: 48, height: 48, borderRadius: 'var(--radius-md)', objectFit: 'cover' }} />
+                        <span style={{ fontSize: '0.8rem', color: 'var(--color-crochet)', fontWeight: 600 }}>Reference photo attached</span>
+                      </div>
+                    ) : '—',
+                  },
+                  { label: 'Reference Link', value: state.referenceLink ? <a href={state.referenceLink} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-crochet)', textDecoration: 'underline' }}>View Link</a> : '—' },
                   { label: 'Vision',       value: state.inspirationNote || '—' },
                 ].map((row) => (
                   <div key={row.label} style={{ display: 'flex', gap: '1rem', padding: '0.6rem 0', borderBottom: '1px solid var(--color-border)' }}>
-                    <span style={{ fontSize: '0.82rem', color: 'var(--color-text-muted)', minWidth: 100 }}>{row.label}</span>
+                    <span style={{ fontSize: '0.82rem', color: 'var(--color-text-secondary)', minWidth: 120 }}>{row.label}</span>
                     <span style={{ fontSize: '0.875rem', color: 'var(--color-text-primary)', flex: 1 }}>{row.value || '—'}</span>
                   </div>
                 ))}
@@ -542,7 +679,7 @@ export default function CrochetDesignPage() {
               <ChevronLeft size={16} /> Back
             </button>
 
-            <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)' }}>
               Step {step} of {STEPS.length}
             </span>
 
@@ -562,7 +699,7 @@ export default function CrochetDesignPage() {
                 className="btn btn-primary"
                 style={{ cursor: 'pointer' }}
               >
-                {submitting ? 'Sending…' : <><Send size={15} /> Submit Order</>}
+                {submitting ? 'Sending…' : <><Send size={15} /> Submit Order Request</>}
               </button>
             )}
           </div>
