@@ -32,55 +32,55 @@ const STITCH_STYLES = [
     value: 'single_stitch',
     label: 'Single Crochet Stitch',
     desc: 'Dense, tight, and durable stitch structure ideal for sturdy items and bags.',
-    image: '/stitches/single stitch.avif',
+    image: '/stitches/single-stitch.avif',
   },
   {
     value: 'half_double_stitch',
     label: 'Half Double Crochet Stitch',
     desc: 'Slightly open stitch offering a soft drape with great warmth.',
-    image: '/stitches/half double stitch.jfif',
+    image: '/stitches/half-double-stitch.jfif',
   },
   {
     value: 'double_stitch',
     label: 'Double Crochet Stitch',
     desc: 'Classic, fluid stitch pattern with a comfortable drape.',
-    image: '/stitches/double stitch.jfif',
+    image: '/stitches/double-stitch.jfif',
   },
   {
     value: 'treble_stitch',
     label: 'Treble Crochet Stitch',
     desc: 'Tall, openwork stitch creating light and breezy fabrics.',
-    image: '/stitches/Trebble stitch.jfif',
+    image: '/stitches/trebble-stitch.jfif',
   },
   {
     value: 'granny_stitch',
     label: 'Granny Stitch',
     desc: 'Iconic 3-dc cluster motif stitch with timeless appeal.',
-    image: '/stitches/Granny Stitch.jfif',
+    image: '/stitches/granny-stitch.jfif',
   },
   {
     value: 'drunken_granny',
     label: 'Drunken Granny Stitch',
     desc: 'Off-kilter diagonal granny cluster pattern adding playful movement.',
-    image: '/stitches/Drunken granny stitch.jfif',
+    image: '/stitches/drunken-granny-stitch.jfif',
   },
   {
     value: 'waffle_stitch',
     label: 'Waffle Stitch',
     desc: 'Deep 3D squishy waffle grid texture, extra cozy, thick and warm.',
-    image: '/stitches/waffle stitch.jfif',
+    image: '/stitches/waffle-stitch.jfif',
   },
   {
     value: 'jasmine_stitch',
     label: 'Jasmine Star Puff Stitch',
     desc: 'Intricate 3D star-burst flower puff stitch.',
-    image: '/stitches/jamine-stitch.webp',
+    image: '/stitches/jasmine-stitch.webp',
   },
   {
     value: 'catherines_wheel',
     label: 'Catherine\'s Wheel Stitch',
     desc: 'Decorative circular starburst wheel motif pattern.',
-    image: "/stitches/Catherine's wheel.webp",
+    image: '/stitches/catherines-wheel.webp',
   },
   {
     value: 'arcade_stitch',
@@ -92,13 +92,13 @@ const STITCH_STYLES = [
     value: 'diamond_trellis',
     label: 'Diamond Trellis Stitch',
     desc: 'Raised front-post cable lattice forming geometric diamond diamonds.',
-    image: '/stitches/Diamond-Trellis-Stitch.webp',
+    image: '/stitches/diamond-trellis-stitch.webp',
   },
   {
     value: 'gingham_stitch',
     label: 'Gingham Check Stitch',
     desc: 'Two-tone tapestry check pattern creating a classic gingham look.',
-    image: '/stitches/Gingham stitch.jfif',
+    image: '/stitches/gingham-stitch.jfif',
   },
   {
     value: 'houndstooth_stitch',
@@ -110,43 +110,43 @@ const STITCH_STYLES = [
     value: 'harlequin_stitch',
     label: 'Harlequin Diamond Shell Stitch',
     desc: 'Bold diamond shell clusters with scalloped edges.',
-    image: '/stitches/Harlequin stitch.jpeg',
+    image: '/stitches/harlequin-stitch.jpeg',
   },
   {
     value: 'mosaic_stitch',
     label: 'Mosaic Pattern Stitch',
     desc: 'Intricate colorwork geometric block pattern.',
-    image: '/stitches/Mosaic stitch.jfif',
+    image: '/stitches/mosaic-stitch.jfif',
   },
   {
     value: 'larksfoot_stitch',
     label: 'Larksfoot Feather Stitch',
     desc: 'Striking spiked feather cluster pattern.',
-    image: '/stitches/Larksfoot stitch.jfif',
+    image: '/stitches/larksfoot-stitch.jfif',
   },
   {
     value: 'lacy_shell_ripple',
     label: 'Lacy Shell Ripple Stitch',
     desc: 'Wavy undulating fan shell ripple design with delicate lace gaps.',
-    image: '/stitches/Lacy shell ripple stitch.jfif',
+    image: '/stitches/lacy-shell-ripple-stitch.jfif',
   },
   {
     value: 'iris_stitch',
     label: 'Iris Shell Stitch',
     desc: 'V-stitch variation creating open floral lace columns.',
-    image: '/stitches/Iris stitc.jfif',
+    image: '/stitches/iris-stitch.jfif',
   },
   {
     value: 'blossom_stitch',
     label: 'Blossom Floral Stitch',
     desc: 'Textured floral petal clusters with gentle openwork.',
-    image: '/stitches/Blossom stitch.jfif',
+    image: '/stitches/blossom-stitch.jfif',
   },
   {
     value: 'trinity_stitch',
     label: 'Trinity Star Stitch',
     desc: 'Dense 3-sc decrease starburst texture with zero holes.',
-    image: '/stitches/Trinity-Stitch.jpg',
+    image: '/stitches/trinity-stitch.jpg',
   },
   {
     value: 'solomons_knot',
@@ -158,25 +158,25 @@ const STITCH_STYLES = [
     value: 'lemon_peel',
     label: 'Lemon Peel Texture Stitch',
     desc: 'Subtle nubby texture alternating single and double crochet stitches.',
-    image: '/stitches/Lemon peel stitch.jfif',
+    image: '/stitches/lemon-peel-stitch.jfif',
   },
   {
     value: 'sedge_stitch',
     label: 'Sedge Textured Stitch',
     desc: 'Plush diagonal textured grain pattern.',
-    image: '/stitches/Sedge stitch.jfif',
+    image: '/stitches/sedge-stitch.jfif',
   },
   {
     value: 'grit_stitch',
     label: 'Grit Stitch',
     desc: 'Sturdy, dense pebbled grain texture.',
-    image: '/stitches/Grit stitch.jpg',
+    image: '/stitches/grit-stitch.jpg',
   },
   {
     value: 'waistcoat_stitch',
     label: 'Waistcoat / Knit-Look Stitch',
     desc: 'Dense V-shaped stitch mimicking traditional stockinette knit.',
-    image: '/stitches/Waistcoat stitch.jfif',
+    image: '/stitches/waistcoat-stitch.jfif',
   },
   {
     value: 'custom_reference',
@@ -481,12 +481,11 @@ export default function CrochetDesignPage() {
                     }}
                   >
                     <div style={{ position: 'relative', width: '100%', height: '140px', overflow: 'hidden', background: 'var(--color-bg-secondary)' }}>
-                      <Image
+                      <img
                         src={s.image}
                         alt={s.label}
-                        fill
-                        style={{ objectFit: 'cover', transition: 'transform 0.4s ease' }}
-                        sizes="(max-width: 768px) 100vw, 300px"
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }}
+                        loading="lazy"
                       />
                     </div>
                     <div style={{ padding: '1.25rem 1rem' }}>
