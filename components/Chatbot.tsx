@@ -63,10 +63,7 @@ const RESPONSES: Record<string, Message> = {
   }
 }
 
-import { useAuth } from '@/lib/auth-context'
-
 export default function Chatbot() {
-  const { user } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE])
   const [showOptions, setShowOptions] = useState(true)
@@ -79,8 +76,6 @@ export default function Chatbot() {
   useEffect(() => {
     scrollToBottom()
   }, [messages])
-
-  if (!user) return null
 
   const handleOptionClick = (optionId: string, userText: string) => {
     setShowOptions(false)

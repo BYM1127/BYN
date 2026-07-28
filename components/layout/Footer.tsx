@@ -40,7 +40,6 @@ const STUDIO_LINKS = [
   { label: 'About BYM Studio', href: '/about' },
   { label: 'Gallery', href: '/gallery' },
   { label: 'Contact', href: '/contact' },
-  { label: 'Sign In', href: '/auth/login' },
 ]
 
 export default function Footer() {

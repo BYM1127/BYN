@@ -6,13 +6,10 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
       disallow: [
-        '/admin/', 
         '/api/', 
-        '/checkout/', 
-        '/my-orders/'
+        '/checkout/'
       ],
     },
-    // Make sure to replace this with your actual production domain once deployed to Vercel
     sitemap: 'https://bym-studio.vercel.app/sitemap.xml',
   }
 }

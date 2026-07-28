@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { AuthProvider } from '@/lib/auth-context'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import WhatsAppButton from '@/components/WhatsAppButton'
 import Chatbot from '@/components/Chatbot'
@@ -38,13 +37,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
         <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
-          <AuthProvider>
-            <CartProvider>
-              {children}
-              <WhatsAppButton />
-              <Chatbot />
-            </CartProvider>
-          </AuthProvider>
+          <CartProvider>
+            {children}
+            <WhatsAppButton />
+            <Chatbot />
+          </CartProvider>
         </ThemeProvider>
       </body>
     </html>

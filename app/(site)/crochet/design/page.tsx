@@ -12,7 +12,6 @@ import {
   Upload,
   Send,
 } from 'lucide-react'
-import { useAuth } from '@/lib/auth-context'
 
 // ── Wizard data ────────────────────────────────────────────────────────────
 
@@ -98,12 +97,9 @@ const EMPTY: WizardState = {
 }
 
 export default function CrochetDesignPage() {
-  const { user, profile } = useAuth()
   const [step, setStep] = useState(1)
   const [state, setState] = useState<WizardState>({
     ...EMPTY,
-    name: profile?.displayName ?? '',
-    email: profile?.email ?? '',
   })
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -178,12 +174,7 @@ export default function CrochetDesignPage() {
             your order and get back to you within 48 hours with a quote.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            {user && (
-              <Link href="/my-orders" className="btn btn-primary">
-                View My Orders
-              </Link>
-            )}
-            <Link href="/crochet" className="btn btn-ghost">
+            <Link href="/crochet" className="btn btn-primary">
               Back to Crochet Studio
             </Link>
           </div>
