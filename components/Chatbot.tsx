@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { MessageCircle, X, ChevronRight } from 'lucide-react'
+import { X, ChevronRight, Sparkles, Heart } from 'lucide-react'
 import Link from 'next/link'
 
 type Message = {
@@ -14,51 +14,51 @@ type Message = {
 const INITIAL_MESSAGE: Message = {
   id: 'init',
   type: 'bot',
-  text: "Hi there! 👋 Welcome to BYM Studio. What can I help you find today?",
+  text: "Hey there! 👋 I'm Boka, your BYM Studio helper! What fun project are we working on today?",
 }
 
 const OPTIONS = [
-  { id: 'crochet', label: '🧶 Crochet Studio', text: "I'm looking for crochet items" },
-  { id: 'photo', label: '📷 Photography', text: "I want to book a photoshoot" },
-  { id: 'web', label: '💻 Web Design', text: "I need a website" },
-  { id: 'general', label: '❓ General Question', text: "I have a general question" },
+  { id: 'crochet', label: '🧶 Crochet Magic', text: "I'm looking for crochet items!" },
+  { id: 'photo', label: '📸 Photoshoot Magic', text: "I want to book a photoshoot!" },
+  { id: 'web', label: '💻 Build a Website', text: "I need a custom website!" },
+  { id: 'general', label: '💬 Just Saying Hi!', text: "I have a general question!" },
 ]
 
 const RESPONSES: Record<string, Message> = {
   crochet: {
     id: 'res-crochet',
     type: 'bot',
-    text: "Awesome! You can shop our ready-made pieces or design your own custom creation using our 6-step wizard.",
+    text: "Yay! 🧶 You can shop ready-made pieces or design your own custom piece step-by-step!",
     links: [
-      { label: 'Design Your Own', href: '/crochet/design' },
-      { label: 'Shop Ready-Made', href: '/crochet/shop' },
+      { label: '✨ Design Your Own Piece', href: '/crochet/design' },
+      { label: '🛍️ Browse Ready-Made Shop', href: '/crochet/shop' },
     ],
   },
   photo: {
     id: 'res-photo',
     type: 'bot',
-    text: "Great! We offer Portrait, Couples, Family, Maternity, and Event sessions. You can view our packages and book online.",
+    text: "Woohoo! 📸 We offer Portraits, Couples, Families, Maternity, and Event sessions. Let's capture some beautiful memories!",
     links: [
-      { label: 'View Packages & Book', href: '/photography' },
-      { label: 'View Gallery', href: '/gallery' },
+      { label: '📅 View Packages & Book', href: '/photography' },
+      { label: '🖼️ Explore Gallery', href: '/gallery' },
     ],
   },
   web: {
     id: 'res-web',
     type: 'bot',
-    text: "Perfect. We build bespoke websites tailored to your business needs. Check out our services to get started.",
+    text: "Awesome choice! 💻 We design fast, modern, and beautiful websites tailored for your business.",
     links: [
-      { label: 'Web Design Services', href: '/webdesign' },
-      { label: 'Start a Project', href: '/webdesign/enquire' },
+      { label: '🚀 Web Design Services', href: '/webdesign' },
+      { label: '✉️ Send a Project Request', href: '/webdesign/enquire' },
     ],
   },
   general: {
     id: 'res-general',
     type: 'bot',
-    text: "No problem! You can learn more about BYM Studio on our About page, or send us a message directly via our Contact page.",
+    text: "Sweet! 💌 Feel free to learn more about BYM Studio or pop us a message directly!",
     links: [
-      { label: 'About Us', href: '/about' },
-      { label: 'Contact Us', href: '/contact' },
+      { label: '🌟 About Us', href: '/about' },
+      { label: '📬 Contact Us Directly', href: '/contact' },
     ],
   },
 }
@@ -90,7 +90,7 @@ export default function Chatbot() {
     }
     setMessages((prev) => [...prev, userMsg])
 
-    // Simulate response delay
+    // Simulate friendly typing delay
     setTimeout(() => {
       const response = RESPONSES[optionId]
       setMessages((prev) => [
@@ -98,78 +98,113 @@ export default function Chatbot() {
         { ...response, id: (Date.now() + 1).toString() },
       ])
 
-      setTimeout(() => setShowOptions(true), 1200)
-    }, 500)
+      setTimeout(() => setShowOptions(true), 1000)
+    }, 450)
   }
 
   return (
     <>
-      {/* Floating Toggle Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-[#E07A5F] to-[#81B29A] text-white rounded-full shadow-xl hover:scale-105 active:scale-95 transition-all duration-200"
-        aria-label="Toggle chat assistant"
-      >
-        {isOpen ? <X size={22} /> : <MessageCircle size={24} />}
-      </button>
+      {/* Cartoon Floating Trigger Button */}
+      <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex items-center gap-2 group">
+        {!isOpen && (
+          <div className="hidden sm:flex items-center gap-1.5 bg-[var(--color-bg-card)] border-2 border-[#F4A261] text-[var(--color-text-primary)] text-xs font-bold px-3 py-1.5 rounded-full shadow-lg animate-bounce">
+            <Sparkles size={13} className="text-[#E07A5F]" />
+            <span>Chat with me!</span>
+          </div>
+        )}
 
-      {/* Chat window frame */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="relative flex items-center justify-center w-13 h-13 sm:w-15 sm:h-15 bg-gradient-to-tr from-[#E07A5F] via-[#F4A261] to-[#81B29A] text-white rounded-2xl sm:rounded-3xl shadow-2xl border-2 border-white/80 hover:scale-110 hover:-rotate-3 active:scale-95 transition-all duration-200"
+          aria-label="Toggle cartoon assistant"
+        >
+          {isOpen ? (
+            <X size={24} className="stroke-[2.5]" />
+          ) : (
+            <div className="flex flex-col items-center justify-center">
+              <span className="text-2xl sm:text-3xl leading-none select-none drop-shadow">🧶</span>
+            </div>
+          )}
+
+          {/* Online badge dot */}
+          {!isOpen && (
+            <span className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-400 border-2 border-white rounded-full flex items-center justify-center">
+              <span className="w-2 h-2 bg-emerald-100 rounded-full animate-ping"></span>
+            </span>
+          )}
+        </button>
+      </div>
+
+      {/* Cartoony Popup Chat Window */}
       {isOpen && (
         <div
-          className="fixed z-50 bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300"
+          className="fixed z-50 bg-[var(--color-bg-card)] border-3 border-[#F4A261] rounded-3xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 font-sans"
           style={{
-            bottom: '4.5rem',
+            bottom: '5rem',
             right: '1rem',
             left: '1rem',
-            maxWidth: '360px',
-            height: '460px',
-            maxHeight: 'calc(100vh - 6rem)',
+            maxWidth: '350px',
+            height: '470px',
+            maxHeight: 'calc(100vh - 6.5rem)',
             marginLeft: 'auto',
           }}
         >
-          {/* Header */}
-          <div className="bg-gradient-to-r from-[var(--color-crochet)] to-[var(--color-photography)] p-3.5 text-white flex justify-between items-center shrink-0">
+          {/* Playful Cartoony Header */}
+          <div className="bg-gradient-to-r from-[#E07A5F] via-[#F4A261] to-[#81B29A] p-3.5 text-white flex justify-between items-center shrink-0 border-b-2 border-white/20">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center font-hand text-sm font-bold text-white shrink-0">
-                BYM
+              {/* Cute Mascot Avatar */}
+              <div className="w-10 h-10 rounded-2xl bg-white text-2xl flex items-center justify-center shadow-md border-2 border-amber-200 shrink-0 transform -rotate-3 hover:rotate-6 transition-transform">
+                🧶
               </div>
               <div>
-                <div className="font-serif font-bold text-sm leading-tight text-white">
-                  Studio Assistant
+                <div className="font-bold text-sm leading-snug text-white flex items-center gap-1">
+                  <span>Boka</span>
+                  <span className="text-[0.65rem] bg-white/30 text-white font-extrabold px-1.5 py-0.5 rounded-full uppercase tracking-wider">
+                    Buddy
+                  </span>
                 </div>
-                <div className="text-[0.68rem] text-white/90">
-                  Typically replies instantly
+                <div className="text-[0.7rem] text-white/90 font-medium flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-emerald-300 animate-pulse"></span>
+                  Ready to help! 😊
                 </div>
               </div>
             </div>
+
             <button
               onClick={() => setIsOpen(false)}
-              className="text-white/80 hover:text-white p-1 rounded-lg transition-colors"
+              className="bg-white/20 hover:bg-white/30 text-white p-1.5 rounded-xl transition-all active:scale-90"
               aria-label="Close chat"
             >
-              <X size={18} />
+              <X size={18} className="stroke-[2.5]" />
             </button>
           </div>
 
           {/* Messages area */}
-          <div className="flex-1 overflow-y-auto p-3.5 flex flex-col gap-3 bg-[var(--color-bg-secondary)]">
+          <div className="flex-1 overflow-y-auto p-3.5 flex flex-col gap-3.5 bg-gradient-to-b from-[var(--color-bg-secondary)] to-[var(--color-bg-card)]">
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex ${
+                className={`flex gap-2 ${
                   msg.type === 'user' ? 'justify-end' : 'justify-start'
                 }`}
               >
+                {/* Bot Avatar Icon */}
+                {msg.type === 'bot' && (
+                  <div className="w-7 h-7 rounded-xl bg-amber-100 border border-amber-300 text-sm flex items-center justify-center shrink-0 mt-0.5 shadow-2xs">
+                    🧶
+                  </div>
+                )}
+
                 <div
-                  className={`max-w-[90%] rounded-2xl px-3.5 py-2.5 text-xs sm:text-sm shadow-sm leading-snug ${
+                  className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 text-xs sm:text-sm shadow-sm leading-relaxed ${
                     msg.type === 'user'
-                      ? 'bg-[var(--color-crochet)] text-white rounded-tr-xs font-medium'
-                      : 'bg-[var(--color-bg-primary)] text-[var(--color-text-primary)] border border-[var(--color-border)] rounded-tl-xs'
+                      ? 'bg-gradient-to-r from-[#E07A5F] to-[#D96B4E] text-white rounded-tr-xs font-semibold'
+                      : 'bg-white text-slate-800 border-2 border-amber-100 rounded-tl-xs shadow-2xs'
                   }`}
                 >
                   {msg.text}
 
-                  {/* Action links */}
+                  {/* Playful Link Buttons */}
                   {msg.links && (
                     <div className="mt-2.5 flex flex-col gap-1.5">
                       {msg.links.map((link, idx) => (
@@ -177,10 +212,10 @@ export default function Chatbot() {
                           key={idx}
                           href={link.href}
                           onClick={() => setIsOpen(false)}
-                          className="flex items-center justify-between bg-[var(--color-bg-secondary)] border border-[var(--color-border)] text-[var(--color-text-primary)] px-2.5 py-1.5 rounded-lg text-xs font-semibold hover:border-[var(--color-crochet)] transition-colors"
+                          className="flex items-center justify-between bg-amber-50 hover:bg-amber-100 border border-amber-200 text-[#E07A5F] px-3 py-1.5 rounded-xl text-xs font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-2xs"
                         >
-                          {link.label}
-                          <ChevronRight size={13} className="opacity-60" />
+                          <span>{link.label}</span>
+                          <ChevronRight size={14} className="text-[#E07A5F]" />
                         </Link>
                       ))}
                     </div>
@@ -192,35 +227,35 @@ export default function Chatbot() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input / Options area */}
-          <div className="p-3 border-t border-[var(--color-border)] bg-[var(--color-bg-card)] shrink-0">
+          {/* Cartoony Options Area */}
+          <div className="p-3 border-t-2 border-[#F4A261]/30 bg-[var(--color-bg-card)] shrink-0">
             {showOptions ? (
               <div className="flex flex-col gap-1.5">
-                <div className="text-[0.68rem] text-center text-[var(--color-text-muted)] mb-1 uppercase tracking-wider font-semibold">
-                  Choose an option below
+                <div className="text-[0.65rem] text-center text-[var(--color-text-muted)] mb-0.5 font-bold uppercase tracking-wider flex items-center justify-center gap-1">
+                  <Sparkles size={11} className="text-[#F4A261]" />
+                  <span>Pick a question below</span>
+                  <Sparkles size={11} className="text-[#F4A261]" />
                 </div>
-                {OPTIONS.map((opt) => (
-                  <button
-                    key={opt.id}
-                    onClick={() => handleOptionClick(opt.id, opt.text)}
-                    className="w-full text-left px-3 py-1.5 text-xs sm:text-sm rounded-full border border-[var(--color-border)] bg-[var(--color-bg-primary)] hover:bg-[var(--color-bg-secondary)] hover:border-[var(--color-crochet)] transition-all text-[var(--color-text-primary)] shadow-2xs font-medium"
-                  >
-                    {opt.label}
-                  </button>
-                ))}
+                <div className="grid grid-cols-1 gap-1.5">
+                  {OPTIONS.map((opt) => (
+                    <button
+                      key={opt.id}
+                      onClick={() => handleOptionClick(opt.id, opt.text)}
+                      className="w-full text-left px-3.5 py-2 text-xs sm:text-sm rounded-xl border-2 border-amber-200/80 bg-gradient-to-r from-amber-50/50 to-orange-50/50 hover:from-amber-100 hover:to-orange-100 hover:border-[#E07A5F] transition-all text-slate-800 font-bold shadow-2xs hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-between group"
+                    >
+                      <span>{opt.label}</span>
+                      <span className="text-xs text-[#E07A5F] opacity-0 group-hover:opacity-100 transition-opacity font-extrabold">
+                        Go →
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </div>
             ) : (
-              <div className="flex items-center justify-center py-2 text-[var(--color-text-muted)] text-xs italic">
-                <span className="flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 bg-[var(--color-crochet)] rounded-full animate-bounce"></span>
-                  <span
-                    className="w-1.5 h-1.5 bg-[var(--color-photography)] rounded-full animate-bounce"
-                    style={{ animationDelay: '0.15s' }}
-                  ></span>
-                  <span
-                    className="w-1.5 h-1.5 bg-[var(--color-webdesign)] rounded-full animate-bounce"
-                    style={{ animationDelay: '0.3s' }}
-                  ></span>
+              <div className="flex items-center justify-center py-2.5 text-[#E07A5F] text-xs font-bold">
+                <span className="flex items-center gap-1.5">
+                  <span className="text-base animate-spin">🧶</span>
+                  <span>Thinking...</span>
                 </span>
               </div>
             )}
