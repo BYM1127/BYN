@@ -60,6 +60,19 @@ export async function POST(req: Request) {
         ${form.referenceImage ? `<p><strong>Uploaded Reference Picture:</strong><br/><img src="${form.referenceImage}" style="max-width:400px; border-radius:8px; margin-top:8px;" alt="Customer Reference" /></p>` : ''}
         <p><strong>Customer Notes:</strong><br/>${form.customerNotes || 'None'}</p>
       `
+    } else if (type === 'crochet_quote') {
+      subject = `🧶 New Crochet Quote Request — ${form.fullName || form.name}`
+      const itemsList = form.items?.map((item: any) => `<li>${item.title} (Qty: ${item.quantity}) — R${item.price * item.quantity}</li>`).join('') || ''
+      html = `
+        <h2>New Order Quote Request</h2>
+        <p><strong>Customer Name:</strong> ${form.fullName || form.name}</p>
+        <p><strong>Email:</strong> ${form.email}</p>
+        <p><strong>Phone:</strong> ${form.phone || 'Not provided'}</p>
+        <p><strong>Delivery Address:</strong> ${form.addressLine1}, ${form.city}, ${form.province} ${form.postalCode}</p>
+        <h3>Ordered Items:</h3>
+        <ul>${itemsList}</ul>
+        <p><strong>Items Total (Est.):</strong> R${form.cartTotal}</p>
+      `
     } else {
       return NextResponse.json({ error: 'Unknown notification type' }, { status: 400 })
     }

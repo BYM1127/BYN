@@ -92,14 +92,14 @@ export default function CartDrawer() {
               <span>R{cartTotal}</span>
             </div>
             <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '1.5rem', textAlign: 'center' }}>
-              Shipping and taxes calculated at checkout.
+              Subtotal estimate. We'll send a custom quote for your order & delivery.
             </p>
             <button 
               onClick={() => { setIsCartOpen(false); router.push('/checkout') }}
               className="btn btn-primary" 
               style={{ width: '100%', padding: '1rem', justifyContent: 'center' }}
             >
-              Proceed to Checkout
+              Get a Quote for Your Order
             </button>
           </div>
         )}
