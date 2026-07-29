@@ -184,17 +184,17 @@ export default function QuoteCheckoutPage() {
                   <div style={{ fontSize: '0.9rem', fontWeight: 500 }}>{item.title}</div>
                   {item.variations && <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>{Object.values(item.variations).join(' / ')}</div>}
                 </div>
-                <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>R{item.price * item.quantity}</div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--color-crochet)', fontWeight: 600 }}>Quote on Request</div>
               </div>
             ))}
           </div>
           
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.25rem', fontWeight: 700, borderTop: '1px solid var(--color-border)', paddingTop: '1.25rem' }}>
-            <span>Est. Subtotal</span>
-            <span>R{cartTotal}</span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.1rem', fontWeight: 700, borderTop: '1px solid var(--color-border)', paddingTop: '1.25rem' }}>
+            <span>Order Total</span>
+            <span style={{ color: 'var(--color-crochet)' }}>Custom Quote</span>
           </div>
           <p style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)', marginTop: '0.75rem', textAlign: 'center', lineHeight: 1.5 }}>
-            Final price and courier shipping cost will be detailed in your custom quote.
+            Final pricing and courier shipping options will be detailed in your custom quote.
           </p>
         </div>
 

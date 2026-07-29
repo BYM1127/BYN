@@ -27,7 +27,7 @@ export default function CartDrawer() {
       >
         <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h2 style={{ fontSize: '1.25rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <ShoppingBag size={20} /> Your Cart
+            <ShoppingBag size={20} /> Your Quote List
           </h2>
           <button onClick={() => setIsCartOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted)' }}>
             <X size={24} />
@@ -38,12 +38,12 @@ export default function CartDrawer() {
           {cart.length === 0 ? (
             <div style={{ textAlign: 'center', color: 'var(--color-text-muted)', marginTop: '2rem' }}>
               <ShoppingBag size={48} style={{ margin: '0 auto 1rem', opacity: 0.2 }} />
-              <p>Your cart is empty.</p>
+              <p>Your quote list is empty.</p>
               <button 
                 onClick={() => { setIsCartOpen(false); router.push('/crochet/shop') }} 
                 className="btn btn-primary" style={{ marginTop: '1.5rem' }}
               >
-                Continue Shopping
+                Browse Collection
               </button>
             </div>
           ) : (
@@ -76,7 +76,9 @@ export default function CartDrawer() {
                           <Plus size={14} />
                         </button>
                       </div>
-                      <div style={{ fontWeight: 600 }}>R{item.price * item.quantity}</div>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--color-crochet)', fontWeight: 600 }}>
+                        Quote on Request
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -87,12 +89,12 @@ export default function CartDrawer() {
 
         {cart.length > 0 && (
           <div style={{ padding: '1.5rem', borderTop: '1px solid var(--color-border)', background: 'var(--color-bg-secondary)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', fontSize: '1.1rem', fontWeight: 600 }}>
-              <span>Subtotal</span>
-              <span>R{cartTotal}</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', fontSize: '1rem', fontWeight: 600 }}>
+              <span>Items Selected</span>
+              <span>{cart.reduce((sum, i) => sum + i.quantity, 0)} item(s)</span>
             </div>
             <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '1.5rem', textAlign: 'center' }}>
-              Subtotal estimate. We'll send a custom quote for your order & delivery.
+              Submit your order details to receive a custom quote.
             </p>
             <button 
               onClick={() => { setIsCartOpen(false); router.push('/checkout') }}

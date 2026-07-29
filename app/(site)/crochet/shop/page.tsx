@@ -214,11 +214,11 @@ export default function CrochetShopPage() {
                     </span>
                   </div>
 
-                  {/* Price and CTA */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  {/* Quote Promotion and CTA */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.5rem' }}>
                     <div>
-                      <span style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--color-text-primary)' }}>
-                        {product.price ? `R${product.price.toLocaleString()}` : 'Custom'}
+                      <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-crochet)', background: 'var(--color-crochet-dim)', padding: '0.25rem 0.65rem', borderRadius: 'var(--radius-full)' }}>
+                        Quote on Enquiry
                       </span>
                     </div>
                     <button
@@ -226,16 +226,16 @@ export default function CrochetShopPage() {
                       style={{ cursor: 'pointer' }}
                       onClick={() => {
                         addToCart({
-                          id: product.id || String(Math.random()), // Assuming PortfolioItem has an id
+                          id: product.id || String(Math.random()),
                           productId: product.id || String(Math.random()),
                           title: product.title,
-                          price: product.price || 0,
+                          price: 0,
                           quantity: 1,
                           imageUrl: product.imageUrl,
                         })
                       }}
                     >
-                      <ShoppingBag size={13} /> Add to Cart
+                      <ShoppingBag size={13} /> Add to Quote
                     </button>
                   </div>
                 </div>
