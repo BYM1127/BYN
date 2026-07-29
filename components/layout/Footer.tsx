@@ -98,12 +98,15 @@ export default function Footer() {
                 BYM Studio
               </span>
             </Link>
-            <p style={{ fontSize: '0.875rem', lineHeight: 1.7, maxWidth: 240, marginBottom: '1.5rem' }}>
-              Handcrafted crochet, professional photography, and bespoke web design — all from one passionate studio.
+            <p style={{ fontSize: '0.875rem', lineHeight: 1.7, maxWidth: 240, marginBottom: '0.75rem' }}>
+              Handcrafted crochet, professional photography, and bespoke web design.
+            </p>
+            <p style={{ fontSize: '0.8rem', color: 'var(--color-crochet)', fontWeight: 600, marginBottom: '1.25rem' }}>
+              📍 Serving in South Africa
             </p>
             <div style={{ display: 'flex', gap: '0.75rem' }}>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/bokasyarnmarket27?igsh=M2JiODh0NWRuZ2Q5"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -118,12 +121,13 @@ export default function Footer() {
                   color: 'var(--color-text-secondary)',
                   transition: 'all 0.2s',
                 }}
-                aria-label="Instagram"
+                aria-label="Instagram (Bokasyarnmarket27)"
+                title="Bokasyarnmarket27"
               >
                 <Share2 size={16} />
               </a>
               <a
-                href="mailto:hello@bymstudio.co"
+                href="mailto:bokasyarnmarket@gmail.com"
                 style={{
                   width: 36,
                   height: 36,
@@ -137,6 +141,7 @@ export default function Footer() {
                   transition: 'all 0.2s',
                 }}
                 aria-label="Email"
+                title="bokasyarnmarket@gmail.com"
               >
                 <Mail size={16} />
               </a>

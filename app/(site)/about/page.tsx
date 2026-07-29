@@ -12,7 +12,7 @@ const VALUES = [
   { icon: '🧶', title: 'Handcrafted with Love', desc: 'Every crochet piece is made stitch by stitch, with genuine care for the person receiving it.' },
   { icon: '📷', title: 'Authentic Storytelling', desc: 'My photography captures real moments and real emotion — not just poses, but personality.' },
   { icon: '💻', title: 'Purpose-Built Design', desc: 'Websites I build have a goal: to represent your brand beautifully and convert visitors into clients.' },
-  { icon: '🌍', title: 'Global, Local Heart', desc: 'Based in South Africa, serving clients worldwide. My work carries its roots wherever it goes.' },
+  { icon: '🌍', title: 'Proudly South African', desc: 'Based in and serving clients across South Africa with passion and care.' },
 ]
 
 const TIMELINE = [
@@ -61,7 +61,7 @@ export default function AboutPage() {
             <p style={{ lineHeight: 1.8, marginBottom: '2rem' }}>
               BYM Studio started as BokasYarnMarket in 2019 when I made my first crochet bag and someone
               asked to buy it. Since then, it's grown into a full creative studio serving clients across
-              South Africa and around the world.
+              South Africa.
             </p>
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
               <Link href="/contact" className="btn btn-gold">

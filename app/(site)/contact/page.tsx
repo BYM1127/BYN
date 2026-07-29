@@ -7,28 +7,28 @@ const CONTACT_ITEMS = [
   {
     icon: <Mail size={20} />,
     label: 'Email',
-    value: 'hello@bymstudio.co',
-    href: 'mailto:hello@bymstudio.co',
+    value: 'bokasyarnmarket@gmail.com',
+    href: 'mailto:bokasyarnmarket@gmail.com',
     color: 'var(--color-gold)',
   },
   {
     icon: <Phone size={20} />,
-    label: 'WhatsApp',
-    value: '+27 000 000 0000',
-    href: 'https://wa.me/27000000000',
+    label: 'WhatsApp / Phone',
+    value: '0793200067',
+    href: 'https://wa.me/27793200067',
     color: 'var(--color-photography)',
   },
   {
     icon: <Share2 size={20} />,
     label: 'Instagram',
-    value: '@bymstudio',
-    href: 'https://instagram.com/bymstudio',
+    value: 'Bokasyarnmarket27',
+    href: 'https://www.instagram.com/bokasyarnmarket27?igsh=M2JiODh0NWRuZ2Q5',
     color: 'var(--color-crochet)',
   },
   {
     icon: <MapPin size={20} />,
     label: 'Location',
-    value: 'South Africa · Serving Worldwide',
+    value: 'Serving in South Africa',
     href: undefined,
     color: 'var(--color-webdesign)',
   },
@@ -76,7 +76,7 @@ export default function ContactPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'WHATSAPP_CONTACT', user: 'Guest', details: 'Clicked WhatsApp link on Contact Page' })
     }).catch(console.error).finally(() => {
-      window.open('https://wa.me/27000000000?text=Hi%20BYM%20Studio%2C%20I%27d%20like%20to%20enquire%20about%E2%80%A6', '_blank', 'noopener,noreferrer');
+      window.open('https://wa.me/27793200067?text=Hi%20BYM%20Studio%2C%20I%27d%20like%20to%20enquire%20about%E2%80%A6', '_blank', 'noopener,noreferrer');
     });
   };
 
@@ -169,7 +169,7 @@ export default function ContactPage() {
 
               {/* WhatsApp CTA */}
               <a
-                href="https://wa.me/27000000000?text=Hi%20BYM%20Studio%2C%20I%27d%20like%20to%20enquire%20about…"
+                href="https://wa.me/27793200067?text=Hi%20BYM%20Studio%2C%20I%27d%20like%20to%20enquire%20about…"
                 onClick={handleWhatsApp}
                 className="btn btn-photo"
                 style={{ width: '100%', justifyContent: 'center', textDecoration: 'none', display: 'flex' }}

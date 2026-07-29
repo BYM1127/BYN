@@ -3,10 +3,8 @@
 import React from 'react';
 
 export default function WhatsAppButton() {
-  const phoneNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
+  const phoneNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '27793200067';
   const message = encodeURIComponent("Hello! I'm interested in your services at BYM Studio.");
-
-  if (!phoneNumber) return null;
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();

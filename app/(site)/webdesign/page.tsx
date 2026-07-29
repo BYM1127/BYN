@@ -5,7 +5,7 @@ import { Monitor, ArrowRight, Check, Zap, Globe, Smartphone, ShieldCheck, Star, 
 export const metadata: Metadata = {
   title: 'Web Design Services',
   description:
-    'Bespoke website design and development by BYM Studio. Stunning landing pages, e-commerce stores, portfolios, and custom web apps. Serving clients worldwide.',
+    'Bespoke website design and development by BYM Studio. Stunning landing pages, e-commerce stores, portfolios, and custom web apps. Serving in South Africa.',
 }
 
 const TIERS = [
@@ -85,7 +85,7 @@ const TIERS = [
       'Admin dashboard',
       'Deployment & hosting setup',
       'Ongoing maintenance available',
-      'Worldwide client base',
+      'Serving in South Africa',
     ],
   },
 ]

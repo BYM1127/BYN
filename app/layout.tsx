@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import WhatsAppButton from '@/components/WhatsAppButton'
-import Chatbot from '@/components/Chatbot'
 
 import { CartProvider } from '@/lib/context/CartContext'
 
@@ -40,7 +39,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <CartProvider>
             {children}
             <WhatsAppButton />
-            <Chatbot />
           </CartProvider>
         </ThemeProvider>
       </body>

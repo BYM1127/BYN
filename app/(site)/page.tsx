@@ -62,7 +62,7 @@ const PILLARS = [
     label: 'Web Design',
     tagline: 'Built to Impress',
     description:
-      'From stunning landing pages to full e-commerce stores — I design and build fast, beautiful websites that convert visitors into customers. Worldwide clients, premium results.',
+      'From stunning landing pages to full e-commerce stores — I design and build fast, beautiful websites that convert visitors into customers. Serving in South Africa, premium results.',
     color: 'var(--color-webdesign)',
     colorDim: 'var(--color-webdesign-dim)',
     gradient: 'linear-gradient(135deg, var(--color-webdesign), var(--color-webdesign-light))',
@@ -70,7 +70,7 @@ const PILLARS = [
       { label: 'See My Work', href: '/webdesign', primary: true },
       { label: 'Start a Project', href: '/webdesign/enquire', primary: false },
     ],
-    features: ['Custom designs', 'Mobile-first', 'SEO optimised', 'Global clients'],
+    features: ['Custom designs', 'Mobile-first', 'SEO optimised', 'Serving in South Africa'],
     emoji: '💻',
   },
 ]
