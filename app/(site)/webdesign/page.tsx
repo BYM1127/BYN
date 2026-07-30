@@ -102,51 +102,51 @@ const TECH_STACK = [
   { name: 'Node.js', category: 'Server' },
   { name: 'PostgreSQL', category: 'Database' },
   { name: 'REST APIs', category: 'Integration' },
-  { name: 'Git / GitHub', category: 'Version Control' },
+  { name: 'Git / Version Control', category: 'Source Control' },
 ]
 
 const PORTFOLIO = [
   {
     id: '1',
-    title: 'BMZtrial1',
+    title: 'BMZ Trial Showcase',
     type: 'Business Website',
     tech: ['HTML', 'CSS', 'JavaScript'],
-    description: "Building a website for a friend's business. Focused on creating a clean, professional online presence.",
+    description: "Bespoke business website created for a client. Focused on creating a clean, professional online presence.",
     imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop',
-    projectUrl: 'https://github.com/BYM1127/BMZtrial1',
+    projectUrl: '',
     color: 'var(--color-webdesign)',
     emoji: '🌸'
   },
   {
     id: '2',
-    title: 'DkLC - Catering',
+    title: 'DkLC - Catering & Events',
     type: 'Food & Catering',
     tech: ['React', 'CSS', 'Vite'],
     description: 'Dimpho ke Lesego Catering website. Showcasing delicious menus, services, and an easy booking contact system.',
     imageUrl: 'https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=800&auto=format&fit=crop',
-    projectUrl: 'https://github.com/BYM1127/DkLC',
+    projectUrl: '',
     color: 'var(--color-crochet)',
     emoji: '🍲'
   },
   {
     id: '3',
-    title: 'IMELA-PROJECTS',
+    title: 'IMELA Electrical & Solar Projects',
     type: 'Corporate Website',
     tech: ['Next.js', 'Tailwind', 'TypeScript'],
     description: 'Electrical & Solar Expertise You Can Trust. Fast, reliable installations and maintenance for residential and commercial projects.',
     imageUrl: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=800&auto=format&fit=crop',
-    projectUrl: 'https://github.com/BYM1127/IMELA-PROJECTS',
+    projectUrl: '',
     color: 'var(--color-photography)',
     emoji: '💡'
   },
   {
     id: '4',
     title: 'Binary Breakout',
-    type: 'Educational Game',
+    type: 'Educational Web App',
     tech: ['JavaScript', 'Canvas', 'Logic'],
     description: 'An interactive, educational browser game designed to help students practice binary logic and conversions.',
     imageUrl: '',
-    projectUrl: 'https://binarybreakout.netlify.app/',
+    projectUrl: '',
     color: 'var(--color-crochet)',
     emoji: '🎮'
   },

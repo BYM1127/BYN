@@ -246,9 +246,7 @@ export default function Footer() {
               gap: '0.35rem',
             }}
           >
-            &copy; {new Date().getFullYear()} BYM Studio. Made with
-            <Heart size={12} style={{ color: 'var(--color-crochet)' }} />
-            by BokasYarnMarket Studio. All Rights Reserved.
+            &copy; {new Date().getFullYear()} BYM Studio. Created & Developed by BYM Studio. All Rights Reserved.
           </p>
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
             <Link href="/policies/terms-of-service" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textDecoration: 'none' }}>
