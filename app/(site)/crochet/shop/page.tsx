@@ -7,16 +7,22 @@ import { getProducts, ProductData as Product } from '@/lib/actions/products'
 import { useCart } from '@/lib/context/CartContext'
 import { ImageLightbox, ZoomOverlay } from '@/components/ImageLightbox'
 
-type Category = 'all' | 'bags' | 'blankets' | 'tops' | 'home_decor' | 'baby' | 'accessories'
+type Category = 'all' | 'bags' | 'blankets' | 'tops' | 'home_decor' | 'baby' | 'accessories' | 'hats' | 'tops-shirts' | 'two piece' | 'pants' | 'skirt' | 'Sleeves' | 'night market'
 
 const CATEGORIES: { value: Category; label: string; emoji: string }[] = [
-  { value: 'all',         label: 'All Pieces',   emoji: '✨' },
-  { value: 'bags',        label: 'Bags',         emoji: '👜' },
-  { value: 'blankets',    label: 'Blankets',     emoji: '🛏️' },
-  { value: 'tops',        label: 'Tops',         emoji: '👗' },
-  { value: 'home_decor',  label: 'Home Décor',   emoji: '🏡' },
-  { value: 'baby',        label: 'Baby',         emoji: '🍼' },
-  { value: 'accessories', label: 'Accessories',  emoji: '🎀' },
+  { value: 'all',          label: 'All Pieces',    emoji: '✨' },
+  { value: 'bags',         label: 'Bags',          emoji: '👜' },
+  { value: 'hats',         label: 'Hats',          emoji: '👒' },
+  { value: 'tops-shirts',  label: 'Tops & Shirts', emoji: '👚' },
+  { value: 'two piece',    label: 'Two Piece',     emoji: '👙' },
+  { value: 'pants',        label: 'Pants',         emoji: '👖' },
+  { value: 'skirt',        label: 'Skirts',        emoji: '👗' },
+  { value: 'Sleeves',      label: 'Sleeves',       emoji: '🧤' },
+  { value: 'night market', label: 'Night Market',  emoji: '🌙' },
+  { value: 'blankets',     label: 'Blankets',      emoji: '🛏️' },
+  { value: 'home_decor',   label: 'Home Décor',    emoji: '🏡' },
+  { value: 'baby',         label: 'Baby',          emoji: '🍼' },
+  { value: 'accessories',  label: 'Accessories',   emoji: '🎀' },
 ]
 
 // Dynamic products loaded from Firestore
