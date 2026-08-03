@@ -32,8 +32,31 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: 'Bokas Yarn Market and Studio',
+    alternateName: 'BYM Studio',
+    url: 'https://bym-studio.vercel.app',
+    logo: 'https://bym-studio.vercel.app/logo-dark.png',
+    telephone: '0793200067',
+    email: 'bokasyarnmarket@gmail.com',
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'ZA',
+    },
+    areaServed: 'South Africa',
+    sameAs: ['https://www.instagram.com/bokasyarnmarket27'],
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="antialiased">
         <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
           <CartProvider>
